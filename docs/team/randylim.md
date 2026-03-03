@@ -7,7 +7,7 @@
 
 ClinicConnect is a CLI-based patient management tool for triage coordinators in public polyclinics. It enables fast recording of patient details and doctor assignments to support efficient high-volume triage workflows. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
 
-Given below are my contributions to the project.
+Given below are my contributions to the project. 
 
 * **New Feature**: 
 
