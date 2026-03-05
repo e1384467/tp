@@ -18,3 +18,47 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[github](https://github.com/annamacinnes)]
 
 * Role: Team Member
+
+### Anish Kousik
+
+<img src="images/anishkousik.png" width="200px">
+
+[[github](https://github.com/anishkousik)]
+
+* Role: Developer
+
+### Niik Seah
+
+<img src="images/niikseah.png" width="200px">
+
+[[github](https://github.com/niikseah)]
+
+* Role: Team Member
+
+### Nigel Gabriel Morais
+
+<img src="images/nigelgm.png" width="200px">
+
+[[homepage](http://www.comp.nus.edu.sg/~damithch)]
+[[github](https://github.com/NigelGM)]
+
+* Role: Team Member
+
+### Natalie Lee
+
+<img src="images/lzynatalie.png" width="200px">
+
+[[github](https://github.com/lzynatalie)]
+
+* Role: Team Member
+
+### Randy Lim
+
+<img src="images/e1384467.png" width="200px">
+
+[[github](https://github.com/e1384467)]
+[[portfolio](team/randylim.md)]
+
+* Role: Team Member
+
+
