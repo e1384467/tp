@@ -11,6 +11,15 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ## Project team
 
+### Nigel Gabriel Morais
+
+<img src="images/nigelgm.png" width="200px">
+
+[[homepage](http://www.comp.nus.edu.sg/~damithch)]
+[[github](https://github.com/NigelGM)]
+
+* Role: Team Member
+
 ### Natalie Lee
 
 <img src="images/lzynatalie.png" width="200px">
@@ -25,4 +34,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 [[github](https://github.com/e1384467)]
 [[portfolio](team/randylim.md)]
+
+* Role: Team Member
+
 
