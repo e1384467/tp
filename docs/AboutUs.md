@@ -11,6 +11,14 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ## Project team
 
+### Anna Macinnes
+
+<img src="images/annamacinnes.png" width="200px">
+
+[[github](https://github.com/annamacinnes)]
+
+* Role: Team Member
+
 ### Anish Kousik
 
 <img src="images/anishkousik.png" width="200px">
