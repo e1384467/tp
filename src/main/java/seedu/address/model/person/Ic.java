@@ -43,7 +43,7 @@ public class Ic {
         }
 
         Ic otherIc = (Ic) other;
-        return value.equals(otherIc.value);
+        return value.equalsIgnoreCase(otherIc.value);
     }
 
     @Override
