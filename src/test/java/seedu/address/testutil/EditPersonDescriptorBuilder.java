@@ -82,6 +82,9 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Ic} of the {@code EditPersonDescriptor} that we are building.
+     */
     public EditPersonDescriptorBuilder withIc(String ic) {
         descriptor.setIc(new seedu.address.model.person.Ic(ic));
         return this;

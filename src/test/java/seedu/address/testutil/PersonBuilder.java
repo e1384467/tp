@@ -94,6 +94,9 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Ic} of the {@code Person} that we are building.
+     */
     public PersonBuilder withIc(String ic) {
         this.ic = new Ic(ic);
         return this;

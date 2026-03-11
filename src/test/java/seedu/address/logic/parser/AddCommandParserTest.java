@@ -66,7 +66,13 @@ public class AddCommandParserTest {
         Person expectedPersonMultipleTags = new PersonBuilder(BOB).withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND)
                 .build();
         assertParseSuccess(parser,
-                NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND + IC_DESC_BOB,
+                NAME_DESC_BOB
+                        + PHONE_DESC_BOB
+                        + EMAIL_DESC_BOB
+                        + ADDRESS_DESC_BOB
+                        + TAG_DESC_HUSBAND
+                        + TAG_DESC_FRIEND
+                        + IC_DESC_BOB,
                 new AddCommand(expectedPersonMultipleTags));
     }
 
@@ -97,9 +103,18 @@ public class AddCommandParserTest {
 
         // multiple fields repeated
         assertParseFailure(parser,
-                validExpectedPersonString + PHONE_DESC_AMY + EMAIL_DESC_AMY + NAME_DESC_AMY + ADDRESS_DESC_AMY + IC_DESC_AMY
+                validExpectedPersonString
+                        + PHONE_DESC_AMY
+                        + EMAIL_DESC_AMY
+                        + NAME_DESC_AMY
+                        + ADDRESS_DESC_AMY
+                        + IC_DESC_AMY
                         + validExpectedPersonString,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME, PREFIX_ADDRESS, PREFIX_EMAIL, PREFIX_PHONE, PREFIX_IC));
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME,
+                        PREFIX_ADDRESS,
+                        PREFIX_EMAIL,
+                        PREFIX_PHONE,
+                        PREFIX_IC));
 
         // invalid value followed by valid value
 
@@ -150,7 +165,11 @@ public class AddCommandParserTest {
     public void parse_optionalFieldsMissing_success() {
         // zero tags
         Person expectedPerson = new PersonBuilder(AMY).withTags().build();
-        assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + IC_DESC_AMY,
+        assertParseSuccess(parser, NAME_DESC_AMY
+                        + PHONE_DESC_AMY
+                        + EMAIL_DESC_AMY
+                        + ADDRESS_DESC_AMY
+                        + IC_DESC_AMY,
                 new AddCommand(expectedPerson));
     }
 
@@ -206,12 +225,16 @@ public class AddCommandParserTest {
                 + TAG_DESC_HUSBAND + TAG_DESC_FRIEND + INVALID_IC_DESC, Ic.MESSAGE_CONSTRAINTS);
 
         // two invalid values, only first invalid value reported
-        assertParseFailure(parser, INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB + INVALID_ADDRESS_DESC + IC_DESC_BOB,
+        assertParseFailure(parser, INVALID_NAME_DESC
+                        + PHONE_DESC_BOB
+                        + EMAIL_DESC_BOB
+                        + INVALID_ADDRESS_DESC
+                        + IC_DESC_BOB,
                 Name.MESSAGE_CONSTRAINTS);
 
         // non-empty preamble
         assertParseFailure(parser, PREAMBLE_NON_EMPTY + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND  + IC_DESC_BOB,
+                + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND + IC_DESC_BOB,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
     }
 }

@@ -3,6 +3,10 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+/**
+ * Represents a Person's IC in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidIc(String)}
+ */
 public class Ic {
 
     public static final String MESSAGE_CONSTRAINTS =
@@ -16,6 +20,11 @@ public class Ic {
 
     public final String value;
 
+    /**
+     * Constructs an {@code Ic}.
+     *
+     * @param ic A valid IC.
+     */
     public Ic(String ic) {
         requireNonNull(ic);
         checkArgument(isValidIc(ic), MESSAGE_CONSTRAINTS);
