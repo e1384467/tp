@@ -17,7 +17,10 @@ public class ListCommand extends Command {
     public static final String MESSAGE_EMPTY_LIST = "Your patient record list is currently empty.";
 
     public static final String MESSAGE_EXTRA_PARAMETERS = "The 'list' command does not take any parameters.\n"
-            + "Usage: list";
+            public static final String MESSAGE_USAGE = COMMAND_WORD 
+            + ": Lists all patients\n"
+            + "Parameters: NIL\n"
+            + "Example: " + COMMAND_WORD;
 
 
     @Override
