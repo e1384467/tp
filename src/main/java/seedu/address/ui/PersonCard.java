@@ -10,7 +10,7 @@ import javafx.scene.layout.Region;
 import seedu.address.model.person.Person;
 
 /**
- * An UI component that displays information of a {@code Person}.
+ * A UI component that displays information of a {@code Person}.
  */
 public class PersonCard extends UiPart<Region> {
 
@@ -39,6 +39,10 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
+    private Label ic;
+    @FXML
+    private Label urgencyLevel;
+    @FXML
     private FlowPane tags;
 
     /**
@@ -49,9 +53,23 @@ public class PersonCard extends UiPart<Region> {
         this.person = person;
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
-        phone.setText(person.getPhone().value);
+        phone.setText("Hp: " + person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
+
+        // Map the new medical fields to the UI
+        ic.setText("NRIC: " + person.getIc().value);
+
+        // Capitalize the first letter of the urgency level to make it look nice
+        String urgencyString = person.getUrgencyLevel().toString();
+        urgencyLevel.setText(urgencyString.substring(0, 1).toUpperCase() + urgencyString.substring(1).toLowerCase());
+
+        // Apply the base badge styling (padding, borders, text color)
+        urgencyLevel.getStyleClass().add("urgency-badge");
+
+        // Dynamically apply the correct background color (e.g., "urgency-high")
+        urgencyLevel.getStyleClass().add("urgency-" + urgencyString.toLowerCase());
+
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
