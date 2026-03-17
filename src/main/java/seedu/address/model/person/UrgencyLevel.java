@@ -84,4 +84,11 @@ public class UrgencyLevel {
     public int hashCode() {
         return level.hashCode();
     }
+
+    /**
+     * Returns the string representation of the urgency level in lowercase for CSS styling.
+     */
+    public String getValue() {
+        return level.toString().toLowerCase();
+    }
 }

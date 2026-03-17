@@ -46,7 +46,7 @@ public class PersonCard extends UiPart<Region> {
     private FlowPane tags;
 
     /**
-     * Creates a {@code PersonCode} with the given {@code Person} and index to display.
+     * Creates a {@code PersonCard} with the given {@code Person} and index to display.
      */
     public PersonCard(Person person, int displayedIndex) {
         super(FXML);
@@ -60,18 +60,31 @@ public class PersonCard extends UiPart<Region> {
         // Map the new medical fields to the UI
         ic.setText("NRIC: " + person.getIc().value);
 
-        // Capitalize the first letter of the urgency level to make it look nice
-        String urgencyString = person.getUrgencyLevel().toString();
-        urgencyLevel.setText(urgencyString.substring(0, 1).toUpperCase() + urgencyString.substring(1).toLowerCase());
-
-        // Apply the base badge styling (padding, borders, text color)
-        urgencyLevel.getStyleClass().add("urgency-badge");
-
-        // Dynamically apply the correct background color (e.g., "urgency-high")
-        urgencyLevel.getStyleClass().add("urgency-" + urgencyString.toLowerCase());
+        // Clinical Details: Urgency Level styling and text
+        setUrgencyStyle(person);
 
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+    }
+
+    /**
+     * Sets the text and dynamic CSS styling for the urgency level label.
+     */
+    private void setUrgencyStyle(Person person) {
+        String urgencyValue = person.getUrgencyLevel().getValue().toLowerCase();
+
+        // Set display text with first letter capitalized (e.g., "Moderate")
+        urgencyLevel.setText(urgencyValue.substring(0, 1).toUpperCase() + urgencyValue.substring(1));
+
+        // Clear existing style classes to prevent color stacking when cells are reused in ListView
+        urgencyLevel.getStyleClass().clear();
+
+        // Add back the base 'label' style plus our custom urgency styling classes
+        urgencyLevel.getStyleClass().addAll(
+                "label",
+                "urgency-badge",
+                "urgency-" + urgencyValue
+        );
     }
 }

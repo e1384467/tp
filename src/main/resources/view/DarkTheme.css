@@ -359,21 +359,22 @@
     -fx-border-width: 1.5;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-text-fill: #202020; /* Dark text so it's readable on the bright colors */
+    /* Changed to solid black with !important to force the override */
+    -fx-text-fill: #000000 !important;
 }
 
 .urgency-low {
-    -fx-background-color: #8EFF5A;
+    -fx-background-color: #8EFF5A !important;
 }
 
 .urgency-moderate {
-    -fx-background-color: #DEFF5A;
+    -fx-background-color: #DEFF5A !important;
 }
 
 .urgency-high {
-    -fx-background-color: #F18A32;
+    -fx-background-color: #F18A32 !important;
 }
 
 .urgency-extreme {
-    -fx-background-color: #E6432D;
+    -fx-background-color: #E6432D !important;
 }
