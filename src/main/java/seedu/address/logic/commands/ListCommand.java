@@ -12,13 +12,30 @@ public class ListCommand extends Command {
 
     public static final String COMMAND_WORD = "list";
 
-    public static final String MESSAGE_SUCCESS = "Listed all persons";
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Lists all patients\n"
+            + "Parameters: NIL\n"
+            + "Example: " + COMMAND_WORD;
+
+    public static final String MESSAGE_SUCCESS = "There are %d patient record(s).";
+
+    public static final String MESSAGE_EMPTY_LIST = "Your patient record list is currently empty.";
+
+    public static final String MESSAGE_EXTRA_PARAMETERS = "The 'list' command does not take any parameters.\n"
+            + "Usage: " + MESSAGE_USAGE;
 
 
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(MESSAGE_SUCCESS);
+
+        int numberOfPatients = model.getFilteredPersonList().size();
+
+        if (numberOfPatients == 0) {
+            return new CommandResult(MESSAGE_EMPTY_LIST);
+        }
+
+        return new CommandResult(String.format(MESSAGE_SUCCESS, numberOfPatients));
     }
 }
