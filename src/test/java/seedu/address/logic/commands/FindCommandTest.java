@@ -59,7 +59,7 @@ public class FindCommandTest {
         FindCommand command = new FindCommand(predicate, "Patient Name: ");
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model,
-                "Found 0 patient(s) matching the criteria of: Patient Name: ", expectedModel);
+                "Found 0 patient(s) whose identifiers include the following criteria: Patient Name: ", expectedModel);
         assertEquals(Collections.emptyList(), model.getFilteredPersonList());
     }
 
@@ -69,7 +69,8 @@ public class FindCommandTest {
         FindCommand command = new FindCommand(predicate, "Patient Name: Kurz Elle Kunz");
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model,
-                "Found 3 patient(s) matching the criteria of: Patient Name: Kurz Elle Kunz", expectedModel);
+                "Found 3 patient(s) whose identifiers include the following criteria: "
+                    + "Patient Name: Kurz Elle Kunz", expectedModel);
         assertEquals(Arrays.asList(CARL, ELLE, FIONA), model.getFilteredPersonList());
     }
 
@@ -80,7 +81,7 @@ public class FindCommandTest {
         FindCommand command = new FindCommand(predicate, null);
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model,
-                "Found 3 patient(s) matching the criteria of: ", expectedModel);
+                "Found 3 patient(s) whose identifiers include the following criteria: ", expectedModel);
     }
 
     @Test

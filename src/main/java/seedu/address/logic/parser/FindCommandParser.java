@@ -32,7 +32,8 @@ public class FindCommandParser implements Parser<FindCommand> {
         String trimmedArgs = args.trim();
         // No text at all or only whitespace after the command word
         if (trimmedArgs.isEmpty()) {
-            throw new ParseException("At least one parameter to search with must be provided.");
+            throw new ParseException("At least one parameter to search with must be provided. You "
+                + "can use the command 'find' with the following parameters: n/NAME, ic/IC_NUMBER, p/PHONE_NUMBER");
         }
 
         ArgumentMultimap argMultimap =

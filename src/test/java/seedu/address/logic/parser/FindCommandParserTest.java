@@ -19,7 +19,8 @@ public class FindCommandParserTest {
     @Test
     public void parse_emptyArg_throwsParseException() {
         assertParseFailure(parser, "     ",
-                "At least one parameter to search with must be provided.");
+                "At least one parameter to search with must be provided. You can use the command 'find'"
+                    + " with the following parameters: n/NAME, ic/IC_NUMBER, p/PHONE_NUMBER");
     }
 
     @Test
@@ -74,7 +75,8 @@ public class FindCommandParserTest {
     @Test
     public void parse_noFieldsProvided_throwsParseException() {
         assertParseFailure(parser, "",
-                "At least one parameter to search with must be provided.");
+                "At least one parameter to search with must be provided. You can use the command 'find'"
+                    + " with the following parameters: n/NAME, ic/IC_NUMBER, p/PHONE_NUMBER");
     }
 
     @Test

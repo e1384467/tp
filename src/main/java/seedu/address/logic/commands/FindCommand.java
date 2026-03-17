@@ -48,7 +48,7 @@ public class FindCommand extends Command {
         requireNonNull(model);
         model.updateFilteredPersonList(predicate);
         int count = model.getFilteredPersonList().size();
-        String header = String.format("Found %d patient(s) matching the criteria of: ", count);
+        String header = String.format("Found %d patient(s) whose identifiers include the following criteria: ", count);
         String details = criteriaDescription == null ? "" : criteriaDescription;
         return new CommandResult(header + details);
     }
