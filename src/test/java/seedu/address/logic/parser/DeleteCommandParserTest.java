@@ -44,6 +44,12 @@ public class DeleteCommandParserTest {
     }
 
     @Test
+    public void parse_invalidArgsSingleIndexZero_throwsParseException() {
+        assertParseFailure(parser, "0", String.format(
+                MESSAGE_INVALID_COMMAND_FORMAT, SingleDeleteCommand.MESSAGE_USAGE));
+    }
+
+    @Test
     public void parse_validArgsMultipleIndices_returnsDeleteCommand() {
         assertParseSuccess(parser, "1,2,3",
                 new MultipleDeleteCommand(new Index[]{ INDEX_FIRST_PERSON, INDEX_SECOND_PERSON, INDEX_THIRD_PERSON }));
@@ -58,6 +64,12 @@ public class DeleteCommandParserTest {
     @Test
     public void parse_invalidArgsMultipleIndices_throwsParseException() {
         assertParseFailure(parser, "1,a,3", String.format(
+                MESSAGE_INVALID_COMMAND_FORMAT, MultipleDeleteCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_invalidArgsMultipleIndicesZero_throwsParseException() {
+        assertParseFailure(parser, "0,1,2", String.format(
                 MESSAGE_INVALID_COMMAND_FORMAT, MultipleDeleteCommand.MESSAGE_USAGE));
     }
 
@@ -88,6 +100,12 @@ public class DeleteCommandParserTest {
     @Test
     public void parse_invalidArgsRangeIndices_throwsParseException() {
         assertParseFailure(parser, "1-a", String.format(
+                MESSAGE_INVALID_COMMAND_FORMAT, RangeDeleteCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_invalidArgsRangeIndicesZero_throwsParseException() {
+        assertParseFailure(parser, "0-2", String.format(
                 MESSAGE_INVALID_COMMAND_FORMAT, RangeDeleteCommand.MESSAGE_USAGE));
     }
 
