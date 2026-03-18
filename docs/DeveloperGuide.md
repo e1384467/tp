@@ -379,7 +379,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User enters in a patient’s details using this format: `add pn/<PATIENT NAME> ic/<IC NUMBER> p/<PATIENT PHONE NUMBER> [s/<SYMPTOMS>] u/<URGENCY LEVEL> d/<DOCTOR NAME> nk/<NEXT-OF-KIN NAME> nkp/<NEXT-OF-KIN PHONE NUMBER> [n/<NOTES>]`.
+1. The user requests to add a patient by providing their details.
 2. ClinicConnect validates the input.
 3. ClinicConnect adds the patient.
 4. ClinicConnect saves the new data.
@@ -415,7 +415,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. The user enters a patient to delete in this format: `delete <INDEX>`.
+1. The user requests to delete a specific patient in the list.
 2. ClinicConnect validates the input.
 3. ClinicConnect deletes the patient.
 4. ClinicConnect saves the new data.
@@ -451,7 +451,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. The user enters patients to delete in this format: `delete <INDEX>,<INDEX>,<INDEX>, …`
+1. The user requests to delete multiple specific patients in the list.
 2. ClinicConnect validates the input.
 3. ClinicConnect deletes the patients.
 4. ClinicConnect saves the new data.
@@ -487,7 +487,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. The user enters a range of patients to delete in this format: `delete <INDEX>-<INDEX>`
+1. The user requests to delete a range of patients in the list.
 2. ClinicConnect validates the input.
 3. ClinicConnect deletes the patients.
 4. ClinicConnect saves the new data.
@@ -523,7 +523,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. The user enters the patient update details in this format: `update <INDEX> [pn/<PATIENT NAME>] [ic/<IC NUMBER>] [p/<PATIENT PHONE NUMBER>] [s/<SYMPTOMS>] [u/<URGENCY LEVEL>] [d/<DOCTOR NAME>] [nk/<NEXT-OF-KIN NAME>] [nkp/<NEXT-OF-KIN PHONE NUMBER>] [n/<NOTES>]`
+1. The user requests to update specific details of a patient in the list.
 2. ClinicConnect validates the input.
 3. ClinicConnect updates the patient's details.
 4. ClinicConnect saves the new data.
@@ -559,7 +559,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User enters the find command using this format: `find [pn/NAME] [ic/IC] [p/PHONE] [u/URGENCY]`.
+1. The user requests to find patients using specific search criteria.
 2. ClinicConnect validates the input format.
 3. ClinicConnect filters the current list of patients based on the criteria.
 4. ClinicConnect updates the UI to display the matching patient records.
