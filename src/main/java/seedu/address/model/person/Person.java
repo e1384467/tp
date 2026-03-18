@@ -26,6 +26,7 @@ public class Person {
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
     private final UrgencyLevel urgencyLevel;
+    private final NextOfKin nextOfKin;
 
     /**
      * Every field must be present and not null.
@@ -36,8 +37,9 @@ public class Person {
                   Address address,
                   Set<Tag> tags,
                   Ic ic,
-                  UrgencyLevel urgencyLevel) {
-        requireAllNonNull(name, phone, email, address, tags, ic, urgencyLevel);
+                  UrgencyLevel urgencyLevel,
+                  NextOfKin nextOfKin) {
+        requireAllNonNull(name, phone, email, address, tags, ic, urgencyLevel, nextOfKin);
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -45,6 +47,7 @@ public class Person {
         this.tags.addAll(tags);
         this.ic = ic;
         this.urgencyLevel = urgencyLevel;
+        this.nextOfKin = nextOfKin;
     }
 
     public Name getName() {
@@ -77,6 +80,10 @@ public class Person {
 
     public UrgencyLevel getUrgencyLevel() {
         return urgencyLevel;
+    }
+
+    public NextOfKin getNextOfKin() {
+        return nextOfKin;
     }
 
     /**
@@ -114,13 +121,14 @@ public class Person {
                 && address.equals(otherPerson.address)
                 && tags.equals(otherPerson.tags)
                 && ic.equals(otherPerson.ic)
-                && urgencyLevel.equals(otherPerson.urgencyLevel);
+                && urgencyLevel.equals(otherPerson.urgencyLevel)
+                && nextOfKin.equals(otherPerson.nextOfKin);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags, ic, urgencyLevel);
+        return Objects.hash(name, phone, email, address, tags, ic, urgencyLevel, nextOfKin);
     }
 
     @Override
@@ -133,6 +141,7 @@ public class Person {
                 .add("tags", tags)
                 .add("ic", ic)
                 .add("urgencyLevel", urgencyLevel)
+                .add("nextOfKin", nextOfKin)
                 .toString();
     }
 

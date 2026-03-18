@@ -9,6 +9,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Ic;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.UrgencyLevel;
@@ -41,6 +42,7 @@ public class UpdatePersonDescriptorBuilder {
         descriptor.setTags(person.getTags());
         descriptor.setIc(person.getIc());
         descriptor.setUrgencyLevel(person.getUrgencyLevel());
+        descriptor.setNextOfKin(person.getNextOfKin());
     }
 
     /**
@@ -76,6 +78,14 @@ public class UpdatePersonDescriptorBuilder {
     }
 
     /**
+     * Sets the {@code NextOfKin} of the {@code UpdatePersonDescriptor} that we are building.
+     */
+    public UpdatePersonDescriptorBuilder withNextOfKin(String nextOfKin) {
+        descriptor.setNextOfKin(new NextOfKin(nextOfKin));
+        return this;
+    }
+
+    /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code UpdatePersonDescriptor}
      * that we are building.
      */
@@ -104,4 +114,5 @@ public class UpdatePersonDescriptorBuilder {
     public UpdatePersonDescriptor build() {
         return descriptor;
     }
+
 }

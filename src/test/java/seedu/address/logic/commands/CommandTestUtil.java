@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_IC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NEXT_OF_KIN;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PATIENT_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_URGENCY;
@@ -42,6 +43,8 @@ public class CommandTestUtil {
     public static final String VALID_IC_BOB = "S1313131B";
     public static final String VALID_URGENCY_LEVEL_AMY = "high";
     public static final String VALID_URGENCY_LEVEL_BOB = "low";
+    public static final String VALID_NEXT_OF_KIN_AMY = "Michael Jordan";
+    public static final String VALID_NEXT_OF_KIN_BOB = "Bad Bunny";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -57,6 +60,8 @@ public class CommandTestUtil {
     public static final String IC_DESC_BOB = " " + PREFIX_IC + VALID_IC_BOB;
     public static final String URGENCY_LEVEL_DESC_AMY = " " + PREFIX_URGENCY + VALID_URGENCY_LEVEL_AMY;
     public static final String URGENCY_LEVEL_DESC_BOB = " " + PREFIX_URGENCY + VALID_URGENCY_LEVEL_BOB;
+    public static final String NEXT_OF_KIN_DESC_AMY = " " + PREFIX_NEXT_OF_KIN + VALID_NEXT_OF_KIN_AMY;
+    public static final String NEXT_OF_KIN_DESC_BOB = " " + PREFIX_NEXT_OF_KIN + VALID_NEXT_OF_KIN_BOB;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PATIENT_PHONE + "911a"; // 'a' not allowed in phones
@@ -64,7 +69,8 @@ public class CommandTestUtil {
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_IC_DESC = " " + PREFIX_IC + "S1234567"; // missing last character
-    public static final String INVALID_URGENCY_LEVEL_DESC = " " + PREFIX_URGENCY + "urgent"; // invalid urgency level
+    public static final String INVALID_URGENCY_LEVEL_DESC = " " + PREFIX_URGENCY + "urgent";
+    public static final String INVALID_NEXT_OF_KIN_DESC = " " + PREFIX_NEXT_OF_KIN + "J@mmy"; // invalid next-of-kin
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
@@ -80,6 +86,7 @@ public class CommandTestUtil {
                 .withTags(VALID_TAG_FRIEND)
                 .withIc(VALID_IC_AMY)
                 .withUrgencyLevel(VALID_URGENCY_LEVEL_AMY)
+                .withNextOfKin(VALID_NEXT_OF_KIN_AMY)
                 .build();
         DESC_BOB = new UpdatePersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB)
@@ -88,6 +95,7 @@ public class CommandTestUtil {
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
                 .withIc(VALID_IC_BOB)
                 .withUrgencyLevel(VALID_URGENCY_LEVEL_BOB)
+                .withNextOfKin(VALID_NEXT_OF_KIN_BOB)
                 .build();
     }
 

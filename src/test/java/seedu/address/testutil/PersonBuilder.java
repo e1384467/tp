@@ -7,6 +7,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Ic;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.UrgencyLevel;
@@ -24,6 +25,7 @@ public class PersonBuilder {
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_IC = "S1234567A";
     public static final String DEFAULT_URGENCY_LEVEL = "low";
+    public static final String DEFAULT_NEXT_OF_KIN = "Ms Jane";
 
     private Name name;
     private Phone phone;
@@ -32,6 +34,7 @@ public class PersonBuilder {
     private Set<Tag> tags;
     private Ic ic;
     private UrgencyLevel urgencyLevel;
+    private NextOfKin nextOfKin;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -44,6 +47,7 @@ public class PersonBuilder {
         tags = new HashSet<>();
         ic = new Ic(DEFAULT_IC);
         urgencyLevel = new UrgencyLevel(DEFAULT_URGENCY_LEVEL);
+        nextOfKin = new NextOfKin(DEFAULT_NEXT_OF_KIN);
     }
 
     /**
@@ -57,6 +61,7 @@ public class PersonBuilder {
         tags = new HashSet<>(personToCopy.getTags());
         ic = personToCopy.getIc();
         urgencyLevel = personToCopy.getUrgencyLevel();
+        nextOfKin = personToCopy.getNextOfKin();
     }
 
     /**
@@ -115,8 +120,16 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code NextOfKin} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withNextOfKin(String nextOfKin) {
+        this.nextOfKin = new NextOfKin(nextOfKin);
+        return this;
+    }
+
     public Person build() {
-        return new Person(name, phone, email, address, tags, ic, urgencyLevel);
+        return new Person(name, phone, email, address, tags, ic, urgencyLevel, nextOfKin);
     }
 
 }

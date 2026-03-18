@@ -4,6 +4,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_IC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NEXT_OF_KIN;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PATIENT_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_URGENCY;
@@ -14,6 +15,7 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.UpdateCommand.UpdatePersonDescriptor;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
+
 
 /**
  * A utility class for Person.
@@ -41,6 +43,7 @@ public class PersonUtil {
         );
         sb.append(PREFIX_IC + person.getIc().value + " ");
         sb.append(PREFIX_URGENCY + person.getUrgencyLevel().toString() + " ");
+        sb.append(PREFIX_NEXT_OF_KIN + person.getNextOfKin().toString() + " ");
         return sb.toString();
     }
 
@@ -64,6 +67,8 @@ public class PersonUtil {
         descriptor.getIc().ifPresent(ic -> sb.append(PREFIX_IC).append(ic.value).append(" "));
         descriptor.getUrgencyLevel().ifPresent(urgencyLevel -> sb.append(PREFIX_URGENCY).append(urgencyLevel)
                 .append(" "));
+        descriptor.getNextOfKin().ifPresent(nextOfKin -> sb.append(PREFIX_NEXT_OF_KIN)
+                .append(nextOfKin).append(" "));
         return sb.toString();
     }
 }

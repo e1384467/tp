@@ -14,6 +14,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Ic;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.UrgencyLevel;
@@ -33,6 +34,7 @@ class JsonAdaptedPerson {
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
     private final String ic;
     private final String urgencyLevel;
+    private final String nextOfKin;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -41,7 +43,8 @@ class JsonAdaptedPerson {
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
             @JsonProperty("email") String email, @JsonProperty("address") String address,
             @JsonProperty("tags") List<JsonAdaptedTag> tags, @JsonProperty("ic") String ic,
-            @JsonProperty("urgencyLevel") String urgencyLevel) {
+            @JsonProperty("urgencyLevel") String urgencyLevel,
+                             @JsonProperty("nextOfKin") String nextOfKin) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -51,6 +54,7 @@ class JsonAdaptedPerson {
         }
         this.ic = ic;
         this.urgencyLevel = urgencyLevel;
+        this.nextOfKin = nextOfKin;
     }
 
     /**
@@ -66,6 +70,7 @@ class JsonAdaptedPerson {
                 .collect(Collectors.toList()));
         ic = source.getIc().value;
         urgencyLevel = source.getUrgencyLevel().toString();
+        nextOfKin = source.getNextOfKin().toString();
     }
 
     /**
@@ -128,8 +133,18 @@ class JsonAdaptedPerson {
         }
         final UrgencyLevel modelUrgencyLevel = new UrgencyLevel(urgencyLevel);
 
+        if (nextOfKin == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    NextOfKin.class.getSimpleName()));
+        }
+        if (!NextOfKin.isValidNextOfKin(nextOfKin)) {
+            throw new IllegalValueException(NextOfKin.MESSAGE_CONSTRAINTS);
+        }
+        final NextOfKin modelNextOfKin = new NextOfKin(nextOfKin);
+
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags, modelIc, modelUrgencyLevel);
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags, modelIc,
+                modelUrgencyLevel, modelNextOfKin);
     }
 
 }

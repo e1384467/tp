@@ -8,6 +8,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_IC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_IC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NEXT_OF_KIN_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NEXT_OF_KIN_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
@@ -33,6 +35,7 @@ public class TypicalPersons {
             .withTags("friends")
             .withIc("S1111111A")
             .withUrgencyLevel("low")
+            .withNextOfKin("Benny Blanco")
             .build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25")
@@ -41,6 +44,7 @@ public class TypicalPersons {
             .withTags("owesMoney", "friends")
             .withIc("S2222222A")
             .withUrgencyLevel("high")
+            .withNextOfKin("Selena Gomez")
             .build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz")
             .withPhone("95352563")
@@ -48,6 +52,7 @@ public class TypicalPersons {
             .withAddress("wall street")
             .withIc("S3333333A")
             .withUrgencyLevel("low")
+            .withNextOfKin("Justin Bieber")
             .build();
     public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier")
             .withPhone("87652533")
@@ -56,6 +61,7 @@ public class TypicalPersons {
             .withTags("friends")
             .withIc("S4444444A")
             .withUrgencyLevel("extreme")
+            .withNextOfKin("Hailey Bieber")
             .build();
     public static final Person ELLE = new PersonBuilder().withName("Elle Meyer")
             .withPhone("94822244")
@@ -63,6 +69,7 @@ public class TypicalPersons {
             .withAddress("michegan ave")
             .withIc("S5555555A")
             .withUrgencyLevel("high")
+            .withNextOfKin("Kendall Jenner")
             .build();
     public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz")
             .withPhone("94824275")
@@ -70,6 +77,7 @@ public class TypicalPersons {
             .withAddress("little tokyo")
             .withIc("S6666666A")
             .withUrgencyLevel("moderate")
+            .withNextOfKin("Kylie Jenner")
             .build();
     public static final Person GEORGE = new PersonBuilder().withName("George Best")
             .withPhone("94824426")
@@ -77,6 +85,7 @@ public class TypicalPersons {
             .withAddress("4th street")
             .withIc("S7777777A")
             .withUrgencyLevel("extreme")
+            .withNextOfKin("Kris Jenner")
             .build();
 
     // Manually added
@@ -86,6 +95,7 @@ public class TypicalPersons {
             .withAddress("little india")
             .withIc("S8888888A")
             .withUrgencyLevel("low")
+            .withNextOfKin("Benson Boone")
             .build();
     public static final Person IDA = new PersonBuilder().withName("Ida Mueller")
             .withPhone("84821318")
@@ -93,6 +103,7 @@ public class TypicalPersons {
             .withAddress("chicago ave")
             .withIc("S9999999A")
             .withUrgencyLevel("moderate")
+            .withNextOfKin("Cayydences")
             .build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
@@ -103,6 +114,7 @@ public class TypicalPersons {
             .withTags(VALID_TAG_FRIEND)
             .withIc(VALID_IC_AMY)
             .withUrgencyLevel(VALID_URGENCY_LEVEL_AMY)
+            .withNextOfKin(VALID_NEXT_OF_KIN_AMY)
             .build();
     public static final Person BOB = new PersonBuilder().withName(VALID_NAME_BOB)
             .withPhone(VALID_PHONE_BOB)
@@ -111,6 +123,7 @@ public class TypicalPersons {
             .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
             .withIc(VALID_IC_BOB)
             .withUrgencyLevel(VALID_URGENCY_LEVEL_BOB)
+            .withNextOfKin(VALID_NEXT_OF_KIN_BOB)
             .build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
