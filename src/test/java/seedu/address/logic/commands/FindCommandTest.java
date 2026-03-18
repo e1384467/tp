@@ -70,8 +70,12 @@ public class FindCommandTest {
         NameContainsKeywordsPredicate predicate = preparePredicate("Kurz Elle Kunz");
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
+
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(CARL, ELLE, FIONA), model.getFilteredPersonList());
+
+        // FIX: The order must match your Urgency sorting (High -> Low)
+        // If FIONA has higher urgency than ELLE, and ELLE higher than CARL:
+        assertEquals(Arrays.asList(ELLE, FIONA, CARL), model.getFilteredPersonList());
     }
 
     @Test

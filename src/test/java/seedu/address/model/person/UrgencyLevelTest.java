@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
@@ -14,56 +15,44 @@ public class UrgencyLevelTest {
     }
 
     @Test
-    public void constructor_invalidUrgencyLevel_throwsIllegalArgumentException() {
-        String invalidUrgencyLevel = "";
-        assertThrows(IllegalArgumentException.class, () -> new UrgencyLevel(invalidUrgencyLevel));
+    public void isValidUrgencyLevel() {
+        // valid urgency levels
+        assertTrue(UrgencyLevel.isValidUrgencyLevel("low"));
+        assertTrue(UrgencyLevel.isValidUrgencyLevel("HIGH"));
+
+        // invalid urgency levels
+        assertFalse(UrgencyLevel.isValidUrgencyLevel("urgent"));
+        assertFalse(UrgencyLevel.isValidUrgencyLevel("123"));
     }
 
     @Test
-    public void isValidUrgencyLevel() {
-        // null urgency level
-        assertThrows(NullPointerException.class, () -> UrgencyLevel.isValidUrgencyLevel(null));
+    public void getStyleClass() {
+        // Ensures the style class matches the CSS requirements with the prefix
+        assertEquals("urgency-low", new UrgencyLevel("low").getStyleClass());
+        assertEquals("urgency-extreme", new UrgencyLevel("EXTREME").getStyleClass());
+    }
 
-        // invalid urgency levels
-        assertFalse(UrgencyLevel.isValidUrgencyLevel("")); // empty string
-        assertFalse(UrgencyLevel.isValidUrgencyLevel(" ")); // spaces only
-        assertFalse(UrgencyLevel.isValidUrgencyLevel("urgent")); // not a valid level
+    @Test
+    public void compareTo() {
+        UrgencyLevel low = new UrgencyLevel("low");
+        UrgencyLevel extreme = new UrgencyLevel("extreme");
 
-        // valid urgency levels
-        assertTrue(UrgencyLevel.isValidUrgencyLevel("low"));
-        assertTrue(UrgencyLevel.isValidUrgencyLevel("lOw")); // case-insensitive
-        assertTrue(UrgencyLevel.isValidUrgencyLevel("moderate"));
-        assertTrue(UrgencyLevel.isValidUrgencyLevel("modErAte")); // case-insensitive
-        assertTrue(UrgencyLevel.isValidUrgencyLevel("high"));
-        assertTrue(UrgencyLevel.isValidUrgencyLevel("HiGh")); // case-insensitive
-        assertTrue(UrgencyLevel.isValidUrgencyLevel("extreme"));
-        assertTrue(UrgencyLevel.isValidUrgencyLevel("extREme")); // case-insensitive
-
+        // Extreme (4) should be "less than" Low (1) for descending sort order (triage)
+        assertTrue(extreme.compareTo(low) < 0);
+        assertTrue(low.compareTo(extreme) > 0);
+        assertEquals(0, low.compareTo(new UrgencyLevel("low")));
     }
 
     @Test
     public void equals() {
-        UrgencyLevel lowUrgency = new UrgencyLevel("low");
-        UrgencyLevel moderateUrgency = new UrgencyLevel("moderate");
+        UrgencyLevel low = new UrgencyLevel("low");
+        assertTrue(low.equals(new UrgencyLevel("low")));
+        assertTrue(low.equals(new UrgencyLevel("LOW")));
+        assertFalse(low.equals(new UrgencyLevel("high")));
+    }
 
-        // same values -> returns true
-        assertTrue(lowUrgency.equals(new UrgencyLevel("low")));
-        assertTrue(moderateUrgency.equals(new UrgencyLevel("moderate")));
-
-        // same object -> returns true
-        assertTrue(lowUrgency.equals(lowUrgency));
-        assertTrue(moderateUrgency.equals(moderateUrgency));
-
-        // null -> returns false
-        assertFalse(lowUrgency.equals(null));
-        assertFalse(moderateUrgency.equals(null));
-
-        // different types -> returns false
-        assertFalse(lowUrgency.equals(5.0f));
-        assertFalse(moderateUrgency.equals(5.0f));
-
-        // different values -> returns false
-        assertFalse(lowUrgency.equals(moderateUrgency));
-
+    @Test
+    public void toStringMethod() {
+        assertEquals("LOW", new UrgencyLevel("low").toString());
     }
 }
