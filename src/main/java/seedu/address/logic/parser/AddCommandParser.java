@@ -6,7 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DOCTOR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_IC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PATIENT_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_URGENCY;
 
@@ -39,7 +39,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args,
                         PREFIX_NAME,
-                        PREFIX_PHONE,
+                        PREFIX_PATIENT_PHONE,
                         PREFIX_EMAIL,
                         PREFIX_ADDRESS,
                         PREFIX_TAG,
@@ -51,7 +51,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         if (!arePrefixesPresent(argMultimap,
                 PREFIX_NAME,
                 PREFIX_ADDRESS,
-                PREFIX_PHONE,
+                PREFIX_PATIENT_PHONE,
                 PREFIX_EMAIL,
                 PREFIX_IC,
                 PREFIX_URGENCY,
@@ -61,14 +61,14 @@ public class AddCommandParser implements Parser<AddCommand> {
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME,
-                PREFIX_PHONE,
+                PREFIX_PATIENT_PHONE,
                 PREFIX_EMAIL,
                 PREFIX_ADDRESS,
                 PREFIX_IC,
                 PREFIX_URGENCY,
                 PREFIX_DOCTOR);
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
-        Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
+        Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PATIENT_PHONE).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
