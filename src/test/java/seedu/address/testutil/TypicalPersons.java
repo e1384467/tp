@@ -2,6 +2,8 @@ package seedu.address.testutil;
 
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DOCTOR_NAME_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DOCTOR_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_IC_AMY;
@@ -21,7 +23,6 @@ import java.util.List;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.person.Person;
-
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
  */
@@ -33,6 +34,7 @@ public class TypicalPersons {
             .withTags("friends")
             .withIc("S1111111A")
             .withUrgencyLevel("low")
+            .withDoctorName("Ben Leong")
             .build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25")
@@ -41,6 +43,7 @@ public class TypicalPersons {
             .withTags("owesMoney", "friends")
             .withIc("S2222222A")
             .withUrgencyLevel("high")
+            .withDoctorName("Colin")
             .build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz")
             .withPhone("95352563")
@@ -48,6 +51,7 @@ public class TypicalPersons {
             .withAddress("wall street")
             .withIc("S3333333A")
             .withUrgencyLevel("low")
+            .withDoctorName("Tzer Bin")
             .build();
     public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier")
             .withPhone("87652533")
@@ -56,6 +60,7 @@ public class TypicalPersons {
             .withTags("friends")
             .withIc("S4444444A")
             .withUrgencyLevel("extreme")
+            .withDoctorName("Lady Gaga")
             .build();
     public static final Person ELLE = new PersonBuilder().withName("Elle Meyer")
             .withPhone("9482224")
@@ -63,6 +68,7 @@ public class TypicalPersons {
             .withAddress("michegan ave")
             .withIc("S5555555A")
             .withUrgencyLevel("high")
+            .withDoctorName("Spiderman")
             .build();
     public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz")
             .withPhone("9482427")
@@ -70,6 +76,7 @@ public class TypicalPersons {
             .withAddress("little tokyo")
             .withIc("S6666666A")
             .withUrgencyLevel("moderate")
+            .withDoctorName("Ironman")
             .build();
     public static final Person GEORGE = new PersonBuilder().withName("George Best")
             .withPhone("9482442")
@@ -77,6 +84,7 @@ public class TypicalPersons {
             .withAddress("4th street")
             .withIc("S7777777A")
             .withUrgencyLevel("extreme")
+            .withDoctorName("Choong")
             .build();
 
     // Manually added
@@ -86,6 +94,7 @@ public class TypicalPersons {
             .withAddress("little india")
             .withIc("S8888888A")
             .withUrgencyLevel("low")
+            .withDoctorName("Boong")
             .build();
     public static final Person IDA = new PersonBuilder().withName("Ida Mueller")
             .withPhone("8482131")
@@ -93,6 +102,7 @@ public class TypicalPersons {
             .withAddress("chicago ave")
             .withIc("S9999999A")
             .withUrgencyLevel("moderate")
+            .withDoctorName("Captain America")
             .build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
@@ -103,6 +113,7 @@ public class TypicalPersons {
             .withTags(VALID_TAG_FRIEND)
             .withIc(VALID_IC_AMY)
             .withUrgencyLevel(VALID_URGENCY_LEVEL_AMY)
+            .withDoctorName(VALID_DOCTOR_NAME_AMY)
             .build();
     public static final Person BOB = new PersonBuilder().withName(VALID_NAME_BOB)
             .withPhone(VALID_PHONE_BOB)
@@ -111,6 +122,7 @@ public class TypicalPersons {
             .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
             .withIc(VALID_IC_BOB)
             .withUrgencyLevel(VALID_URGENCY_LEVEL_BOB)
+            .withDoctorName(VALID_DOCTOR_NAME_BOB)
             .build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER

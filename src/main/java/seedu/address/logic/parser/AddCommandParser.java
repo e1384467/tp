@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DOCTOR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_IC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -15,6 +16,7 @@ import java.util.stream.Stream;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DoctorName;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Ic;
 import seedu.address.model.person.Name;
@@ -42,7 +44,8 @@ public class AddCommandParser implements Parser<AddCommand> {
                         PREFIX_ADDRESS,
                         PREFIX_TAG,
                         PREFIX_IC,
-                        PREFIX_URGENCY
+                        PREFIX_URGENCY,
+                        PREFIX_DOCTOR
                 );
 
         if (!arePrefixesPresent(argMultimap,
@@ -51,7 +54,8 @@ public class AddCommandParser implements Parser<AddCommand> {
                 PREFIX_PHONE,
                 PREFIX_EMAIL,
                 PREFIX_IC,
-                PREFIX_URGENCY)
+                PREFIX_URGENCY,
+                PREFIX_DOCTOR)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
@@ -61,7 +65,8 @@ public class AddCommandParser implements Parser<AddCommand> {
                 PREFIX_EMAIL,
                 PREFIX_ADDRESS,
                 PREFIX_IC,
-                PREFIX_URGENCY);
+                PREFIX_URGENCY,
+                PREFIX_DOCTOR);
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
@@ -69,8 +74,9 @@ public class AddCommandParser implements Parser<AddCommand> {
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         Ic ic = ParserUtil.parseIc(argMultimap.getValue(PREFIX_IC).get());
         UrgencyLevel urgencyLevel = ParserUtil.parseUrgencyLevel(argMultimap.getValue(PREFIX_URGENCY).get());
+        DoctorName doctorName = ParserUtil.parseDoctorName(argMultimap.getValue(PREFIX_DOCTOR).get());
 
-        Person person = new Person(name, phone, email, address, tagList, ic, urgencyLevel);
+        Person person = new Person(name, phone, email, address, tagList, ic, urgencyLevel, doctorName);
 
         return new AddCommand(person);
     }

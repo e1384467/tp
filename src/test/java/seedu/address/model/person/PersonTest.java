@@ -94,6 +94,7 @@ public class PersonTest {
                 + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress() + ", tags=" + ALICE.getTags()
                 + ", ic=" + ALICE.getIc()
                 + ", urgencyLevel=" + ALICE.getUrgencyLevel()
+                + ", doctorName=" + ALICE.getDoctorName()
                 + "}";
         assertEquals(expected, ALICE.toString());
     }
