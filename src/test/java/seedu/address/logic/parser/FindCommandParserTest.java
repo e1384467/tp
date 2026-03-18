@@ -37,15 +37,15 @@ public class FindCommandParserTest {
                 new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
 
         // simple prefixed form
-        assertParseSuccess(parser, " n/Alice Bob", expectedFindCommand);
+        assertParseSuccess(parser, " pn/Alice Bob", expectedFindCommand);
 
         // prefixed form with surrounding whitespace
-        assertParseSuccess(parser, " \n n/Alice \n \t Bob  \t", expectedFindCommand);
+        assertParseSuccess(parser, " \n pn/Alice \n \t Bob  \t", expectedFindCommand);
     }
 
     @Test
     public void parse_emptyPrefixedArgs_throwsParseException() {
-        assertParseFailure(parser, " n/   ",
+        assertParseFailure(parser, " pn/   ",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
     }
 

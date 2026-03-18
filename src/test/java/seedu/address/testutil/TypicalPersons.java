@@ -58,21 +58,21 @@ public class TypicalPersons {
             .withUrgencyLevel("extreme")
             .build();
     public static final Person ELLE = new PersonBuilder().withName("Elle Meyer")
-            .withPhone("9482224")
+            .withPhone("94822244")
             .withEmail("werner@example.com")
             .withAddress("michegan ave")
             .withIc("S5555555A")
             .withUrgencyLevel("high")
             .build();
     public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz")
-            .withPhone("9482427")
+            .withPhone("94824275")
             .withEmail("lydia@example.com")
             .withAddress("little tokyo")
             .withIc("S6666666A")
             .withUrgencyLevel("moderate")
             .build();
     public static final Person GEORGE = new PersonBuilder().withName("George Best")
-            .withPhone("9482442")
+            .withPhone("94824426")
             .withEmail("anna@example.com")
             .withAddress("4th street")
             .withIc("S7777777A")
@@ -81,14 +81,14 @@ public class TypicalPersons {
 
     // Manually added
     public static final Person HOON = new PersonBuilder().withName("Hoon Meier")
-            .withPhone("8482424")
+            .withPhone("84824247")
             .withEmail("stefan@example.com")
             .withAddress("little india")
             .withIc("S8888888A")
             .withUrgencyLevel("low")
             .build();
     public static final Person IDA = new PersonBuilder().withName("Ida Mueller")
-            .withPhone("8482131")
+            .withPhone("84821318")
             .withEmail("hans@example.com")
             .withAddress("chicago ave")
             .withIc("S9999999A")
