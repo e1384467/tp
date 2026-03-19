@@ -72,8 +72,7 @@ public class CommandTestUtil {
     public static final String INVALID_IC_DESC = " " + PREFIX_IC + "S1234567"; // missing last character
     public static final String INVALID_URGENCY_LEVEL_DESC = " " + PREFIX_URGENCY + "urgent"; // invalid urgency level
     public static final String INVALID_NOTES_DESC = " " + PREFIX_NOTES
-            + "a".repeat(Notes.MAX_LENGTH + 10); // invalid doctor name
-
+            + "a".repeat(Notes.MAX_LENGTH + 10); // invalid notes
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 

@@ -307,6 +307,7 @@ public class AddCommandParserTest {
                         + SYMPTOM_DESC_HUSBAND + SYMPTOM_DESC_FRIEND
                         + INVALID_IC_DESC + URGENCY_LEVEL_DESC_BOB + NOTES_DESC_BOB,
                 Ic.MESSAGE_CONSTRAINTS);
+
         // invalid notes
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB
                         + EMAIL_DESC_BOB + ADDRESS_DESC_BOB

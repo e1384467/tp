@@ -28,7 +28,7 @@ public class JsonAdaptedPersonTest {
     private static final String INVALID_SYMPTOM = "#friend";
     private static final String INVALID_IC = "S1234567";
     private static final String INVALID_URGENCY_LEVEL = "urgent";
-    private static final String INVALID_NOTES = "a".repeat(Notes.MAX_LENGTH);
+    private static final String INVALID_NOTES = "a".repeat(Notes.MAX_LENGTH + 10);
 
     private static final String VALID_NAME = BENSON.getName().toString();
     private static final String VALID_PHONE = BENSON.getPhone().toString();
@@ -258,6 +258,23 @@ public class JsonAdaptedPersonTest {
                         null,
                         VALID_NOTES);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, UrgencyLevel.class.getSimpleName());
+        assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+
+    @Test
+    public void toModelType_invalidNotes_throwsIllegalValueException() {
+        JsonAdaptedPerson person =
+                new JsonAdaptedPerson(
+                        VALID_NAME,
+                        VALID_PHONE,
+                        VALID_EMAIL,
+                        VALID_ADDRESS,
+                        VALID_SYMPTOMS,
+                        VALID_IC,
+                        VALID_URGENCY_LEVEL,
+                        INVALID_NOTES
+                );
+        String expectedMessage = Notes.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
 }
