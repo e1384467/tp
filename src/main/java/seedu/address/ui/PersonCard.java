@@ -64,9 +64,9 @@ public class PersonCard extends UiPart<Region> {
         phone.setText("Hp: " + person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
-        nextOfKinPhone.setText(person.getNextOfKinPhone().toString());
-        doctorName.setText(person.getDoctorName().toString());
-        nextOfKin.setText(person.getNextOfKin().toString());
+        nextOfKinPhone.setText("NOK phone: " + person.getNextOfKinPhone().toString());
+        doctorName.setText("Doctor: " + person.getDoctorName().toString());
+        nextOfKin.setText("NOK: " + person.getNextOfKin().toString());
 
         // Map the new medical fields to the UI
         ic.setText("NRIC: " + person.getIc().value);
@@ -78,7 +78,7 @@ public class PersonCard extends UiPart<Region> {
                 .sorted(Comparator.comparing(symptom -> symptom.symptomName))
                 .forEach(symptom -> symptoms.getChildren().add(new Label(symptom.symptomName)));
 
-        notes.setText(person.getNotes().getValue());
+        notes.setText("Notes: " + person.getNotes().getValue());
     }
 
     /**

@@ -49,12 +49,12 @@ public class SampleDataUtil {
                 new Address("Blk 47 Tampines Street 20, #17-35"),
                 getSymptomSet("classmates"), new Ic("S5678901A"), new UrgencyLevel("low"),
                     new NextOfKinPhone("92352732"), new DoctorName("Li Ting"),
-                    new NextOfKin("Johnny"), null),
+                    new NextOfKin("Johnny"), new Notes("Not crazy")),
             new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
                 new Address("Blk 45 Aljunied Street 85, #11-31"),
                 getSymptomSet("colleagues"), new Ic("S6789012A"), new UrgencyLevel("high"),
                     new NextOfKinPhone("81234234"), new DoctorName("Xiao Jun"),
-                    new NextOfKin("Ronny"), null)
+                    new NextOfKin("Ronny"), new Notes("Crazy"))
         };
     }
 
