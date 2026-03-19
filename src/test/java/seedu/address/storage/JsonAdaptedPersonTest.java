@@ -270,7 +270,7 @@ public class JsonAdaptedPersonTest {
                         VALID_PHONE,
                         VALID_EMAIL,
                         VALID_ADDRESS,
-                        VALID_TAGS,
+                        VALID_SYMPTOMS,
                         VALID_IC,
                         VALID_URGENCY_LEVEL,
                         INVALID_DOCTOR_NAME
@@ -287,7 +287,7 @@ public class JsonAdaptedPersonTest {
                         VALID_PHONE,
                         VALID_EMAIL,
                         VALID_ADDRESS,
-                        VALID_TAGS,
+                        VALID_SYMPTOMS,
                         VALID_IC,
                         VALID_URGENCY_LEVEL,
                         null);

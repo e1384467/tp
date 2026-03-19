@@ -52,7 +52,6 @@ public class UpdateCommand extends Command {
             + "[" + PREFIX_IC + "IC] "
             + "[" + PREFIX_URGENCY + "LEVEL] "
             + "[" + PREFIX_DOCTOR + "]"
-            + "[" + PREFIX_TAG + "TAG]"
             + "[" + PREFIX_SYMPTOM + "SYMPTOM]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PATIENT_PHONE + "91234567 "
