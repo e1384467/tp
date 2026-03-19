@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.symptom.Symptom;
 
 /**
  * Represents a Person in the address book.
@@ -24,7 +24,7 @@ public class Person {
 
     // Data fields
     private final Address address;
-    private final Set<Tag> tags = new HashSet<>();
+    private final Set<Symptom> symptoms = new HashSet<>();
     private final UrgencyLevel urgencyLevel;
 
     /**
@@ -34,15 +34,15 @@ public class Person {
                   Phone phone,
                   Email email,
                   Address address,
-                  Set<Tag> tags,
+                  Set<Symptom> symptoms,
                   Ic ic,
                   UrgencyLevel urgencyLevel) {
-        requireAllNonNull(name, phone, email, address, tags, ic, urgencyLevel);
+        requireAllNonNull(name, phone, email, address, symptoms, ic, urgencyLevel);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
-        this.tags.addAll(tags);
+        this.symptoms.addAll(symptoms);
         this.ic = ic;
         this.urgencyLevel = urgencyLevel;
     }
@@ -64,11 +64,11 @@ public class Person {
     }
 
     /**
-     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
+     * Returns an immutable symptom set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
-    public Set<Tag> getTags() {
-        return Collections.unmodifiableSet(tags);
+    public Set<Symptom> getSymptoms() {
+        return Collections.unmodifiableSet(symptoms);
     }
 
     public Ic getIc() {
@@ -112,7 +112,7 @@ public class Person {
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
-                && tags.equals(otherPerson.tags)
+                && symptoms.equals(otherPerson.symptoms)
                 && ic.equals(otherPerson.ic)
                 && urgencyLevel.equals(otherPerson.urgencyLevel);
     }
@@ -120,7 +120,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags, ic, urgencyLevel);
+        return Objects.hash(name, phone, email, address, symptoms, ic, urgencyLevel);
     }
 
     @Override
@@ -130,7 +130,7 @@ public class Person {
                 .add("phone", phone)
                 .add("email", email)
                 .add("address", address)
-                .add("tags", tags)
+                .add("symptoms", symptoms)
                 .add("ic", ic)
                 .add("urgencyLevel", urgencyLevel)
                 .toString();

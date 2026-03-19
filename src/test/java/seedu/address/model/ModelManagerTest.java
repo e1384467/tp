@@ -7,6 +7,8 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.DANIEL;
+import static seedu.address.testutil.TypicalPersons.ELLE;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -14,8 +16,10 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.Person;
 import seedu.address.testutil.AddressBookBuilder;
 
 public class ModelManagerTest {
@@ -91,6 +95,30 @@ public class ModelManagerTest {
     @Test
     public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
         assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredPersonList().remove(0));
+    }
+
+    /**
+     * Tests that the filtered person list is automatically sorted by Urgency Level.
+     * This is critical for verifying your medical triage logic.
+     */
+    @Test
+    public void getFilteredPersonList_isSortedByUrgency() {
+        // TypicalPersons: DANIEL (Extreme), ELLE (High), ALICE (Low)
+        AddressBook addressBook = new AddressBookBuilder()
+                .withPerson(ALICE)
+                .withPerson(DANIEL)
+                .withPerson(ELLE)
+                .build();
+        UserPrefs userPrefs = new UserPrefs();
+        modelManager = new ModelManager(addressBook, userPrefs);
+
+        // Even though they were added in order [ALICE, DANIEL, ELLE]
+        // They should be sorted as: [DANIEL (Extreme), ELLE (High), ALICE (Low)]
+        ObservableList<Person> sortedList = modelManager.getFilteredPersonList();
+
+        assertEquals(DANIEL, sortedList.get(0)); // 1st: Extreme
+        assertEquals(ELLE, sortedList.get(1)); // 2nd: High
+        assertEquals(ALICE, sortedList.get(2)); // 3rd: Low
     }
 
     @Test

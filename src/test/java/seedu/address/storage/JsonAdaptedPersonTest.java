@@ -24,7 +24,7 @@ public class JsonAdaptedPersonTest {
     private static final String INVALID_PHONE = "+651234";
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
-    private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_SYMPTOM = "#friend";
     private static final String INVALID_IC = "S1234567";
     private static final String INVALID_URGENCY_LEVEL = "urgent";
 
@@ -32,8 +32,8 @@ public class JsonAdaptedPersonTest {
     private static final String VALID_PHONE = BENSON.getPhone().toString();
     private static final String VALID_EMAIL = BENSON.getEmail().toString();
     private static final String VALID_ADDRESS = BENSON.getAddress().toString();
-    private static final List<JsonAdaptedTag> VALID_TAGS = BENSON.getTags().stream()
-            .map(JsonAdaptedTag::new)
+    private static final List<JsonAdaptedSymptom> VALID_SYMPTOMS = BENSON.getSymptoms().stream()
+            .map(JsonAdaptedSymptom::new)
             .collect(Collectors.toList());
     private static final String VALID_IC = BENSON.getIc().toString();
     private static final String VALID_URGENCY_LEVEL = BENSON.getUrgencyLevel().toString();
@@ -51,7 +51,7 @@ public class JsonAdaptedPersonTest {
                         VALID_PHONE,
                         VALID_EMAIL,
                         VALID_ADDRESS,
-                        VALID_TAGS,
+                        VALID_SYMPTOMS,
                         VALID_IC,
                         VALID_URGENCY_LEVEL
                 );
@@ -66,7 +66,7 @@ public class JsonAdaptedPersonTest {
                 VALID_PHONE,
                 VALID_EMAIL,
                 VALID_ADDRESS,
-                VALID_TAGS,
+                VALID_SYMPTOMS,
                 VALID_IC,
                 VALID_URGENCY_LEVEL
         );
@@ -82,7 +82,7 @@ public class JsonAdaptedPersonTest {
                         INVALID_PHONE,
                         VALID_EMAIL,
                         VALID_ADDRESS,
-                        VALID_TAGS,
+                        VALID_SYMPTOMS,
                         VALID_IC,
                         VALID_URGENCY_LEVEL
                 );
@@ -97,7 +97,7 @@ public class JsonAdaptedPersonTest {
                 null,
                 VALID_EMAIL,
                 VALID_ADDRESS,
-                VALID_TAGS,
+                VALID_SYMPTOMS,
                 VALID_IC,
                 VALID_URGENCY_LEVEL
         );
@@ -113,7 +113,7 @@ public class JsonAdaptedPersonTest {
                         VALID_PHONE,
                         INVALID_EMAIL,
                         VALID_ADDRESS,
-                        VALID_TAGS,
+                        VALID_SYMPTOMS,
                         VALID_IC,
                         VALID_URGENCY_LEVEL
                 );
@@ -128,7 +128,7 @@ public class JsonAdaptedPersonTest {
                 VALID_PHONE,
                 null,
                 VALID_ADDRESS,
-                VALID_TAGS,
+                VALID_SYMPTOMS,
                 VALID_IC,
                 VALID_URGENCY_LEVEL
         );
@@ -144,7 +144,7 @@ public class JsonAdaptedPersonTest {
                         VALID_PHONE,
                         VALID_EMAIL,
                         INVALID_ADDRESS,
-                        VALID_TAGS,
+                        VALID_SYMPTOMS,
                         VALID_IC,
                         VALID_URGENCY_LEVEL
                 );
@@ -159,7 +159,7 @@ public class JsonAdaptedPersonTest {
                 VALID_PHONE,
                 VALID_EMAIL,
                 null,
-                VALID_TAGS,
+                VALID_SYMPTOMS,
                 VALID_IC,
                 VALID_URGENCY_LEVEL
         );
@@ -168,16 +168,16 @@ public class JsonAdaptedPersonTest {
     }
 
     @Test
-    public void toModelType_invalidTags_throwsIllegalValueException() {
-        List<JsonAdaptedTag> invalidTags = new ArrayList<>(VALID_TAGS);
-        invalidTags.add(new JsonAdaptedTag(INVALID_TAG));
+    public void toModelType_invalidSymptoms_throwsIllegalValueException() {
+        List<JsonAdaptedSymptom> invalidSymptoms = new ArrayList<>(VALID_SYMPTOMS);
+        invalidSymptoms.add(new JsonAdaptedSymptom(INVALID_SYMPTOM));
         JsonAdaptedPerson person =
                 new JsonAdaptedPerson(
                         VALID_NAME,
                         VALID_PHONE,
                         VALID_EMAIL,
                         VALID_ADDRESS,
-                        invalidTags,
+                        invalidSymptoms,
                         VALID_IC,
                         VALID_URGENCY_LEVEL
                 );
@@ -191,7 +191,7 @@ public class JsonAdaptedPersonTest {
                 VALID_PHONE,
                 VALID_EMAIL,
                 VALID_ADDRESS,
-                VALID_TAGS,
+                VALID_SYMPTOMS,
                 null,
                 VALID_URGENCY_LEVEL
         );
@@ -207,7 +207,7 @@ public class JsonAdaptedPersonTest {
                         VALID_PHONE,
                         VALID_EMAIL,
                         VALID_ADDRESS,
-                        VALID_TAGS,
+                        VALID_SYMPTOMS,
                         INVALID_IC,
                         VALID_URGENCY_LEVEL
                 );
@@ -223,7 +223,7 @@ public class JsonAdaptedPersonTest {
                         VALID_PHONE,
                         VALID_EMAIL,
                         VALID_ADDRESS,
-                        VALID_TAGS,
+                        VALID_SYMPTOMS,
                         VALID_IC,
                         INVALID_URGENCY_LEVEL);
         String expectedMessage = UrgencyLevel.MESSAGE_CONSTRAINTS;
@@ -238,7 +238,7 @@ public class JsonAdaptedPersonTest {
                         VALID_PHONE,
                         VALID_EMAIL,
                         VALID_ADDRESS,
-                        VALID_TAGS,
+                        VALID_SYMPTOMS,
                         VALID_IC,
                         null);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, UrgencyLevel.class.getSimpleName());

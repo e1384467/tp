@@ -18,6 +18,7 @@ public class Messages {
     public static final String MESSAGE_INVALID_PERSON_INDICES = "One or more person indices provided are invalid";
     public static final String MESSAGE_INVALID_PERSON_INDEX_RANGE = "The person index range provided is invalid";
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
+    public static final String MESSAGE_PERSONS_SEARCHED = "Found %1$d patients matching the criteria  persons listed!";
     public static final String MESSAGE_DUPLICATE_FIELDS =
                 "Multiple values specified for the following single-valued field(s): ";
 
@@ -45,8 +46,8 @@ public class Messages {
                 .append(person.getEmail())
                 .append("; Address: ")
                 .append(person.getAddress())
-                .append("; Tags: ");
-        person.getTags().forEach(builder::append);
+                .append("; Symptoms: ");
+        person.getSymptoms().forEach(builder::append);
         return builder.toString();
     }
 

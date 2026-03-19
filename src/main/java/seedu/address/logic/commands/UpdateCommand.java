@@ -4,9 +4,9 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_IC;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PATIENT_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PATIENT_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SYMPTOM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_URGENCY;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
@@ -30,7 +30,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.UrgencyLevel;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.symptom.Symptom;
 
 /**
  * Updates the details of an existing person in the address book.
@@ -43,15 +43,15 @@ public class UpdateCommand extends Command {
             + "by the index number used in the displayed person list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "[" + PREFIX_NAME + "NAME] "
-            + "[" + PREFIX_PHONE + "PHONE] "
+            + "[" + PREFIX_PATIENT_NAME + "NAME] "
+            + "[" + PREFIX_PATIENT_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_IC + "IC] "
             + "[" + PREFIX_URGENCY + "LEVEL] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_SYMPTOM + "SYMPTOM]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_PHONE + "91234567 "
+            + PREFIX_PATIENT_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
 
     public static final String MESSAGE_UPDATE_PERSON_SUCCESS = "Updated Person: %1$s";
@@ -105,7 +105,7 @@ public class UpdateCommand extends Command {
         Phone updatedPhone = updatePersonDescriptor.getPhone().orElse(personToUpdate.getPhone());
         Email updatedEmail = updatePersonDescriptor.getEmail().orElse(personToUpdate.getEmail());
         Address updatedAddress = updatePersonDescriptor.getAddress().orElse(personToUpdate.getAddress());
-        Set<Tag> updatedTags = updatePersonDescriptor.getTags().orElse(personToUpdate.getTags());
+        Set<Symptom> updatedSymptoms = updatePersonDescriptor.getSymptoms().orElse(personToUpdate.getSymptoms());
         Ic updatedIc = updatePersonDescriptor.getIc().orElse(personToUpdate.getIc());
         UrgencyLevel updatedUrgencyLevel = updatePersonDescriptor.getUrgencyLevel()
                 .orElse(personToUpdate.getUrgencyLevel());
@@ -114,7 +114,7 @@ public class UpdateCommand extends Command {
                 updatedPhone,
                 updatedEmail,
                 updatedAddress,
-                updatedTags,
+                updatedSymptoms,
                 updatedIc,
                 updatedUrgencyLevel);
     }
@@ -151,7 +151,7 @@ public class UpdateCommand extends Command {
         private Phone phone;
         private Email email;
         private Address address;
-        private Set<Tag> tags;
+        private Set<Symptom> symptoms;
         private Ic ic;
         private UrgencyLevel urgencyLevel;
 
@@ -159,14 +159,14 @@ public class UpdateCommand extends Command {
 
         /**
          * Copy constructor.
-         * A defensive copy of {@code tags} is used internally.
+         * A defensive copy of {@code symptoms} is used internally.
          */
         public UpdatePersonDescriptor(UpdatePersonDescriptor toCopy) {
             setName(toCopy.name);
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setAddress(toCopy.address);
-            setTags(toCopy.tags);
+            setSymptoms(toCopy.symptoms);
             setUrgencyLevel(toCopy.urgencyLevel);
             setIc(toCopy.ic);
         }
@@ -175,7 +175,7 @@ public class UpdateCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags, urgencyLevel, ic);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, symptoms, urgencyLevel, ic);
         }
 
         public void setName(Name name) {
@@ -219,20 +219,20 @@ public class UpdateCommand extends Command {
         }
 
         /**
-         * Sets {@code tags} to this object's {@code tags}.
-         * A defensive copy of {@code tags} is used internally.
+         * Sets {@code symptoms} to this object's {@code symptoms}.
+         * A defensive copy of {@code symptoms} is used internally.
          */
-        public void setTags(Set<Tag> tags) {
-            this.tags = (tags != null) ? new HashSet<>(tags) : null;
+        public void setSymptoms(Set<Symptom> symptoms) {
+            this.symptoms = (symptoms != null) ? new HashSet<>(symptoms) : null;
         }
 
         /**
-         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
+         * Returns an unmodifiable symptom set, which throws {@code UnsupportedOperationException}
          * if modification is attempted.
-         * Returns {@code Optional#empty()} if {@code tags} is null.
+         * Returns {@code Optional#empty()} if {@code symptoms} is null.
          */
-        public Optional<Set<Tag>> getTags() {
-            return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
+        public Optional<Set<Symptom>> getSymptoms() {
+            return (symptoms != null) ? Optional.of(Collections.unmodifiableSet(symptoms)) : Optional.empty();
         }
 
         public void setUrgencyLevel(UrgencyLevel urgencyLevel) {
@@ -258,7 +258,7 @@ public class UpdateCommand extends Command {
                     && Objects.equals(phone, otherUpdatePersonDescriptor.phone)
                     && Objects.equals(email, otherUpdatePersonDescriptor.email)
                     && Objects.equals(address, otherUpdatePersonDescriptor.address)
-                    && Objects.equals(tags, otherUpdatePersonDescriptor.tags)
+                    && Objects.equals(symptoms, otherUpdatePersonDescriptor.symptoms)
                     && Objects.equals(ic, otherUpdatePersonDescriptor.ic)
                     && Objects.equals(urgencyLevel, otherUpdatePersonDescriptor.urgencyLevel);
         }
@@ -270,7 +270,7 @@ public class UpdateCommand extends Command {
                     .add("phone", phone)
                     .add("email", email)
                     .add("address", address)
-                    .add("tags", tags)
+                    .add("symptoms", symptoms)
                     .add("ic", ic)
                     .add("urgencyLevel", urgencyLevel)
                     .toString();

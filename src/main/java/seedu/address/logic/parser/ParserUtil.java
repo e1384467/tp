@@ -15,7 +15,7 @@ import seedu.address.model.person.Ic;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.UrgencyLevel;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.symptom.Symptom;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -98,30 +98,30 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String tag} into a {@code Tag}.
+     * Parses a {@code String symptom} into a {@code Symptom}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws ParseException if the given {@code tag} is invalid.
+     * @throws ParseException if the given {@code symptom} is invalid.
      */
-    public static Tag parseTag(String tag) throws ParseException {
-        requireNonNull(tag);
-        String trimmedTag = tag.trim();
-        if (!Tag.isValidTagName(trimmedTag)) {
-            throw new ParseException(Tag.MESSAGE_CONSTRAINTS);
+    public static Symptom parseSymptom(String symptom) throws ParseException {
+        requireNonNull(symptom);
+        String trimmedSymptom = symptom.trim();
+        if (!Symptom.isValidSymptomName(trimmedSymptom)) {
+            throw new ParseException(Symptom.MESSAGE_CONSTRAINTS);
         }
-        return new Tag(trimmedTag);
+        return new Symptom(trimmedSymptom);
     }
 
     /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
+     * Parses {@code Collection<String> symptoms} into a {@code Set<Symptom>}.
      */
-    public static Set<Tag> parseTags(Collection<String> tags) throws ParseException {
-        requireNonNull(tags);
-        final Set<Tag> tagSet = new HashSet<>();
-        for (String tagName : tags) {
-            tagSet.add(parseTag(tagName));
+    public static Set<Symptom> parseSymptoms(Collection<String> symptoms) throws ParseException {
+        requireNonNull(symptoms);
+        final Set<Symptom> symptomSet = new HashSet<>();
+        for (String symptomName : symptoms) {
+            symptomSet.add(parseSymptom(symptomName));
         }
-        return tagSet;
+        return symptomSet;
     }
 
     /**

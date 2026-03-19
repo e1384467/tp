@@ -10,8 +10,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_SYMPTOM_FRIEND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_SYMPTOM_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_URGENCY_LEVEL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_URGENCY_LEVEL_BOB;
 
@@ -30,7 +30,7 @@ public class TypicalPersons {
     public static final Person ALICE = new PersonBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
             .withPhone("94351253")
-            .withTags("friends")
+            .withSymptoms("friends")
             .withIc("S1111111A")
             .withUrgencyLevel("low")
             .build();
@@ -38,7 +38,7 @@ public class TypicalPersons {
             .withAddress("311, Clementi Ave 2, #02-25")
             .withEmail("johnd@example.com")
             .withPhone("98765432")
-            .withTags("owesMoney", "friends")
+            .withSymptoms("owesMoney", "friends")
             .withIc("S2222222A")
             .withUrgencyLevel("high")
             .build();
@@ -53,26 +53,26 @@ public class TypicalPersons {
             .withPhone("87652533")
             .withEmail("cornelia@example.com")
             .withAddress("10th street")
-            .withTags("friends")
+            .withSymptoms("friends")
             .withIc("S4444444A")
             .withUrgencyLevel("extreme")
             .build();
     public static final Person ELLE = new PersonBuilder().withName("Elle Meyer")
-            .withPhone("9482224")
+            .withPhone("94822244")
             .withEmail("werner@example.com")
             .withAddress("michegan ave")
             .withIc("S5555555A")
             .withUrgencyLevel("high")
             .build();
     public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz")
-            .withPhone("9482427")
+            .withPhone("94824275")
             .withEmail("lydia@example.com")
             .withAddress("little tokyo")
             .withIc("S6666666A")
             .withUrgencyLevel("moderate")
             .build();
     public static final Person GEORGE = new PersonBuilder().withName("George Best")
-            .withPhone("9482442")
+            .withPhone("94824426")
             .withEmail("anna@example.com")
             .withAddress("4th street")
             .withIc("S7777777A")
@@ -81,14 +81,14 @@ public class TypicalPersons {
 
     // Manually added
     public static final Person HOON = new PersonBuilder().withName("Hoon Meier")
-            .withPhone("8482424")
+            .withPhone("84824247")
             .withEmail("stefan@example.com")
             .withAddress("little india")
             .withIc("S8888888A")
             .withUrgencyLevel("low")
             .build();
     public static final Person IDA = new PersonBuilder().withName("Ida Mueller")
-            .withPhone("8482131")
+            .withPhone("84821318")
             .withEmail("hans@example.com")
             .withAddress("chicago ave")
             .withIc("S9999999A")
@@ -100,7 +100,7 @@ public class TypicalPersons {
             .withPhone(VALID_PHONE_AMY)
             .withEmail(VALID_EMAIL_AMY)
             .withAddress(VALID_ADDRESS_AMY)
-            .withTags(VALID_TAG_FRIEND)
+            .withSymptoms(VALID_SYMPTOM_FRIEND)
             .withIc(VALID_IC_AMY)
             .withUrgencyLevel(VALID_URGENCY_LEVEL_AMY)
             .build();
@@ -108,7 +108,7 @@ public class TypicalPersons {
             .withPhone(VALID_PHONE_BOB)
             .withEmail(VALID_EMAIL_BOB)
             .withAddress(VALID_ADDRESS_BOB)
-            .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
+            .withSymptoms(VALID_SYMPTOM_HUSBAND, VALID_SYMPTOM_FRIEND)
             .withIc(VALID_IC_BOB)
             .withUrgencyLevel(VALID_URGENCY_LEVEL_BOB)
             .build();

@@ -17,7 +17,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.UrgencyLevel;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.symptom.Symptom;
 
 /**
  * Jackson-friendly version of {@link Person}.
@@ -30,7 +30,7 @@ class JsonAdaptedPerson {
     private final String phone;
     private final String email;
     private final String address;
-    private final List<JsonAdaptedTag> tags = new ArrayList<>();
+    private final List<JsonAdaptedSymptom> symptoms = new ArrayList<>();
     private final String ic;
     private final String urgencyLevel;
 
@@ -39,15 +39,15 @@ class JsonAdaptedPerson {
      */
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
-            @JsonProperty("email") String email, @JsonProperty("address") String address,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags, @JsonProperty("ic") String ic,
-            @JsonProperty("urgencyLevel") String urgencyLevel) {
+                             @JsonProperty("email") String email, @JsonProperty("address") String address,
+                             @JsonProperty("symptoms") List<JsonAdaptedSymptom> symptoms, @JsonProperty("ic") String ic,
+                             @JsonProperty("urgencyLevel") String urgencyLevel) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
-        if (tags != null) {
-            this.tags.addAll(tags);
+        if (symptoms != null) {
+            this.symptoms.addAll(symptoms);
         }
         this.ic = ic;
         this.urgencyLevel = urgencyLevel;
@@ -61,8 +61,8 @@ class JsonAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
-        tags.addAll(source.getTags().stream()
-                .map(JsonAdaptedTag::new)
+        symptoms.addAll(source.getSymptoms().stream()
+                .map(JsonAdaptedSymptom::new)
                 .collect(Collectors.toList()));
         ic = source.getIc().value;
         urgencyLevel = source.getUrgencyLevel().toString();
@@ -74,9 +74,9 @@ class JsonAdaptedPerson {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person.
      */
     public Person toModelType() throws IllegalValueException {
-        final List<Tag> personTags = new ArrayList<>();
-        for (JsonAdaptedTag tag : tags) {
-            personTags.add(tag.toModelType());
+        final List<Symptom> personSymptoms = new ArrayList<>();
+        for (JsonAdaptedSymptom symptom : symptoms) {
+            personSymptoms.add(symptom.toModelType());
         }
 
         if (name == null) {
@@ -128,8 +128,8 @@ class JsonAdaptedPerson {
         }
         final UrgencyLevel modelUrgencyLevel = new UrgencyLevel(urgencyLevel);
 
-        final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags, modelIc, modelUrgencyLevel);
+        final Set<Symptom> modelSymptoms = new HashSet<>(personSymptoms);
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelSymptoms, modelIc, modelUrgencyLevel);
     }
 
 }

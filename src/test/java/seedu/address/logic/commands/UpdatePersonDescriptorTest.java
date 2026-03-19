@@ -10,7 +10,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_IC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_SYMPTOM_HUSBAND;
 
 import org.junit.jupiter.api.Test;
 
@@ -53,8 +53,8 @@ public class UpdatePersonDescriptorTest {
         editedAmy = new UpdatePersonDescriptorBuilder(DESC_AMY).withAddress(VALID_ADDRESS_BOB).build();
         assertFalse(DESC_AMY.equals(editedAmy));
 
-        // different tags -> returns false
-        editedAmy = new UpdatePersonDescriptorBuilder(DESC_AMY).withTags(VALID_TAG_HUSBAND).build();
+        // different symptoms -> returns false
+        editedAmy = new UpdatePersonDescriptorBuilder(DESC_AMY).withSymptoms(VALID_SYMPTOM_HUSBAND).build();
         assertFalse(DESC_AMY.equals(editedAmy));
 
         // different ic -> returns false
@@ -69,8 +69,8 @@ public class UpdatePersonDescriptorTest {
                 + updatePersonDescriptor.getName().orElse(null) + ", phone="
                 + updatePersonDescriptor.getPhone().orElse(null) + ", email="
                 + updatePersonDescriptor.getEmail().orElse(null) + ", address="
-                + updatePersonDescriptor.getAddress().orElse(null) + ", tags="
-                + updatePersonDescriptor.getTags().orElse(null) + ", ic="
+                + updatePersonDescriptor.getAddress().orElse(null) + ", symptoms="
+                + updatePersonDescriptor.getSymptoms().orElse(null) + ", ic="
                 + updatePersonDescriptor.getIc().orElse(null) + ", urgencyLevel="
                 + updatePersonDescriptor.getUrgencyLevel().orElse(null) + "}";
         assertEquals(expected, updatePersonDescriptor.toString());

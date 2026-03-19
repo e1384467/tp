@@ -10,7 +10,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.UrgencyLevel;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.symptom.Symptom;
 import seedu.address.model.util.SampleDataUtil;
 
 /**
@@ -29,7 +29,7 @@ public class PersonBuilder {
     private Phone phone;
     private Email email;
     private Address address;
-    private Set<Tag> tags;
+    private Set<Symptom> symptoms;
     private Ic ic;
     private UrgencyLevel urgencyLevel;
 
@@ -41,7 +41,7 @@ public class PersonBuilder {
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
-        tags = new HashSet<>();
+        symptoms = new HashSet<>();
         ic = new Ic(DEFAULT_IC);
         urgencyLevel = new UrgencyLevel(DEFAULT_URGENCY_LEVEL);
     }
@@ -54,7 +54,7 @@ public class PersonBuilder {
         phone = personToCopy.getPhone();
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
-        tags = new HashSet<>(personToCopy.getTags());
+        symptoms = new HashSet<>(personToCopy.getSymptoms());
         ic = personToCopy.getIc();
         urgencyLevel = personToCopy.getUrgencyLevel();
     }
@@ -68,10 +68,10 @@ public class PersonBuilder {
     }
 
     /**
-     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Person} that we are building.
+     * Parses the {@code symptoms} into a {@code Set<Symptom>} and set it to the {@code Person} that we are building.
      */
-    public PersonBuilder withTags(String ... tags) {
-        this.tags = SampleDataUtil.getTagSet(tags);
+    public PersonBuilder withSymptoms(String ... symptoms) {
+        this.symptoms = SampleDataUtil.getSymptomSet(symptoms);
         return this;
     }
 
@@ -116,7 +116,7 @@ public class PersonBuilder {
     }
 
     public Person build() {
-        return new Person(name, phone, email, address, tags, ic, urgencyLevel);
+        return new Person(name, phone, email, address, symptoms, ic, urgencyLevel);
     }
 
 }
