@@ -281,6 +281,34 @@
     -fx-text-fill: white;
 }
 
+.exit-message {
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-background-color: #2ecc71;
+    -fx-padding: 10;
+}
+
+.exit-message #resultDisplay .content {
+    -fx-background-color: #2ecc71;
+}
+
+.exit-message .result-display {
+    -fx-text-fill: white;
+}
+
+.exit-error-message {
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-background-color: #e74c3c;
+    -fx-padding: 10;
+}
+
+.exit-error-message #resultDisplay .content {
+    -fx-background-color: #e74c3c;
+}
+
+.exit-error-message .result-display {
+    -fx-text-fill: white;
+}
+
 .scroll-bar {
     -fx-background-color: derive(#1d1d1d, 20%);
 }

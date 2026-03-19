@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
@@ -10,6 +11,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Logic;
@@ -183,14 +185,36 @@ public class MainWindow extends UiPart<Stage> {
             }
 
             if (commandResult.isExit()) {
-                handleExit();
+                resultDisplay.setExitMessage(commandResult.getFeedbackToUser());
+                delayExit();
             }
 
             return commandResult;
         } catch (CommandException | ParseException e) {
-            logger.info("An error occurred while executing command: " + commandText);
-            resultDisplay.setFeedbackToUser(e.getMessage());
+            if (commandText.trim().startsWith("exit")) {
+                resultDisplay.setExitErrorMessage(e.getMessage());
+            } else {
+                logger.info("An error occurred while executing command: " + commandText);
+                resultDisplay.setFeedbackToUser(e.getMessage());
+            }
             throw e;
         }
+    }
+
+    /**
+     * Delays the closing of the application to allow the exit message
+     * to be displayed to the user before the window closes.
+     *
+     * A {@link PauseTransition} is used to pause the execution for a
+     * short duration without blocking the JavaFX UI thread. After the
+     * delay finishes, {@code handleExit()} is invoked to close the
+     * application window.
+     */
+    private void delayExit() {
+        PauseTransition delay = new PauseTransition(Duration.seconds(3));
+
+        delay.setOnFinished(event -> handleExit());
+
+        delay.play();
     }
 }
