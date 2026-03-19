@@ -26,6 +26,7 @@ public class Person {
     private final Address address;
     private final Set<Symptom> symptoms = new HashSet<>();
     private final UrgencyLevel urgencyLevel;
+    private final DoctorName doctorName;
 
     /**
      * Every field must be present and not null.
@@ -36,8 +37,9 @@ public class Person {
                   Address address,
                   Set<Symptom> symptoms,
                   Ic ic,
-                  UrgencyLevel urgencyLevel) {
-        requireAllNonNull(name, phone, email, address, symptoms, ic, urgencyLevel);
+                  UrgencyLevel urgencyLevel,
+                  DoctorName doctorName) {
+        requireAllNonNull(name, phone, email, address, symptoms, ic, urgencyLevel, doctorName);
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -45,6 +47,7 @@ public class Person {
         this.symptoms.addAll(symptoms);
         this.ic = ic;
         this.urgencyLevel = urgencyLevel;
+        this.doctorName = doctorName;
     }
 
     public Name getName() {
@@ -77,6 +80,10 @@ public class Person {
 
     public UrgencyLevel getUrgencyLevel() {
         return urgencyLevel;
+    }
+
+    public DoctorName getDoctorName() {
+        return doctorName;
     }
 
     /**
@@ -114,13 +121,14 @@ public class Person {
                 && address.equals(otherPerson.address)
                 && symptoms.equals(otherPerson.symptoms)
                 && ic.equals(otherPerson.ic)
-                && urgencyLevel.equals(otherPerson.urgencyLevel);
+                && urgencyLevel.equals(otherPerson.urgencyLevel)
+                && doctorName.equals(otherPerson.doctorName);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, symptoms, ic, urgencyLevel);
+        return Objects.hash(name, phone, email, address, symptoms, ic, urgencyLevel, doctorName);
     }
 
     @Override
@@ -133,6 +141,7 @@ public class Person {
                 .add("symptoms", symptoms)
                 .add("ic", ic)
                 .add("urgencyLevel", urgencyLevel)
+                .add("doctorName", doctorName)
                 .toString();
     }
 

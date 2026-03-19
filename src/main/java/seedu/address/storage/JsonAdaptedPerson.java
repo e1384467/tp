@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DoctorName;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Ic;
 import seedu.address.model.person.Name;
@@ -33,15 +34,17 @@ class JsonAdaptedPerson {
     private final List<JsonAdaptedSymptom> symptoms = new ArrayList<>();
     private final String ic;
     private final String urgencyLevel;
+    private final String doctorName;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
      */
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
-                             @JsonProperty("email") String email, @JsonProperty("address") String address,
-                             @JsonProperty("symptoms") List<JsonAdaptedSymptom> symptoms, @JsonProperty("ic") String ic,
-                             @JsonProperty("urgencyLevel") String urgencyLevel) {
+            @JsonProperty("email") String email, @JsonProperty("address") String address,
+            @JsonProperty("symptoms") List<JsonAdaptedSymptom> symptoms, @JsonProperty("ic") String ic,
+            @JsonProperty("urgencyLevel") String urgencyLevel,
+                             @JsonProperty("doctorName") String doctorName) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -51,6 +54,7 @@ class JsonAdaptedPerson {
         }
         this.ic = ic;
         this.urgencyLevel = urgencyLevel;
+        this.doctorName = doctorName;
     }
 
     /**
@@ -66,6 +70,7 @@ class JsonAdaptedPerson {
                 .collect(Collectors.toList()));
         ic = source.getIc().value;
         urgencyLevel = source.getUrgencyLevel().toString();
+        doctorName = source.getDoctorName().toString();
     }
 
     /**
@@ -128,8 +133,18 @@ class JsonAdaptedPerson {
         }
         final UrgencyLevel modelUrgencyLevel = new UrgencyLevel(urgencyLevel);
 
+        if (doctorName == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    DoctorName.class.getSimpleName()));
+        }
+        if (!DoctorName.isValidName(doctorName)) {
+            throw new IllegalValueException(DoctorName.MESSAGE_CONSTRAINTS);
+        }
+        final DoctorName modelDoctorName = new DoctorName(doctorName);
+
         final Set<Symptom> modelSymptoms = new HashSet<>(personSymptoms);
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelSymptoms, modelIc, modelUrgencyLevel);
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelSymptoms, modelIc, modelUrgencyLevel,
+                modelDoctorName);
     }
 
 }

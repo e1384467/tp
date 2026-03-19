@@ -42,6 +42,8 @@ public class PersonCard extends UiPart<Region> {
     private Label urgencyLevel;
     @FXML
     private FlowPane symptoms;
+    @FXML
+    private Label doctorName;
 
     /**
      * Creates a {@code PersonCard} with the given {@code Person} and index to display.
@@ -56,6 +58,7 @@ public class PersonCard extends UiPart<Region> {
         phone.setText("Hp: " + person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
+        doctorName.setText(person.getDoctorName().toString());
 
         // Map the new medical fields to the UI
         ic.setText("NRIC: " + person.getIc().value);

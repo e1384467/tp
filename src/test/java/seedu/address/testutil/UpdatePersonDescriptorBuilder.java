@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 
 import seedu.address.logic.commands.UpdateCommand.UpdatePersonDescriptor;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DoctorName;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Ic;
 import seedu.address.model.person.Name;
@@ -41,6 +42,7 @@ public class UpdatePersonDescriptorBuilder {
         descriptor.setSymptoms(person.getSymptoms());
         descriptor.setIc(person.getIc());
         descriptor.setUrgencyLevel(person.getUrgencyLevel());
+        descriptor.setDoctorName(person.getDoctorName());
     }
 
     /**
@@ -103,5 +105,13 @@ public class UpdatePersonDescriptorBuilder {
 
     public UpdatePersonDescriptor build() {
         return descriptor;
+    }
+
+    /**
+     * Sets the {@code DoctorName} of the {@code UpdatePersonDescriptor} that we are building.
+     */
+    public UpdatePersonDescriptorBuilder withDoctorName(String doctorName) {
+        descriptor.setDoctorName(new DoctorName(doctorName));
+        return this;
     }
 }

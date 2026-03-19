@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DOCTOR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_IC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PATIENT_NAME;
@@ -41,7 +42,8 @@ public class UpdateCommandParser implements Parser<UpdateCommand> {
                         PREFIX_ADDRESS,
                         PREFIX_SYMPTOM,
                         PREFIX_IC,
-                        PREFIX_URGENCY
+                        PREFIX_URGENCY,
+                        PREFIX_DOCTOR
                 );
 
         Index index;
@@ -57,7 +59,8 @@ public class UpdateCommandParser implements Parser<UpdateCommand> {
                 PREFIX_EMAIL,
                 PREFIX_ADDRESS,
                 PREFIX_IC,
-                PREFIX_URGENCY);
+                PREFIX_URGENCY,
+                PREFIX_DOCTOR);
 
         UpdatePersonDescriptor updatePersonDescriptor = new UpdatePersonDescriptor();
 
@@ -77,8 +80,13 @@ public class UpdateCommandParser implements Parser<UpdateCommand> {
         if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
             updatePersonDescriptor.setAddress(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get()));
         }
+
         if (argMultimap.getValue(PREFIX_IC).isPresent()) {
             updatePersonDescriptor.setIc(ParserUtil.parseIc(argMultimap.getValue(PREFIX_IC).get()));
+        }
+
+        if (argMultimap.getValue(PREFIX_DOCTOR).isPresent()) {
+            updatePersonDescriptor.setDoctorName(ParserUtil.parseDoctorName(argMultimap.getValue(PREFIX_DOCTOR).get()));
         }
         parseSymptomsForEdit(argMultimap.getAllValues(PREFIX_SYMPTOM)).ifPresent(updatePersonDescriptor::setSymptoms);
 

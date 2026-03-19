@@ -72,7 +72,8 @@ public class UpdatePersonDescriptorTest {
                 + updatePersonDescriptor.getAddress().orElse(null) + ", symptoms="
                 + updatePersonDescriptor.getSymptoms().orElse(null) + ", ic="
                 + updatePersonDescriptor.getIc().orElse(null) + ", urgencyLevel="
-                + updatePersonDescriptor.getUrgencyLevel().orElse(null) + "}";
+                + updatePersonDescriptor.getUrgencyLevel().orElse(null) + ", doctorName="
+                + updatePersonDescriptor.getDoctorName().orElse(null) + "}";
         assertEquals(expected, updatePersonDescriptor.toString());
     }
 }

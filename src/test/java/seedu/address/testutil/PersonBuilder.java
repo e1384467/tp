@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DoctorName;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Ic;
 import seedu.address.model.person.Name;
@@ -24,6 +25,7 @@ public class PersonBuilder {
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_IC = "S1234567A";
     public static final String DEFAULT_URGENCY_LEVEL = "low";
+    public static final String DEFAULT_DOCTOR_NAME = "Seuss";
 
     private Name name;
     private Phone phone;
@@ -32,6 +34,7 @@ public class PersonBuilder {
     private Set<Symptom> symptoms;
     private Ic ic;
     private UrgencyLevel urgencyLevel;
+    private DoctorName doctorName;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -44,6 +47,7 @@ public class PersonBuilder {
         symptoms = new HashSet<>();
         ic = new Ic(DEFAULT_IC);
         urgencyLevel = new UrgencyLevel(DEFAULT_URGENCY_LEVEL);
+        doctorName = new DoctorName(DEFAULT_DOCTOR_NAME);
     }
 
     /**
@@ -57,6 +61,7 @@ public class PersonBuilder {
         symptoms = new HashSet<>(personToCopy.getSymptoms());
         ic = personToCopy.getIc();
         urgencyLevel = personToCopy.getUrgencyLevel();
+        doctorName = personToCopy.getDoctorName();
     }
 
     /**
@@ -115,8 +120,16 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code DoctorName} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withDoctorName(String doctorName) {
+        this.doctorName = new DoctorName(doctorName);
+        return this;
+    }
+
     public Person build() {
-        return new Person(name, phone, email, address, symptoms, ic, urgencyLevel);
+        return new Person(name, phone, email, address, symptoms, ic, urgencyLevel, doctorName);
     }
 
 }

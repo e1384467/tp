@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DOCTOR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_IC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PATIENT_NAME;
@@ -24,6 +25,7 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DoctorName;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Ic;
 import seedu.address.model.person.Name;
@@ -49,6 +51,7 @@ public class UpdateCommand extends Command {
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_IC + "IC] "
             + "[" + PREFIX_URGENCY + "LEVEL] "
+            + "[" + PREFIX_DOCTOR + "]"
             + "[" + PREFIX_SYMPTOM + "SYMPTOM]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PATIENT_PHONE + "91234567 "
@@ -109,6 +112,7 @@ public class UpdateCommand extends Command {
         Ic updatedIc = updatePersonDescriptor.getIc().orElse(personToUpdate.getIc());
         UrgencyLevel updatedUrgencyLevel = updatePersonDescriptor.getUrgencyLevel()
                 .orElse(personToUpdate.getUrgencyLevel());
+        DoctorName updatedDoctorName = updatePersonDescriptor.getDoctorName().orElse(personToUpdate.getDoctorName());
 
         return new Person(updatedName,
                 updatedPhone,
@@ -116,7 +120,8 @@ public class UpdateCommand extends Command {
                 updatedAddress,
                 updatedSymptoms,
                 updatedIc,
-                updatedUrgencyLevel);
+                updatedUrgencyLevel,
+                updatedDoctorName);
     }
 
     @Override
@@ -154,6 +159,7 @@ public class UpdateCommand extends Command {
         private Set<Symptom> symptoms;
         private Ic ic;
         private UrgencyLevel urgencyLevel;
+        private DoctorName doctorName;
 
         public UpdatePersonDescriptor() {}
 
@@ -169,13 +175,14 @@ public class UpdateCommand extends Command {
             setSymptoms(toCopy.symptoms);
             setUrgencyLevel(toCopy.urgencyLevel);
             setIc(toCopy.ic);
+            setDoctorName(toCopy.doctorName);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, symptoms, urgencyLevel, ic);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, symptoms, urgencyLevel, ic, doctorName);
         }
 
         public void setName(Name name) {
@@ -218,6 +225,13 @@ public class UpdateCommand extends Command {
             return Optional.ofNullable(ic);
         }
 
+        public void setDoctorName(DoctorName doctorName) {
+            this.doctorName = doctorName;
+        }
+
+        public Optional<DoctorName> getDoctorName() {
+            return Optional.ofNullable(doctorName);
+        }
         /**
          * Sets {@code symptoms} to this object's {@code symptoms}.
          * A defensive copy of {@code symptoms} is used internally.
@@ -260,7 +274,8 @@ public class UpdateCommand extends Command {
                     && Objects.equals(address, otherUpdatePersonDescriptor.address)
                     && Objects.equals(symptoms, otherUpdatePersonDescriptor.symptoms)
                     && Objects.equals(ic, otherUpdatePersonDescriptor.ic)
-                    && Objects.equals(urgencyLevel, otherUpdatePersonDescriptor.urgencyLevel);
+                    && Objects.equals(urgencyLevel, otherUpdatePersonDescriptor.urgencyLevel)
+                    && Objects.equals(doctorName, otherUpdatePersonDescriptor.doctorName);
         }
 
         @Override
@@ -273,6 +288,7 @@ public class UpdateCommand extends Command {
                     .add("symptoms", symptoms)
                     .add("ic", ic)
                     .add("urgencyLevel", urgencyLevel)
+                    .add("doctorName", doctorName)
                     .toString();
         }
     }
