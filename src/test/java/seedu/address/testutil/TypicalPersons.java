@@ -2,6 +2,8 @@ package seedu.address.testutil;
 
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DOCTOR_NAME_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DOCTOR_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_IC_AMY;
@@ -12,8 +14,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_NEXT_OF_KIN_PHO
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NEXT_OF_KIN_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_SYMPTOM_FRIEND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_SYMPTOM_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_URGENCY_LEVEL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_URGENCY_LEVEL_BOB;
 
@@ -23,7 +25,6 @@ import java.util.List;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.person.Person;
-
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
  */
@@ -32,19 +33,21 @@ public class TypicalPersons {
     public static final Person ALICE = new PersonBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
             .withPhone("94351253")
-            .withTags("friends")
+            .withSymptoms("friends")
             .withIc("S1111111A")
             .withUrgencyLevel("low")
             .withNextOfKinPhone("91234567")
+            .withDoctorName("Ben Leong")
             .build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25")
             .withEmail("johnd@example.com")
             .withPhone("98765432")
-            .withTags("owesMoney", "friends")
+            .withSymptoms("owesMoney", "friends")
             .withIc("S2222222A")
             .withUrgencyLevel("high")
             .withNextOfKinPhone("92345678")
+            .withDoctorName("Colin")
             .build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz")
             .withPhone("95352563")
@@ -53,15 +56,17 @@ public class TypicalPersons {
             .withIc("S3333333A")
             .withUrgencyLevel("low")
             .withNextOfKinPhone("93456789")
+            .withDoctorName("Tzer Bin")
             .build();
     public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier")
             .withPhone("87652533")
             .withEmail("cornelia@example.com")
             .withAddress("10th street")
-            .withTags("friends")
+            .withSymptoms("friends")
             .withIc("S4444444A")
             .withUrgencyLevel("extreme")
             .withNextOfKinPhone("94567890")
+            .withDoctorName("Lady Gaga")
             .build();
     public static final Person ELLE = new PersonBuilder().withName("Elle Meyer")
             .withPhone("94822244")
@@ -70,6 +75,7 @@ public class TypicalPersons {
             .withIc("S5555555A")
             .withUrgencyLevel("high")
             .withNextOfKinPhone("95678901")
+            .withDoctorName("Spiderman")
             .build();
     public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz")
             .withPhone("94824275")
@@ -78,6 +84,7 @@ public class TypicalPersons {
             .withIc("S6666666A")
             .withUrgencyLevel("moderate")
             .withNextOfKinPhone("96789012")
+            .withDoctorName("Ironman")
             .build();
     public static final Person GEORGE = new PersonBuilder().withName("George Best")
             .withPhone("94824426")
@@ -86,6 +93,7 @@ public class TypicalPersons {
             .withIc("S7777777A")
             .withUrgencyLevel("extreme")
             .withNextOfKinPhone("97890123")
+            .withDoctorName("Choong")
             .build();
 
     // Manually added
@@ -96,6 +104,7 @@ public class TypicalPersons {
             .withIc("S8888888A")
             .withUrgencyLevel("low")
             .withNextOfKinPhone("98901234")
+            .withDoctorName("Boong")
             .build();
     public static final Person IDA = new PersonBuilder().withName("Ida Mueller")
             .withPhone("84821318")
@@ -104,6 +113,7 @@ public class TypicalPersons {
             .withIc("S9999999A")
             .withUrgencyLevel("moderate")
             .withNextOfKinPhone("99012345")
+            .withDoctorName("Captain America")
             .build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
@@ -111,19 +121,21 @@ public class TypicalPersons {
             .withPhone(VALID_PHONE_AMY)
             .withEmail(VALID_EMAIL_AMY)
             .withAddress(VALID_ADDRESS_AMY)
-            .withTags(VALID_TAG_FRIEND)
+            .withSymptoms(VALID_SYMPTOM_FRIEND)
             .withIc(VALID_IC_AMY)
             .withUrgencyLevel(VALID_URGENCY_LEVEL_AMY)
             .withNextOfKinPhone(VALID_NEXT_OF_KIN_PHONE_AMY)
+            .withDoctorName(VALID_DOCTOR_NAME_AMY)
             .build();
     public static final Person BOB = new PersonBuilder().withName(VALID_NAME_BOB)
             .withPhone(VALID_PHONE_BOB)
             .withEmail(VALID_EMAIL_BOB)
             .withAddress(VALID_ADDRESS_BOB)
-            .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
+            .withSymptoms(VALID_SYMPTOM_HUSBAND, VALID_SYMPTOM_FRIEND)
             .withIc(VALID_IC_BOB)
             .withUrgencyLevel(VALID_URGENCY_LEVEL_BOB)
             .withNextOfKinPhone(VALID_NEXT_OF_KIN_PHONE_BOB)
+            .withDoctorName(VALID_DOCTOR_NAME_BOB)
             .build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER

@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.ELLE;
@@ -34,14 +33,14 @@ public class FindCommandTest {
         NameContainsKeywordsPredicate secondPredicate =
                 new NameContainsKeywordsPredicate(Collections.singletonList("second"));
 
-        FindCommand findFirstCommand = new FindCommand(firstPredicate);
-        FindCommand findSecondCommand = new FindCommand(secondPredicate);
+        FindCommand findFirstCommand = new FindCommand(firstPredicate, "Patient Name: first");
+        FindCommand findSecondCommand = new FindCommand(secondPredicate, "Patient Name: second");
 
         // same object -> returns true
         assertTrue(findFirstCommand.equals(findFirstCommand));
 
         // same values -> returns true
-        FindCommand findFirstCommandCopy = new FindCommand(firstPredicate);
+        FindCommand findFirstCommandCopy = new FindCommand(firstPredicate, "Patient Name: first");
         assertTrue(findFirstCommand.equals(findFirstCommandCopy));
 
         // different types -> returns false
@@ -56,21 +55,22 @@ public class FindCommandTest {
 
     @Test
     public void execute_zeroKeywords_noPersonFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
         NameContainsKeywordsPredicate predicate = preparePredicate(" ");
-        FindCommand command = new FindCommand(predicate);
+        FindCommand command = new FindCommand(predicate, "Patient Name: ");
         expectedModel.updateFilteredPersonList(predicate);
-        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        assertCommandSuccess(command, model,
+                "Found 0 patient(s) whose identifiers include the following criteria: Patient Name: ", expectedModel);
         assertEquals(Collections.emptyList(), model.getFilteredPersonList());
     }
 
     @Test
     public void execute_multipleKeywords_multiplePersonsFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         NameContainsKeywordsPredicate predicate = preparePredicate("Kurz Elle Kunz");
-        FindCommand command = new FindCommand(predicate);
+        FindCommand command = new FindCommand(predicate, "Patient Name: Kurz Elle Kunz");
         expectedModel.updateFilteredPersonList(predicate);
 
+        String expectedMessage = "Found 3 patient(s) whose identifiers include the following criteria: "
+                + "Patient Name: Kurz Elle Kunz";
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
 
         // FIX: The order must match your Urgency sorting (High -> Low)
@@ -79,11 +79,23 @@ public class FindCommandTest {
     }
 
     @Test
+    public void execute_nullCriteriaDescription_usesHeaderOnly() {
+        // Reuse existing predicate that matches 3 persons
+        NameContainsKeywordsPredicate predicate = preparePredicate("Kurz Elle Kunz");
+        FindCommand command = new FindCommand(predicate, null);
+        expectedModel.updateFilteredPersonList(predicate);
+        assertCommandSuccess(command, model,
+                "Found 3 patient(s) whose identifiers include the following criteria: ", expectedModel);
+    }
+
+    @Test
     public void toStringMethod() {
         NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(Arrays.asList("keyword"));
-        FindCommand findCommand = new FindCommand(predicate);
-        String expected = FindCommand.class.getCanonicalName() + "{predicate=" + predicate + "}";
-        assertEquals(expected, findCommand.toString());
+        FindCommand findCommand = new FindCommand(predicate, "Patient Name: keyword");
+        String result = findCommand.toString();
+        assertTrue(result.contains(FindCommand.class.getCanonicalName()));
+        assertTrue(result.contains("predicate=" + predicate));
+        assertTrue(result.contains("criteriaDescription=Patient Name: keyword"));
     }
 
     /**

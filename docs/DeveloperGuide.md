@@ -1,12 +1,11 @@
 ---
-  layout: default.md
-  title: "Developer Guide"
-  pageNav: 3
+layout: default.md
+title: "Developer Guide"
+pageNav: 3
 ---
 
-# AB-3 Developer Guide
+# ClinicConnect Developer Guide
 
-<!-- * Table of Contents -->
 <page-nav-print />
 
 --------------------------------------------------------------------------------------------------------------------
@@ -158,6 +157,47 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
+### Automatic Triage Sorting
+
+The Automatic Triage Sorting mechanism ensures that the patient list is always ordered by medical severity, allowing triage coordinators to identify critical cases immediately.
+
+This feature is facilitated by the `Urgency` and `Ic` classes, and is integrated directly into the `Person` model. The sorting logic relies on Java's `Comparable<T>` interface to enforce a strict, deterministic order every time the list of patients is modified (e.g., during an `add` or `update` command).
+
+<box type="info" seamless>
+
+**Note:** The sorting logic comparison can be conceptually represented by the following mathematical formula:
+`Triage Priority = (Urgency Weight * 10) + IC Lexicographical Value`
+</box>
+
+#### Sorting Logic Flow
+1. **Primary Sort (Urgency):** The `Urgency` class implements `Comparable<Urgency>`. It assigns internal weightages to its valid states (`EXTREME` = 4, `HIGH` = 3, `MODERATE` = 2, `LOW` = 1). When two patients are compared, the one with the higher urgency weight is placed higher in the list.
+2. **Secondary Sort (Tie-Breaker):** If two patients have the exact same `Urgency`, the `Person#compareTo()` method falls back to comparing their `Ic` objects. The `Ic` class implements `Comparable<Ic>` and uses standard lexicographical string comparison to ensure a consistent, deterministic order.
+
+#### Class Diagram
+The following class diagram shows how the `Comparable` interface is implemented across the domain models:
+
+<img src="images/TriageSortingClassDiagram.png" width="450" />
+
+#### Sequence of Events
+When a user executes a command that alters the patient list (like `add` or `update`), the internal list must re-sort itself.
+1. The `LogicManager` executes the command, which calls `Model#addPerson(Person)`.
+2. The `ModelManager` adds the patient to the `UniquePersonList`.
+3. The `UniquePersonList` internal list (or a wrapping `SortedList` in the UI) triggers the `Person#compareTo(Person)` method.
+4. The list is re-ordered and the UI updates automatically to reflect the new triage hierarchy.
+
+#### Design Considerations: Triage Sorting
+
+**Aspect: How to maintain the sorted order of the patient list.**
+
+* **Alternative 1 (Current Implementation):** Implement `Comparable` in `Person` and enforce sorting at the `UniquePersonList` level or UI `SortedList` level automatically upon any modification.
+    * *Pros:* The UI and internal data are always inherently synchronized. No explicit `sort` command needs to be called by the user, fitting the fast-paced triage environment.
+    * *Cons:* Slight performance overhead since sorting occurs on every single addition or update (O(n log n) time complexity per modification).
+* **Alternative 2:** Do not sort automatically. Create a separate `sort` command that the user must type manually.
+    * *Pros:* Better performance during rapid, sequential `add` operations.
+    * *Cons:* Highly dangerous in a medical triage context. If a user forgets to type `sort`, an `EXTREME` urgency patient might be left at the bottom of the list, leading to critical delays in care.
+
+**Reason for choosing Alternative 1:** In a clinical setting, data accuracy and immediate visibility of critical patients strictly outweigh the minor performance cost of automatic sorting. "Security by Design" principles dictate that the system should fail-safe; automatically sorting ensures no critical patient is ever accidentally hidden.
+
 ### \[Proposed\] Undo/redo feature
 
 #### Proposed Implementation
@@ -180,7 +220,7 @@ Step 2. The user executes `delete 5` command to delete the 5th person in the add
 
 <puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
 
-Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
+Step 3. The user executes `add pn/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
 
 <puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
 
@@ -228,7 +268,7 @@ Step 5. The user then decides to execute the command `list`. Commands that do no
 
 <puml src="diagrams/UndoRedoState4.puml" alt="UndoRedoState4" />
 
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
+Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add pn/David …​` command. This is the behavior that most modern desktop applications follow.
 
 <puml src="diagrams/UndoRedoState5.puml" alt="UndoRedoState5" />
 
@@ -241,13 +281,13 @@ The following activity diagram summarizes what happens when a user executes a ne
 **Aspect: How undo & redo executes:**
 
 * **Alternative 1 (current choice):** Saves the entire address book.
-  * Pros: Easy to implement.
-  * Cons: May have performance issues in terms of memory usage.
+    * Pros: Easy to implement.
+    * Cons: May have performance issues in terms of memory usage.
 
 * **Alternative 2:** Individual command knows how to undo/redo by
   itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
-  * Cons: We must ensure that the implementation of each individual command are correct.
+    * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
+    * Cons: We must ensure that the implementation of each individual command are correct.
 
 _{more aspects and alternatives to be added}_
 
@@ -280,9 +320,9 @@ _{Explain here how the data archiving feature will be implemented}_
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: This product eliminates the administrative friction of navigating complex, full-scale medical 
-record systems during time-sensitive triage. By providing a streamlined, high-speed CLI interface for tracking patient 
-updates and doctor assignments, this reduces coordinators' cognitive load, ensuring faster patient throughput and more 
+**Value proposition**: This product eliminates the administrative friction of navigating complex, full-scale medical
+record systems during time-sensitive triage. By providing a streamlined, high-speed CLI interface for tracking patient
+updates and doctor assignments, this reduces coordinators' cognitive load, ensuring faster patient throughput and more
 accurate prioritisation in fast-paced, high-workload clinical environments.
 
 ### User stories
@@ -294,11 +334,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | beginner user      | list all patients in the system                                | verify that the data I just entered was saved correctly.                        |
 | `* * *`  | beginner user      | exit the app safely                                            | be assured that the data entered into the app is saved when I end my shift.     |                                                                    |
 | `* * *`  | user               | add patient details                                            | start tracking those patients.                                                  |
+| `* * *`  | triage coordinator | update specific details of a patient (such as their urgency level, symptoms, or notes) | quickly keep records current as the patient moves through the triage process and their medical condition changes. |
 | `* * *`  | user               | remove patients                                                | remove duplicates or wrongly created records to keep it accurate.               |
+| `* *`    | triage coordinator | search for patient records using different criteria (like Name, IC, Phone, or Urgency Level) | easily locate a specific patient in an emergency or find specific groups of patients without manually scrolling through the entire database. |
 | `* *`    | expert user        | use my up/down keyboard keys                                   | conveniently access previously entered commands in my history to execute again. |
-| `* *`    | expert user        | update specific details of the patient                         | quickly keep records current as the patients move through the triage process.   |
 | `* *`    | expert user        | archive old patient records                                    | focus on the relevant patient records.                                          |
-| `* *`    | triage coordinator | search for records using different criteria                    | easily find specifiy groups of patients.                                        |
 | `* *`    | beginner user      | see a confirmation message after adding a patient              | be assured that a patient has been added to my contacts.                        |
 | `* *`    | beginner user      | use a help command                                             | easily understand the capabilities of ClinicConnect.                            |
 | `* *`    | beginner user      | reset the app to its initial state                             | safely experiment with the app.                                                 |
@@ -317,7 +357,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `*`      | beginner user      | view a brief onboarding walkthrough                            | know what the app can do.                                                       |
 | `*`      | beginner user      | search for a patient by name or identifier                     | quickly find an existing contact.                                               |
 | `*`      | beginner user      | undo recent actions                                            | feel safe exploring the app.                                                    |
-| `*`      | expert user        | organize patients using tags                                   | categorise patients based on clinical priority or special needs.                |
+| `*`      | expert user        | organize patients using symptoms                                   | categorise patients based on clinical priority or special needs.                |
 | `*`      | beginner user      | view what actions I have recently made                         | understand the current state of the database more accurately.                   |
 | `*`      | expert user        | use command shortcuts or aliases when entering patient details | maximize my efficiency in typing during peak hours.                             |
 | `*`      | expert user        | customise views or defaults                                    | the app matches my working habits.                                              |
@@ -332,50 +372,50 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Use case: UC1 - Add a patient record**
 
 **Preconditions**:
-* User has launched the app and is at the main window.
+* The user has launched the app and is at the main window.
 
 **Guarantees**:
 * The patient will be added only if the user enters the format correctly, there is no duplicate patient record or there is no error with the save file.
 
 **MSS**
 
-1. User enters in a patient’s details using this format: add pn/PATIENT NAME ic/IC NUMBER p/PATIENT PHONE NUMBER s/SYMPTOMS u/URGENCY LEVEL d/DOCTOR NAME nk/NEXT-OF-KIN NAME nkp/NEXT-OF-KIN PHONE NUMBER [n/NOTES].
+1. The user requests to add a patient by providing their details.
 2. ClinicConnect validates the input.
 3. ClinicConnect adds the patient.
 4. ClinicConnect saves the new data.
 5. ClinicConnect displays a successful message.
 
-    Use case ends.
+   Use case ends.
 
 **Extensions**
 
 * 2a. ClinicConnect detects an error with the user’s input.
-  * 2a1. ClinicConnects display an unsuccessful message. 
-        
-    Use case resumes from step 1.
+    * 2a1. ClinicConnect displays an unsuccessful message.
 
-* 2b. 	ClinicConnect detects a duplicate patient record. 
-  * 2b1. ClinicConnects display an unsuccessful message. 
-    
-    Use case resumes from step 1.
+      Use case resumes from step 1.
+
+* 2b. ClinicConnect detects a duplicate patient record.
+    * 2b1. ClinicConnect displays an unsuccessful message.
+
+      Use case resumes from step 1.
 
 * 3a. ClinicConnect detects an error with the save file.
-  * 3a1. ClinicConnects display an unsuccessful message. 
-    
-    Use case ends. (Note: Since there is an issue with the save file, the use case should end here rather than retrying)
+    * 3a1. ClinicConnect displays an unsuccessful message.
+
+      Use case ends. (Note: Since there is an issue with the save file, the use case should end here rather than retrying)
 
 
 **Use case: UC2 - Delete a patient record**
 
 **Preconditions**:
-* User has launched the app and is at the main window.
+* The user has launched the app and is at the main window.
 
 **Guarantees**:
 * The patient will be deleted only if the user enters the format correctly, the list of patient records is not empty already or there is no error with the save file.
 
 **MSS**
 
-1. User enters in a patient’s details using this format: delete INDEX.
+1. The user requests to delete a specific patient in the list.
 2. ClinicConnect validates the input.
 3. ClinicConnect deletes the patient.
 4. ClinicConnect saves the new data.
@@ -386,33 +426,34 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 * 2a. ClinicConnect detects an error with the user’s input.
-    * 2a1. ClinicConnects display an unsuccessful message.
+    * 2a1. ClinicConnect displays an unsuccessful message.
 
       Use case resumes from step 1.
 
-* 2b. 	ClinicConnect detects that the list is already empty.
-    * 2b1. ClinicConnects display an unsuccessful message.
+* 2b. ClinicConnect detects that the list is already empty.
+    * 2b1. ClinicConnect displays an unsuccessful message.
 
       Use case ends. (Note: Since the list is empty, the use case should end here rather than retrying)
 
 * 3a. ClinicConnect detects an error with the save file.
-    * 3a1. ClinicConnects display an unsuccessful message.
+    * 3a1. ClinicConnect displays an unsuccessful message.
 
       Use case ends. (Note: Since there is an issue with the save file, the use case should end here rather than retrying)
 
-**Use case: UC3 - Delete a group of selected patient record**
+
+**Use case: UC3 - Delete a group of selected patient records**
 
 **Preconditions**:
-* User has launched the app and is at the main window.
+* The user has launched the app and is at the main window.
 
 **Guarantees**:
 * The patients will be deleted only if the user enters the format correctly, the list of patient records is not empty already or there is no error with the save file.
 
 **MSS**
 
-1. User enters in a patient’s details using this format: delete INDEX1, INDEX2, INDEX3, ….
+1. The user requests to delete multiple specific patients in the list.
 2. ClinicConnect validates the input.
-3. ClinicConnect deletes the patient.
+3. ClinicConnect deletes the patients.
 4. ClinicConnect saves the new data.
 5. ClinicConnect displays a successful message.
 
@@ -421,33 +462,34 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 * 2a. ClinicConnect detects an error with the user’s input.
-    * 2a1. ClinicConnects display an unsuccessful message.
+    * 2a1. ClinicConnect displays an unsuccessful message.
 
       Use case resumes from step 1.
 
-* 2b. 	ClinicConnect detects that the list is already empty.
-    * 2b1. ClinicConnects display an unsuccessful message.
+* 2b. ClinicConnect detects that the list is already empty.
+    * 2b1. ClinicConnect displays an unsuccessful message.
 
       Use case ends. (Note: Since the list is empty, the use case should end here rather than retrying)
 
 * 3a. ClinicConnect detects an error with the save file.
-    * 3a1. ClinicConnects display an unsuccessful message.
+    * 3a1. ClinicConnect displays an unsuccessful message.
 
       Use case ends. (Note: Since there is an issue with the save file, the use case should end here rather than retrying)
 
-**Use case: UC4 -  Delete a range of selected patient record**
+
+**Use case: UC4 - Delete a range of selected patient records**
 
 **Preconditions**:
-* User has launched the app and is at the main window.
+* The user has launched the app and is at the main window.
 
 **Guarantees**:
 * The patients will be deleted only if the user enters the format correctly, the list of patient records is not empty already or there is no error with the save file.
 
 **MSS**
 
-1. User enters in a patient’s details using this format: delete INDEX - INDEX.
+1. The user requests to delete a range of patients in the list.
 2. ClinicConnect validates the input.
-3. ClinicConnect deletes the patient.
+3. ClinicConnect deletes the patients.
 4. ClinicConnect saves the new data.
 5. ClinicConnect displays a successful message.
 
@@ -456,19 +498,81 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 * 2a. ClinicConnect detects an error with the user’s input.
-    * 2a1. ClinicConnects display an unsuccessful message.
+    * 2a1. ClinicConnect displays an unsuccessful message.
 
       Use case resumes from step 1.
 
-* 2b. 	ClinicConnect detects that the list is already empty.
-    * 2b1. ClinicConnects display an unsuccessful message.
+* 2b. ClinicConnect detects that the list is already empty.
+    * 2b1. ClinicConnect displays an unsuccessful message.
 
       Use case ends. (Note: Since the list is empty, the use case should end here rather than retrying)
 
 * 3a. ClinicConnect detects an error with the save file.
-    * 3a1. ClinicConnects display an unsuccessful message.
+    * 3a1. ClinicConnect displays an unsuccessful message.
 
       Use case ends. (Note: Since there is an issue with the save file, the use case should end here rather than retrying)
+
+
+**Use case: UC5 - Update a patient’s details**
+
+**Preconditions**:
+* The user has launched the app and is at the main window.
+
+**Guarantees**:
+* The patient will be updated only if the user enters the format correctly, the list of patient records is not empty already or there is no error with the save file.
+
+**MSS**
+
+1. The user requests to update specific details of a patient in the list.
+2. ClinicConnect validates the input.
+3. ClinicConnect updates the patient's details.
+4. ClinicConnect saves the new data.
+5. ClinicConnect displays a successful message.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. ClinicConnect detects an error with the user’s input.
+    * 2a1. ClinicConnect displays an unsuccessful message.
+
+      Use case resumes from step 1.
+
+* 2b. ClinicConnect detects that the list is empty.
+    * 2b1. ClinicConnect displays an unsuccessful message.
+
+      Use case ends. (Note: Since the list is empty, the use case should end here rather than retrying)
+
+* 3a. ClinicConnect detects an error with the save file.
+    * 3a1. ClinicConnect displays an unsuccessful message.
+
+      Use case ends. (Note: Since there is an issue with the save file, the use case should end here rather than retrying)
+
+
+**Use case: UC6 - Search patient records**
+
+**Preconditions**:
+* User has launched the app and is at the main window.
+
+**Guarantees**:
+* A list of patients matching the criteria will be displayed if the user enters the search format correctly with at least one valid identifier.
+
+**MSS**
+
+1. The user requests to find patients using specific search criteria.
+2. ClinicConnect validates the input format.
+3. ClinicConnect filters the current list of patients based on the criteria.
+4. ClinicConnect updates the UI to display the matching patient records.
+5. ClinicConnect displays a message showing the number of patients found.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. ClinicConnect detects an error with the user’s input (e.g., no fields provided).
+    * 2a1. ClinicConnects display an unsuccessful message detailing the error.
+
+      Use case resumes from step 1.
 
 *{More to be added}*
 
@@ -502,15 +606,15 @@ testers are expected to do more *exploratory* testing.
 
 1. Initial launch
 
-   1. Download the jar file and copy into an empty folder
+    1. Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+    1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
 1. Saving window preferences
 
-   1. Resize the window to an optimum size. Move the window to a different location. Close the window.
+    1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
-   1. Re-launch the app by double-clicking the jar file.<br>
+    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
 1. _{ more test cases …​ }_
@@ -519,16 +623,16 @@ testers are expected to do more *exploratory* testing.
 
 1. Deleting a person while all persons are being shown
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+    1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
 
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+    1. Test case: `delete 1`<br>
+       Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 
-   1. Test case: `delete 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+    1. Test case: `delete 0`<br>
+       Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
+    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
+       Expected: Similar to previous.
 
 1. _{ more test cases …​ }_
 
@@ -536,6 +640,6 @@ testers are expected to do more *exploratory* testing.
 
 1. Dealing with missing/corrupted data files
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
 1. _{ more test cases …​ }_

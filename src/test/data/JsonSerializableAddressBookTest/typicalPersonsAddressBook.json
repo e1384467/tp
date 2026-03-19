@@ -5,63 +5,70 @@
     "phone" : "94351253",
     "email" : "alice@example.com",
     "address" : "123, Jurong West Ave 6, #08-111",
-    "tags" : [ "friends" ],
+    "symptoms" : [ "friends" ],
     "ic" : "S1111111A",
     "urgencyLevel" : "low",
-    "nextOfKinPhone": "91234567"
+    "nextOfKinPhone": "91234567",
+    "doctorName": "Ben Leong"
   }, {
     "name" : "Benson Meier",
     "phone" : "98765432",
     "email" : "johnd@example.com",
     "address" : "311, Clementi Ave 2, #02-25",
-    "tags" : [ "owesMoney", "friends" ],
+    "symptoms" : [ "owesMoney", "friends" ],
     "ic" : "S2222222A",
     "urgencyLevel" : "high",
-    "nextOfKinPhone": "92345678"
+    "nextOfKinPhone": "92345678",
+    "doctorName": "Colin"
   }, {
     "name" : "Carl Kurz",
     "phone" : "95352563",
     "email" : "heinz@example.com",
     "address" : "wall street",
-    "tags" : [ ],
+    "symptoms" : [ ],
     "ic" : "S3333333A",
     "urgencyLevel" : "low",
-    "nextOfKinPhone": "93456789"
+    "nextOfKinPhone": "93456789",
+    "doctorName": "Tzer Bin"
   }, {
     "name" : "Daniel Meier",
     "phone" : "87652533",
     "email" : "cornelia@example.com",
     "address" : "10th street",
-    "tags" : [ "friends" ],
+    "symptoms" : [ "friends" ],
     "ic" : "S4444444A",
     "urgencyLevel" : "extreme",
-    "nextOfKinPhone": "94567890"
+    "nextOfKinPhone": "94567890",
+    "doctorName": "Lady Gaga"
   }, {
     "name" : "Elle Meyer",
     "phone" : "94822244",
     "email" : "werner@example.com",
     "address" : "michegan ave",
-    "tags" : [ ],
+    "symptoms" : [ ],
     "ic" : "S5555555A",
     "urgencyLevel" : "high",
-    "nextOfKinPhone": "95678901"
+    "nextOfKinPhone": "95678901",
+    "doctorName": "Spiderman"
   }, {
     "name" : "Fiona Kunz",
     "phone" : "94824275",
     "email" : "lydia@example.com",
     "address" : "little tokyo",
-    "tags" : [ ],
+    "symptoms" : [ ],
     "ic" : "S6666666A",
     "urgencyLevel" : "moderate",
-    "nextOfKinPhone": "96789012"
+    "nextOfKinPhone": "96789012",
+    "doctorName": "Ironman"
   }, {
     "name" : "George Best",
     "phone" : "94824426",
     "email" : "anna@example.com",
     "address" : "4th street",
-    "tags" : [ ],
+    "symptoms" : [ ],
     "ic" : "S7777777A",
     "urgencyLevel" : "extreme",
-    "nextOfKinPhone": "97890123"
+    "nextOfKinPhone": "97890123",
+    "doctorName": "Choong"
   } ]
 }
