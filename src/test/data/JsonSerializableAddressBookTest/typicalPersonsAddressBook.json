@@ -8,6 +8,7 @@
     "symptoms" : [ "friends" ],
     "ic" : "S1111111A",
     "urgencyLevel" : "low",
+    "nextOfKinPhone": "91234567",
     "doctorName": "Ben Leong"
   }, {
     "name" : "Benson Meier",
@@ -17,6 +18,7 @@
     "symptoms" : [ "owesMoney", "friends" ],
     "ic" : "S2222222A",
     "urgencyLevel" : "high",
+    "nextOfKinPhone": "92345678",
     "doctorName": "Colin"
   }, {
     "name" : "Carl Kurz",
@@ -26,6 +28,7 @@
     "symptoms" : [ ],
     "ic" : "S3333333A",
     "urgencyLevel" : "low",
+    "nextOfKinPhone": "93456789",
     "doctorName": "Tzer Bin"
   }, {
     "name" : "Daniel Meier",
@@ -35,6 +38,7 @@
     "symptoms" : [ "friends" ],
     "ic" : "S4444444A",
     "urgencyLevel" : "extreme",
+    "nextOfKinPhone": "94567890",
     "doctorName": "Lady Gaga"
   }, {
     "name" : "Elle Meyer",
@@ -44,6 +48,7 @@
     "symptoms" : [ ],
     "ic" : "S5555555A",
     "urgencyLevel" : "high",
+    "nextOfKinPhone": "95678901",
     "doctorName": "Spiderman"
   }, {
     "name" : "Fiona Kunz",
@@ -53,6 +58,7 @@
     "symptoms" : [ ],
     "ic" : "S6666666A",
     "urgencyLevel" : "moderate",
+    "nextOfKinPhone": "96789012",
     "doctorName": "Ironman"
   }, {
     "name" : "George Best",
@@ -62,6 +68,7 @@
     "symptoms" : [ ],
     "ic" : "S7777777A",
     "urgencyLevel" : "extreme",
+    "nextOfKinPhone": "97890123",
     "doctorName": "Choong"
   } ]
 }

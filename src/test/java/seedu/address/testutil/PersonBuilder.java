@@ -8,6 +8,7 @@ import seedu.address.model.person.DoctorName;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Ic;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.NextOfKinPhone;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.UrgencyLevel;
@@ -25,6 +26,7 @@ public class PersonBuilder {
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_IC = "S1234567A";
     public static final String DEFAULT_URGENCY_LEVEL = "low";
+    public static final String DEFAULT_NEXT_OF_KIN_PHONE = "81234567";
     public static final String DEFAULT_DOCTOR_NAME = "Seuss";
 
     private Name name;
@@ -34,6 +36,7 @@ public class PersonBuilder {
     private Set<Symptom> symptoms;
     private Ic ic;
     private UrgencyLevel urgencyLevel;
+    private NextOfKinPhone nextOfKinPhone;
     private DoctorName doctorName;
 
     /**
@@ -47,6 +50,7 @@ public class PersonBuilder {
         symptoms = new HashSet<>();
         ic = new Ic(DEFAULT_IC);
         urgencyLevel = new UrgencyLevel(DEFAULT_URGENCY_LEVEL);
+        nextOfKinPhone = new NextOfKinPhone(DEFAULT_NEXT_OF_KIN_PHONE);
         doctorName = new DoctorName(DEFAULT_DOCTOR_NAME);
     }
 
@@ -61,6 +65,7 @@ public class PersonBuilder {
         symptoms = new HashSet<>(personToCopy.getSymptoms());
         ic = personToCopy.getIc();
         urgencyLevel = personToCopy.getUrgencyLevel();
+        nextOfKinPhone = personToCopy.getNextOfKinPhone();
         doctorName = personToCopy.getDoctorName();
     }
 
@@ -121,6 +126,14 @@ public class PersonBuilder {
     }
 
     /**
+     * Sets the {@code NextOfKinPhone} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withNextOfKinPhone(String nextOfKinPhone) {
+        this.nextOfKinPhone = new NextOfKinPhone(nextOfKinPhone);
+        return this;
+    }
+
+    /**
      * Sets the {@code DoctorName} of the {@code Person} that we are building.
      */
     public PersonBuilder withDoctorName(String doctorName) {
@@ -129,7 +142,6 @@ public class PersonBuilder {
     }
 
     public Person build() {
-        return new Person(name, phone, email, address, symptoms, ic, urgencyLevel, doctorName);
+        return new Person(name, phone, email, address, symptoms, ic, urgencyLevel, nextOfKinPhone, doctorName);
     }
-
 }

@@ -26,6 +26,7 @@ public class Person {
     private final Address address;
     private final Set<Symptom> symptoms = new HashSet<>();
     private final UrgencyLevel urgencyLevel;
+    private final NextOfKinPhone nextOfKinPhone;
     private final DoctorName doctorName;
 
     /**
@@ -38,8 +39,9 @@ public class Person {
                   Set<Symptom> symptoms,
                   Ic ic,
                   UrgencyLevel urgencyLevel,
+                  NextOfKinPhone nextOfKinPhone,
                   DoctorName doctorName) {
-        requireAllNonNull(name, phone, email, address, symptoms, ic, urgencyLevel, doctorName);
+        requireAllNonNull(name, phone, email, address, symptoms, ic, urgencyLevel, doctorName, nextOfKinPhone);
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -47,6 +49,7 @@ public class Person {
         this.symptoms.addAll(symptoms);
         this.ic = ic;
         this.urgencyLevel = urgencyLevel;
+        this.nextOfKinPhone = nextOfKinPhone;
         this.doctorName = doctorName;
     }
 
@@ -64,6 +67,10 @@ public class Person {
 
     public Address getAddress() {
         return address;
+    }
+
+    public NextOfKinPhone getNextOfKinPhone() {
+        return nextOfKinPhone;
     }
 
     /**
@@ -122,13 +129,14 @@ public class Person {
                 && symptoms.equals(otherPerson.symptoms)
                 && ic.equals(otherPerson.ic)
                 && urgencyLevel.equals(otherPerson.urgencyLevel)
+                && nextOfKinPhone.equals(otherPerson.nextOfKinPhone)
                 && doctorName.equals(otherPerson.doctorName);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, symptoms, ic, urgencyLevel, doctorName);
+        return Objects.hash(name, phone, email, address, symptoms, ic, urgencyLevel, doctorName, nextOfKinPhone);
     }
 
     @Override
@@ -141,6 +149,7 @@ public class Person {
                 .add("symptoms", symptoms)
                 .add("ic", ic)
                 .add("urgencyLevel", urgencyLevel)
+                .add("nextOfKinPhone", nextOfKinPhone)
                 .add("doctorName", doctorName)
                 .toString();
     }

@@ -10,6 +10,7 @@ import seedu.address.model.person.DoctorName;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Ic;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.NextOfKinPhone;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.UrgencyLevel;
@@ -42,6 +43,7 @@ public class UpdatePersonDescriptorBuilder {
         descriptor.setSymptoms(person.getSymptoms());
         descriptor.setIc(person.getIc());
         descriptor.setUrgencyLevel(person.getUrgencyLevel());
+        descriptor.setNextOfKinPhone(person.getNextOfKinPhone());
         descriptor.setDoctorName(person.getDoctorName());
     }
 
@@ -100,6 +102,14 @@ public class UpdatePersonDescriptorBuilder {
      */
     public UpdatePersonDescriptorBuilder withUrgencyLevel(String urgencyLevel) {
         descriptor.setUrgencyLevel(new UrgencyLevel(urgencyLevel));
+        return this;
+    }
+
+    /**
+     * Sets the {@code NextOfKinPhone} of the {@code UpdatePersonDescriptor} that we are building.
+     */
+    public UpdatePersonDescriptorBuilder withNextOfKinPhone(String phone) {
+        descriptor.setNextOfKinPhone(new NextOfKinPhone(phone));
         return this;
     }
 

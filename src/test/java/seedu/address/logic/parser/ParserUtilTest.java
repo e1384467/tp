@@ -30,6 +30,8 @@ public class ParserUtilTest {
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_SYMPTOM = "#friend";
     private static final String INVALID_URGENCY_LEVEL = "urgent";
+    private static final String INVALID_DOCTOR_NAME = "J@nny";
+    private static final String INVALID_NEXT_OF_KIN_PHONE = "9131a";
 
     private static final String VALID_IC = "S1234567Z";
     private static final String VALID_NAME = "Rachel Walker";
@@ -39,6 +41,7 @@ public class ParserUtilTest {
     private static final String VALID_SYMPTOM_1 = "friend";
     private static final String VALID_SYMPTOM_2 = "neighbour";
     private static final String VALID_URGENCY_LEVEL = "high";
+
 
     private static final String WHITESPACE = " \t\r\n";
 

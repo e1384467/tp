@@ -15,6 +15,7 @@ import seedu.address.model.person.DoctorName;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Ic;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.NextOfKinPhone;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.UrgencyLevel;
@@ -34,6 +35,7 @@ class JsonAdaptedPerson {
     private final List<JsonAdaptedSymptom> symptoms = new ArrayList<>();
     private final String ic;
     private final String urgencyLevel;
+    private final String nextOfKinPhone;
     private final String doctorName;
 
     /**
@@ -42,9 +44,10 @@ class JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
             @JsonProperty("email") String email, @JsonProperty("address") String address,
-            @JsonProperty("symptoms") List<JsonAdaptedSymptom> symptoms, @JsonProperty("ic") String ic,
+            @JsonProperty("tags") List<JsonAdaptedSymptom> tags, @JsonProperty("ic") String ic,
             @JsonProperty("urgencyLevel") String urgencyLevel,
-                             @JsonProperty("doctorName") String doctorName) {
+                             @JsonProperty("doctorName") String doctorName,
+                             @JsonProperty("nextOfKinPhone") String nextOfKinPhone) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -54,6 +57,7 @@ class JsonAdaptedPerson {
         }
         this.ic = ic;
         this.urgencyLevel = urgencyLevel;
+        this.nextOfKinPhone = nextOfKinPhone;
         this.doctorName = doctorName;
     }
 
@@ -70,6 +74,7 @@ class JsonAdaptedPerson {
                 .collect(Collectors.toList()));
         ic = source.getIc().value;
         urgencyLevel = source.getUrgencyLevel().toString();
+        nextOfKinPhone = source.getNextOfKinPhone().toString();
         doctorName = source.getDoctorName().toString();
     }
 
@@ -133,6 +138,14 @@ class JsonAdaptedPerson {
         }
         final UrgencyLevel modelUrgencyLevel = new UrgencyLevel(urgencyLevel);
 
+        if (nextOfKinPhone == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    NextOfKinPhone.class.getSimpleName()));
+        }
+        if (!NextOfKinPhone.isValidNextOfKinPhone(nextOfKinPhone)) {
+            throw new IllegalValueException(NextOfKinPhone.MESSAGE_CONSTRAINTS);
+        }
+        final NextOfKinPhone modelNextOfKinPhone = new NextOfKinPhone(nextOfKinPhone);
         if (doctorName == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     DoctorName.class.getSimpleName()));
@@ -144,7 +157,7 @@ class JsonAdaptedPerson {
 
         final Set<Symptom> modelSymptoms = new HashSet<>(personSymptoms);
         return new Person(modelName, modelPhone, modelEmail, modelAddress, modelSymptoms, modelIc, modelUrgencyLevel,
-                modelDoctorName);
+                modelNextOfKinPhone, modelDoctorName);
     }
 
 }

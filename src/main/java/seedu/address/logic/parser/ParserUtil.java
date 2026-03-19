@@ -14,6 +14,7 @@ import seedu.address.model.person.DoctorName;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Ic;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.NextOfKinPhone;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.UrgencyLevel;
 import seedu.address.model.symptom.Symptom;
@@ -141,6 +142,21 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String phone} into a {@code NextOfKinPhone}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code phone} is invalid.
+     */
+    public static NextOfKinPhone parseNextOfKinPhone(String phone) throws ParseException {
+        requireNonNull(phone);
+        String trimmedPhone = phone.trim();
+        if (!NextOfKinPhone.isValidNextOfKinPhone(trimmedPhone)) {
+            throw new ParseException(NextOfKinPhone.MESSAGE_CONSTRAINTS);
+        }
+        return new NextOfKinPhone(trimmedPhone);
+    }
+
+    /**
      * Parses {@code String ic} into an {@code Ic}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -165,7 +181,7 @@ public class ParserUtil {
         requireNonNull(name);
         String trimmedDoctorName = name.trim();
         if (!DoctorName.isValidName(trimmedDoctorName)) {
-            throw new ParseException(Address.MESSAGE_CONSTRAINTS);
+            throw new ParseException(DoctorName.MESSAGE_CONSTRAINTS);
         }
         return new DoctorName(trimmedDoctorName);
     }
