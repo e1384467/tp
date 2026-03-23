@@ -8,6 +8,7 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 
@@ -30,7 +31,8 @@ public class RangeDeleteCommand extends DeleteCommand {
      * @param startIndex The starting index of the range (inclusive).
      * @param endIndex The ending index of the range (inclusive).
      */
-    public RangeDeleteCommand(Index startIndex, Index endIndex) {
+    public RangeDeleteCommand(Index startIndex, Index endIndex, Set<Prefix> prefixes) {
+        super(prefixes);
         this.startIndex = startIndex;
         this.endIndex = endIndex;
     }

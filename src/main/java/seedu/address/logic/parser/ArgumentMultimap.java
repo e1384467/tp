@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import seedu.address.logic.Messages;
@@ -60,6 +61,15 @@ public class ArgumentMultimap {
      */
     public String getPreamble() {
         return getValue(new Prefix("")).orElse("");
+    }
+
+    /**
+     * Returns the set of all prefixes that have at least one argument value.
+     */
+    public Set<Prefix> getPrefixes() {
+        Set<Prefix> prefixes = argMultimap.keySet();
+        prefixes.remove(new Prefix(""));
+        return prefixes;
     }
 
     /**

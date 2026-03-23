@@ -8,6 +8,7 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 
@@ -23,7 +24,8 @@ public class SingleDeleteCommand extends DeleteCommand {
 
     private final Index targetIndex;
 
-    public SingleDeleteCommand(Index targetIndex) {
+    public SingleDeleteCommand(Index targetIndex, Set<Prefix> prefixes) {
+        super(prefixes);
         this.targetIndex = targetIndex;
     }
 
@@ -42,6 +44,13 @@ public class SingleDeleteCommand extends DeleteCommand {
         }
 
         Person personToDelete = lastShownList.get(targetIndex.getZeroBased());
+
+        if (!prefixes.isEmpty()) {
+            Person updatedPerson = getUpdatedPerson(personToDelete);
+            model.setPerson(personToDelete, updatedPerson);
+            return new CommandResult(String.format(MESSAGE_DELETE_FIELD_SUCCESS, Messages.format(updatedPerson)));
+        }
+
         model.deletePerson(personToDelete);
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(personToDelete)));
     }

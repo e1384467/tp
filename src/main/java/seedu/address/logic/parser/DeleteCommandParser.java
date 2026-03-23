@@ -1,12 +1,16 @@
 package seedu.address.logic.parser;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.Messages.MESSAGE_MISSING_PERSON_INDEX;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTES;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SYMPTOM;
 
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.Messages;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.MultipleDeleteCommand;
 import seedu.address.logic.commands.RangeDeleteCommand;
@@ -31,32 +35,38 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public DeleteCommand parse(String args) throws ParseException {
-        if (args == null || args.trim().isEmpty()) {
-            throw new ParseException(String.format(
-                    Messages.MESSAGE_MISSING_PERSON_INDEX, DeleteCommand.MESSAGE_USAGE));
-        }
+        requireNonNull(args);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_SYMPTOM, PREFIX_NOTES);
 
-        if (args.contains(MULTIPLE_INDICES_DELIMITER)) {
-            return parseMultipleIndices(args);
-        } else if (args.contains(RANGE_INDICES_DELIMITER)) {
-            return parseRangeIndices(args);
+        final String indicesString = argMultimap.getPreamble();
+        if (indicesString.isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_MISSING_PERSON_INDEX, DeleteCommand.MESSAGE_USAGE));
+        }
+        Set<Prefix> prefixes = argMultimap.getPrefixes();
+
+        if (indicesString.contains(MULTIPLE_INDICES_DELIMITER)) {
+            return parseMultipleIndices(indicesString, prefixes);
+        } else if (indicesString.contains(RANGE_INDICES_DELIMITER)) {
+            return parseRangeIndices(indicesString, prefixes);
         } else {
-            return parseSingleIndex(args);
+            return parseSingleIndex(indicesString, prefixes);
         }
     }
 
-    private DeleteCommand parseSingleIndex(String args) throws ParseException {
+    private DeleteCommand parseSingleIndex(String indexString, Set<Prefix> prefixes) throws ParseException {
+        Index index;
         try {
-            Index index = ParserUtil.parseIndex(args);
-            return new SingleDeleteCommand(index);
+            index = ParserUtil.parseIndex(indexString);
         } catch (ParseException pe) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, SingleDeleteCommand.MESSAGE_USAGE), pe);
         }
+
+        return new SingleDeleteCommand(index, prefixes);
     }
 
-    private DeleteCommand parseMultipleIndices(String args) throws ParseException {
-        Matcher matcher = MULTIPLE_INDICES_ARGUMENT_FORMAT.matcher(args.trim());
+    private DeleteCommand parseMultipleIndices(String indicesString, Set<Prefix> prefixes) throws ParseException {
+        final Matcher matcher = MULTIPLE_INDICES_ARGUMENT_FORMAT.matcher(indicesString.trim());
         if (!matcher.matches()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, MultipleDeleteCommand.MESSAGE_USAGE));
@@ -73,11 +83,11 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
             }
         }
 
-        return new MultipleDeleteCommand(indices);
+        return new MultipleDeleteCommand(indices, prefixes);
     }
 
-    private DeleteCommand parseRangeIndices(String args) throws ParseException {
-        Matcher matcher = RANGE_ARGUMENT_FORMAT.matcher(args.trim());
+    private DeleteCommand parseRangeIndices(String indicesString, Set<Prefix> prefixes) throws ParseException {
+        final Matcher matcher = RANGE_ARGUMENT_FORMAT.matcher(indicesString.trim());
         if (!matcher.matches()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, RangeDeleteCommand.MESSAGE_USAGE));
@@ -93,6 +103,6 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, RangeDeleteCommand.MESSAGE_USAGE), pe);
         }
 
-        return new RangeDeleteCommand(startIndex, endIndex);
+        return new RangeDeleteCommand(startIndex, endIndex, prefixes);
     }
 }
