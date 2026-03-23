@@ -76,7 +76,8 @@ public class UpdateCommandParser implements Parser<UpdateCommand> {
 
         // NEW: BUG PREVENTION: Prevent overwrite (n/) and append (an/) at the same time
         if (argMultimap.getValue(PREFIX_NOTES).isPresent() && argMultimap.getValue(PREFIX_APPEND_NOTES).isPresent()) {
-            throw new ParseException("You cannot overwrite a note (n/) and append to a note (an/) in the same command.");
+            throw new ParseException("You cannot overwrite a note (n/) "
+                    + "and append to a note (an/) in the same command.");
         }
 
         UpdatePersonDescriptor updatePersonDescriptor = new UpdatePersonDescriptor();
