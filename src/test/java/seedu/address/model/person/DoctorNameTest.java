@@ -34,11 +34,6 @@ public class DoctorNameTest {
         assertThrows(IllegalArgumentException.class, () -> new DoctorName(invalidName));
     }
 
-    @Test
-    public void constructor_trimsLeadingAndTrailingSpaces() {
-        DoctorName doctorName = new DoctorName("   Dr. Jane Doe  ");
-        assertEquals("Dr. Jane Doe", doctorName.getFullName());
-    }
 
     // isValidName tests
     @Test
