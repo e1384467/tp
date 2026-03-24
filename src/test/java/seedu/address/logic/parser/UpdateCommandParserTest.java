@@ -36,8 +36,8 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
-import seedu.address.logic.commands.UpdateCommand;
-import seedu.address.logic.commands.UpdateCommand.UpdatePersonDescriptor;
+import seedu.address.logic.commands.SingleUpdateCommand;
+import seedu.address.logic.commands.SingleUpdateCommand.UpdatePersonDescriptor;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -50,7 +50,7 @@ public class UpdateCommandParserTest {
     private static final String SYMPTOM_EMPTY = " " + PREFIX_SYMPTOM;
 
     private static final String MESSAGE_INVALID_FORMAT =
-            String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateCommand.MESSAGE_USAGE);
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, SingleUpdateCommand.MESSAGE_USAGE);
 
     private UpdateCommandParser parser = new UpdateCommandParser();
 
@@ -60,7 +60,7 @@ public class UpdateCommandParserTest {
         assertParseFailure(parser, VALID_NAME_AMY, MESSAGE_INVALID_FORMAT);
 
         // no field specified
-        assertParseFailure(parser, "1", UpdateCommand.MESSAGE_NOT_UPDATED);
+        assertParseFailure(parser, "1", SingleUpdateCommand.MESSAGE_NOT_UPDATED);
 
         // no index and no field specified
         assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
@@ -116,7 +116,7 @@ public class UpdateCommandParserTest {
         UpdatePersonDescriptor descriptor = new UpdatePersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
                 .withSymptoms(VALID_SYMPTOM_HUSBAND, VALID_SYMPTOM_FRIEND).build();
-        UpdateCommand expectedCommand = new UpdateCommand(targetIndex, descriptor);
+        SingleUpdateCommand expectedCommand = new SingleUpdateCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
     }
@@ -128,7 +128,7 @@ public class UpdateCommandParserTest {
 
         UpdatePersonDescriptor descriptor = new UpdatePersonDescriptorBuilder().withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_AMY).build();
-        UpdateCommand expectedCommand = new UpdateCommand(targetIndex, descriptor);
+        SingleUpdateCommand expectedCommand = new SingleUpdateCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
     }
@@ -139,31 +139,31 @@ public class UpdateCommandParserTest {
         Index targetIndex = INDEX_THIRD_PERSON;
         String userInput = targetIndex.getOneBased() + NAME_DESC_AMY;
         UpdatePersonDescriptor descriptor = new UpdatePersonDescriptorBuilder().withName(VALID_NAME_AMY).build();
-        UpdateCommand expectedCommand = new UpdateCommand(targetIndex, descriptor);
+        SingleUpdateCommand expectedCommand = new SingleUpdateCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // phone
         userInput = targetIndex.getOneBased() + PHONE_DESC_AMY;
         descriptor = new UpdatePersonDescriptorBuilder().withPhone(VALID_PHONE_AMY).build();
-        expectedCommand = new UpdateCommand(targetIndex, descriptor);
+        expectedCommand = new SingleUpdateCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // email
         userInput = targetIndex.getOneBased() + EMAIL_DESC_AMY;
         descriptor = new UpdatePersonDescriptorBuilder().withEmail(VALID_EMAIL_AMY).build();
-        expectedCommand = new UpdateCommand(targetIndex, descriptor);
+        expectedCommand = new SingleUpdateCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // address
         userInput = targetIndex.getOneBased() + ADDRESS_DESC_AMY;
         descriptor = new UpdatePersonDescriptorBuilder().withAddress(VALID_ADDRESS_AMY).build();
-        expectedCommand = new UpdateCommand(targetIndex, descriptor);
+        expectedCommand = new SingleUpdateCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // symptoms
         userInput = targetIndex.getOneBased() + SYMPTOM_DESC_FRIEND;
         descriptor = new UpdatePersonDescriptorBuilder().withSymptoms(VALID_SYMPTOM_FRIEND).build();
-        expectedCommand = new UpdateCommand(targetIndex, descriptor);
+        expectedCommand = new SingleUpdateCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 
@@ -205,7 +205,7 @@ public class UpdateCommandParserTest {
         String userInput = targetIndex.getOneBased() + SYMPTOM_EMPTY;
 
         UpdatePersonDescriptor descriptor = new UpdatePersonDescriptorBuilder().withSymptoms().build();
-        UpdateCommand expectedCommand = new UpdateCommand(targetIndex, descriptor);
+        SingleUpdateCommand expectedCommand = new SingleUpdateCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
     }

@@ -17,7 +17,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_SYMPTOM_HUSBAND
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.commands.UpdateCommand.UpdatePersonDescriptor;
+import seedu.address.logic.commands.SingleUpdateCommand.UpdatePersonDescriptor;
 import seedu.address.testutil.UpdatePersonDescriptorBuilder;
 
 public class UpdatePersonDescriptorTest {
@@ -91,8 +91,8 @@ public class UpdatePersonDescriptorTest {
                 + updatePersonDescriptor.getNextOfKinPhone().orElse(null) + ", doctorName="
                 + updatePersonDescriptor.getDoctorName().orElse(null) + ", nextOfKin="
                 + updatePersonDescriptor.getNextOfKin().orElse(null) + ", notes="
-                + updatePersonDescriptor.getUrgencyLevel().orElse(null)
-                + "}";
+                + updatePersonDescriptor.getNotes().orElse(null) + ", notesToAppend="
+                + updatePersonDescriptor.getNotesToAppend().orElse(null) + "}";
         assertEquals(expected, updatePersonDescriptor.toString());
     }
 }

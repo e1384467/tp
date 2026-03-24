@@ -96,8 +96,8 @@ public class CommandTestUtil {
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 
-    public static final UpdateCommand.UpdatePersonDescriptor DESC_AMY;
-    public static final UpdateCommand.UpdatePersonDescriptor DESC_BOB;
+    public static final SingleUpdateCommand.UpdatePersonDescriptor DESC_AMY;
+    public static final SingleUpdateCommand.UpdatePersonDescriptor DESC_BOB;
 
     static {
         DESC_AMY = new UpdatePersonDescriptorBuilder().withName(VALID_NAME_AMY)

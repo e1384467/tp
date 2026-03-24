@@ -15,7 +15,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_URGENCY;
 import java.util.Set;
 
 import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.UpdateCommand.UpdatePersonDescriptor;
+import seedu.address.logic.commands.SingleUpdateCommand.UpdatePersonDescriptor;
 import seedu.address.model.person.Person;
 import seedu.address.model.symptom.Symptom;
 

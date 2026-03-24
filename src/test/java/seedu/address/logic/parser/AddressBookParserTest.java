@@ -21,8 +21,8 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SingleDeleteCommand;
-import seedu.address.logic.commands.UpdateCommand;
-import seedu.address.logic.commands.UpdateCommand.UpdatePersonDescriptor;
+import seedu.address.logic.commands.SingleUpdateCommand;
+import seedu.address.logic.commands.SingleUpdateCommand.UpdatePersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
@@ -58,9 +58,9 @@ public class AddressBookParserTest {
     public void parseCommand_edit() throws Exception {
         Person person = new PersonBuilder().build();
         UpdatePersonDescriptor descriptor = new UpdatePersonDescriptorBuilder(person).build();
-        UpdateCommand command = (UpdateCommand) parser.parseCommand(UpdateCommand.COMMAND_WORD + " "
+        SingleUpdateCommand command = (SingleUpdateCommand) parser.parseCommand(SingleUpdateCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getUpdatePersonDescriptorDetails(descriptor));
-        assertEquals(new UpdateCommand(INDEX_FIRST_PERSON, descriptor), command);
+        assertEquals(new SingleUpdateCommand(INDEX_FIRST_PERSON, descriptor), command);
     }
 
     @Test
