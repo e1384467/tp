@@ -41,32 +41,39 @@ public class MultipleUpdateCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         List<Person> lastShownList = model.getFilteredPersonList();
-        StringBuilder updatedNames = new StringBuilder();
 
-        // 1. Validate ALL indices first (Atomic Execution)
+        // 1. Validate indices and capture the exact Person references FIRST
+        // This prevents list-shifting bugs because we grab everyone before making changes.
+        List<Person> personsToUpdate = new java.util.ArrayList<>();
         for (Index index : targetIndices) {
             if (index.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
+            personsToUpdate.add(lastShownList.get(index.getZeroBased()));
         }
 
-        // 2. Perform the updates
-        for (Index index : targetIndices) {
-            Person personToUpdate = lastShownList.get(index.getZeroBased());
+        // 2. Pre-compute updates and check for duplicates
+        // This guarantees Atomic Execution: if one fails, nothing changes.
+        List<Person> updatedPersons = new java.util.ArrayList<>();
+        for (Person personToUpdate : personsToUpdate) {
             Person updatedPerson = SingleUpdateCommand.createUpdatedPerson(personToUpdate, updatePersonDescriptor);
 
             if (!personToUpdate.isSamePerson(updatedPerson) && model.hasPerson(updatedPerson)) {
                 throw new CommandException(SingleUpdateCommand.MESSAGE_DUPLICATE_PERSON
-                        + " (Conflict at " + personToUpdate.getName() + ")");
+                        + " (Conflict at " + personToUpdate.getName().fullName + ")");
             }
+            updatedPersons.add(updatedPerson);
+        }
 
-            model.setPerson(personToUpdate, updatedPerson);
-            updatedNames.append(updatedPerson.getName()).append(", ");
+        // 3. Safely apply all updates now that we know no errors will be thrown
+        StringBuilder updatedNames = new StringBuilder();
+        for (int i = 0; i < personsToUpdate.size(); i++) {
+            model.setPerson(personsToUpdate.get(i), updatedPersons.get(i));
+            updatedNames.append(updatedPersons.get(i).getName().fullName).append(", ");
         }
 
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
-        // Remove the trailing comma and space
         String finalNames = updatedNames.substring(0, updatedNames.length() - 2);
         return new CommandResult(String.format(MESSAGE_UPDATE_MULTIPLE_SUCCESS, finalNames));
     }
