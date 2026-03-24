@@ -9,10 +9,12 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
@@ -53,7 +55,7 @@ public class ParserUtilTest {
     @Test
     public void parseIndex_outOfRangeInput_throwsParseException() {
         assertThrows(ParseException.class, MESSAGE_INVALID_INDEX, ()
-            -> ParserUtil.parseIndex(Long.toString(Integer.MAX_VALUE + 1)));
+                -> ParserUtil.parseIndex(Long.toString(Integer.MAX_VALUE + 1)));
     }
 
     @Test
@@ -249,5 +251,58 @@ public class ParserUtilTest {
         String urgencyLevelWithWhitespace = WHITESPACE + VALID_URGENCY_LEVEL + WHITESPACE;
         UrgencyLevel expectedUrgencyLevel = new UrgencyLevel(VALID_URGENCY_LEVEL);
         assertEquals(expectedUrgencyLevel, ParserUtil.parseUrgencyLevel(urgencyLevelWithWhitespace));
+    }
+
+    @Test
+    public void parseIndices_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> ParserUtil.parseIndices(null));
+    }
+
+    @Test
+    public void parseIndices_emptyInput_throwsParseException() {
+        // Test exact empty string
+        assertThrows(ParseException.class, "Please provide at least one index.", () ->
+                ParserUtil.parseIndices("")
+        );
+
+        // Test string with only spaces
+        assertThrows(ParseException.class, "Please provide at least one index.", () ->
+                ParserUtil.parseIndices("   ")
+        );
+    }
+
+    @Test
+    public void parseIndices_validSingleIndex_returnsIndexList() throws Exception {
+        List<Index> expectedIndexList = Collections.singletonList(Index.fromOneBased(1));
+
+        // No extra spaces
+        assertEquals(expectedIndexList, ParserUtil.parseIndices("1"));
+
+        // With trailing/leading spaces
+        assertEquals(expectedIndexList, ParserUtil.parseIndices("  1  "));
+    }
+
+    @Test
+    public void parseIndices_validMultipleIndices_returnsIndexList() throws Exception {
+        List<Index> expectedIndexList = Arrays.asList(
+                Index.fromOneBased(1),
+                Index.fromOneBased(2),
+                Index.fromOneBased(3)
+        );
+
+        // Standard space separation
+        assertEquals(expectedIndexList, ParserUtil.parseIndices("1 2 3"));
+
+        // Multiple spaces between numbers
+        assertEquals(expectedIndexList, ParserUtil.parseIndices("  1   2    3  "));
+    }
+
+    @Test
+    public void parseIndices_invalidIndexPresent_throwsParseException() {
+        // One of the indices is a letter
+        assertThrows(ParseException.class, () -> ParserUtil.parseIndices("1 a 3"));
+
+        // One of the indices is zero (caught by parseIndex)
+        assertThrows(ParseException.class, () -> ParserUtil.parseIndices("1 0 3"));
     }
 }
