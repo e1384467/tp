@@ -72,19 +72,19 @@ public class MultipleUpdateCommandTest {
 
     @Test
     public void execute_duplicatePerson_throwsCommandException() {
+        // We will target the FIRST person
+        List<Index> indices = Arrays.asList(INDEX_FIRST_PERSON);
+
+        // We will try to update the FIRST person to have the exact details of the SECOND person
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Person secondPerson = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
 
-        // Target the second person
-        List<Index> indices = Arrays.asList(INDEX_SECOND_PERSON);
-
-        // Try to update the second person to have the EXACT same details as the first person
-        UpdatePersonDescriptor descriptor = new UpdatePersonDescriptorBuilder(firstPerson).build();
+        UpdatePersonDescriptor descriptor = new UpdatePersonDescriptorBuilder(secondPerson).build();
         MultipleUpdateCommand command = new MultipleUpdateCommand(indices, descriptor);
 
-        // FIX: The conflict error message prints the name of the person being updated (secondPerson)
+        // The conflict happens on the first person, because they are the one being changed into a duplicate
         String expectedMessage = SingleUpdateCommand.MESSAGE_DUPLICATE_PERSON
-                + " (Conflict at " + secondPerson.getName() + ")";
+                + " (Conflict at " + firstPerson.getName().fullName + ")";
 
         // Asserts lines 58-61 (Duplicate Exception check)
         assertCommandFailure(command, model, expectedMessage);

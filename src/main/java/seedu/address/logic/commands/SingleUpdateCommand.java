@@ -41,8 +41,8 @@ public class SingleUpdateCommand extends Command {
     public static final String MESSAGE_USAGE = "The index field cannot be empty.\n"
             + "Usage:\n"
             + "        Single update: " + COMMAND_WORD + " INDEX [PREFIX/VALUE]...\n"
-            + "        Multiple update: " + COMMAND_WORD + " INDEX1 INDEX2 [INDEX3...] [PREFIX/VALUE]...\n"
-            + "Example: " + COMMAND_WORD + " 1 2 "
+            + "        Multiple update: " + COMMAND_WORD + " INDEX1,INDEX2,INDEX3... [PREFIX/VALUE]...\n" // Removed brackets and spaces here
+            + "Example: " + COMMAND_WORD + " 1,2 " // Perfect comma-separated example
             + PREFIX_PATIENT_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
 

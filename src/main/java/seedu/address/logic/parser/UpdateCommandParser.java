@@ -15,6 +15,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PATIENT_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SYMPTOM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_URGENCY;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -32,14 +33,14 @@ import seedu.address.model.symptom.Symptom;
 /**
  * Parses input arguments and creates either a SingleUpdateCommand or MultipleUpdateCommand
  */
-public class UpdateCommandParser implements Parser<Command> { // CHANGED: Now returns <Command>
+public class UpdateCommandParser implements Parser<Command> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the UpdateCommand
      * and returns a Command object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public Command parse(String args) throws ParseException { // CHANGED: Return type is Command
+    public Command parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args,
@@ -57,12 +58,28 @@ public class UpdateCommandParser implements Parser<Command> { // CHANGED: Now re
                         PREFIX_APPEND_NOTES
                 );
 
-        List<Index> indices; // CHANGED: Now holds a List of indices
+        String preamble = argMultimap.getPreamble().trim();
 
+        if (preamble.isEmpty()) {
+            throw new ParseException(SingleUpdateCommand.MESSAGE_USAGE);
+        }
+
+        // STRICT CHECK: Reject any spaces within the index list (e.g., "1, 2" or "1 2")
+        if (preamble.contains(" ")) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    SingleUpdateCommand.MESSAGE_USAGE));
+        }
+
+        List<Index> indices = new ArrayList<>();
         try {
-            // CHANGED: Uses parseIndices to grab 1 or more numbers
-            indices = ParserUtil.parseIndices(argMultimap.getPreamble());
+            // Split purely by commas
+            String[] indexStrings = preamble.split(",");
+            for (String indexString : indexStrings) {
+                // Since we blocked spaces, we can parse it directly using parseIndex
+                indices.add(ParserUtil.parseIndex(indexString));
+            }
         } catch (ParseException pe) {
+            // Catches non-integers, trailing commas, or weird symbols
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     SingleUpdateCommand.MESSAGE_USAGE), pe);
         }

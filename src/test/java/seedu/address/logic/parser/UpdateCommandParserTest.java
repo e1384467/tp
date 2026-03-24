@@ -60,14 +60,14 @@ public class UpdateCommandParserTest {
 
     @Test
     public void parse_missingParts_failure() {
-        // no index specified
+        // no index specified ("Amy Bee" contains a space, so it hits our space-blocker)
         assertParseFailure(parser, VALID_NAME_AMY, MESSAGE_INVALID_FORMAT);
 
         // no field specified
         assertParseFailure(parser, "1", SingleUpdateCommand.MESSAGE_NOT_UPDATED);
 
-        // no index and no field specified
-        assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
+        // no index and no field specified (empty string hits the isEmpty() check)
+        assertParseFailure(parser, "", SingleUpdateCommand.MESSAGE_USAGE);
     }
 
     @Test
@@ -234,7 +234,18 @@ public class UpdateCommandParserTest {
         UpdatePersonDescriptor descriptor = new UpdatePersonDescriptorBuilder().withPhone(VALID_PHONE_AMY).build();
         MultipleUpdateCommand expectedCommand = new MultipleUpdateCommand(indices, descriptor);
 
-        // Pass two numbers to trigger the "else" branch in your Master Parser
-        assertParseSuccess(parser, "1 2 " + PHONE_DESC_AMY, expectedCommand);
+        // FIXED: Using "1,2" instead of "1 2" to match the strict comma requirement
+        assertParseSuccess(parser, "1,2 " + PHONE_DESC_AMY, expectedCommand);
+    }
+
+    @Test
+    public void parse_multipleIndicesWithSpaces_failure() {
+        // Tries to sneak a space after the comma
+        String userInputWithSpace = "1, 2 " + PHONE_DESC_AMY;
+
+        // Should throw the standard usage message due to the space rejection block
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, SingleUpdateCommand.MESSAGE_USAGE);
+
+        assertParseFailure(parser, userInputWithSpace, expectedMessage);
     }
 }
