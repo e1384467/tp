@@ -39,6 +39,7 @@
       <Label fx:id="doctorName" styleClass="cell_small_label" text="\$doctor name" />
       <Label fx:id="nextOfKin" styleClass="cell_small_label" text="\$next of kin" />
       <Label fx:id="nextOfKinPhone" styleClass="cell_small_label" text="\$next-of-kin phone" />
+      <Label fx:id="nextOfKinRelationship" styleClass="cell_small_label" text="\$next-of-kin relationship" />
       <Label fx:id="notes" styleClass="cell_small_label" text="\$notes" />
     </VBox>
   </GridPane>

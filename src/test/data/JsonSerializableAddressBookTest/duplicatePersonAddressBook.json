@@ -10,6 +10,7 @@
     "nextOfKinPhone": "91748274",
     "doctorName": "Ben Leong",
     "nextOfKin" : "Johnny",
+    "nextOfKinRelationship" : "Brother",
     "notes": "cannot stop talking"
   }, {
     "name": "Alice Pauline",
@@ -21,6 +22,7 @@
     "nextOfKinPhone": "92846294",
     "doctorName": "Ben Leong",
     "nextOfKin" : "John",
+    "nextOfKinRelationship" : "Father",
     "notes": "Christian"
   } ]
 }

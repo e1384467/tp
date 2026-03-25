@@ -10,6 +10,7 @@ import seedu.address.model.person.Ic;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.NextOfKinPhone;
+import seedu.address.model.person.NextOfKinRelationship;
 import seedu.address.model.person.Notes;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -32,6 +33,7 @@ public class PersonBuilder {
     public static final String DEFAULT_DOCTOR_NAME = "Seuss";
     public static final String DEFAULT_NEXT_OF_KIN = "Ms Jane";
     public static final String DEFAULT_NOTES = "Goes to gym";
+    public static final String DEFAULT_NEXT_OF_KIN_RELATIONSHIP = "Parent";
 
     private Name name;
     private Phone phone;
@@ -44,6 +46,7 @@ public class PersonBuilder {
     private DoctorName doctorName;
     private NextOfKin nextOfKin;
     private Notes notes;
+    private NextOfKinRelationship nextOfKinRelationship;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -60,6 +63,7 @@ public class PersonBuilder {
         doctorName = new DoctorName(DEFAULT_DOCTOR_NAME);
         nextOfKin = new NextOfKin(DEFAULT_NEXT_OF_KIN);
         notes = new Notes(DEFAULT_NOTES);
+        nextOfKinRelationship = new NextOfKinRelationship(DEFAULT_NEXT_OF_KIN_RELATIONSHIP);
     }
 
     /**
@@ -77,6 +81,7 @@ public class PersonBuilder {
         doctorName = personToCopy.getDoctorName();
         nextOfKin = personToCopy.getNextOfKin();
         notes = personToCopy.getNotes();
+        nextOfKinRelationship = personToCopy.getNextOfKinRelationship();
     }
 
     /**
@@ -160,6 +165,14 @@ public class PersonBuilder {
     }
 
     /**
+     * Sets the {@code NextOfKinRelationship} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withNextOfKinRelationship(String nextOfKinRelationship) {
+        this.nextOfKinRelationship = new NextOfKinRelationship(nextOfKinRelationship);
+        return this;
+    }
+
+    /**
      * Sets the {@code Notes} of the {@code Person} that we are building.
      */
     public PersonBuilder withNotes(String notes) {
@@ -172,7 +185,7 @@ public class PersonBuilder {
      */
     public Person build() {
         return new Person(name, phone, email, address, symptoms, ic, urgencyLevel,
-                nextOfKinPhone, doctorName, nextOfKin, notes);
+                nextOfKinPhone, doctorName, nextOfKin, nextOfKinRelationship, notes);
     }
 
 

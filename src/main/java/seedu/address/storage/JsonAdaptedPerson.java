@@ -17,6 +17,7 @@ import seedu.address.model.person.Ic;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.NextOfKinPhone;
+import seedu.address.model.person.NextOfKinRelationship;
 import seedu.address.model.person.Notes;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -41,6 +42,7 @@ class JsonAdaptedPerson {
     private final String doctorName;
     private final String nextOfKin;
     private final String notes;
+    private final String nextOfKinRelationship;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -56,6 +58,7 @@ class JsonAdaptedPerson {
                              @JsonProperty("doctorName") String doctorName,
                              @JsonProperty("nextOfKinPhone") String nextOfKinPhone,
                              @JsonProperty("nextOfKin") String nextOfKin,
+                             @JsonProperty("nextOfKinRelationship") String nextOfKinRelationship,
                              @JsonProperty("notes") String notes) {
         this.name = name;
         this.phone = phone;
@@ -70,6 +73,7 @@ class JsonAdaptedPerson {
         this.doctorName = doctorName;
         this.nextOfKin = nextOfKin;
         this.notes = notes;
+        this.nextOfKinRelationship = nextOfKinRelationship;
     }
 
     /**
@@ -89,6 +93,7 @@ class JsonAdaptedPerson {
         nextOfKinPhone = source.getNextOfKinPhone().toString();
         doctorName = source.getDoctorName().toString();
         nextOfKin = source.getNextOfKin().toString();
+        nextOfKinRelationship = source.getNextOfKinRelationship().toString();
     }
 
     /**
@@ -160,6 +165,15 @@ class JsonAdaptedPerson {
         }
         final NextOfKin modelNextOfKin = new NextOfKin(nextOfKin);
 
+        if (nextOfKinRelationship == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    NextOfKinRelationship.class.getSimpleName()));
+        }
+        if (!NextOfKinRelationship.isValidNextOfKinRelationship(nextOfKinRelationship)) {
+            throw new IllegalValueException(NextOfKinRelationship.MESSAGE_CONSTRAINTS);
+        }
+        final NextOfKinRelationship modelNextOfKinRelationship = new NextOfKinRelationship(nextOfKinRelationship);
+
         if (nextOfKinPhone == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     NextOfKinPhone.class.getSimpleName()));
@@ -190,7 +204,7 @@ class JsonAdaptedPerson {
 
         final Set<Symptom> modelSymptoms = new HashSet<>(personSymptoms);
         return new Person(modelName, modelPhone, modelEmail, modelAddress, modelSymptoms, modelIc, modelUrgencyLevel,
-                modelNextOfKinPhone, modelDoctorName, modelNextOfKin, modelNotes);
+                modelNextOfKinPhone, modelDoctorName, modelNextOfKin, modelNextOfKinRelationship, modelNotes);
     }
 
 }

@@ -11,6 +11,7 @@
     "nextOfKinPhone": "91234567",
     "doctorName": "Ben Leong",
     "nextOfKin" : "Benny Blanco",
+    "nextOfKinRelationship" : "Father",
     "notes": "Keeps saying hi"
   }, {
     "name" : "Benson Meier",
@@ -23,6 +24,7 @@
     "nextOfKinPhone": "92345678",
     "doctorName": "Colin",
     "nextOfKin" : "Selena Gomez",
+    "nextOfKinRelationship" : "Mother",
     "notes": "Cannot sit down"
   }, {
     "name" : "Carl Kurz",
@@ -35,6 +37,7 @@
     "nextOfKinPhone": "93456789",
     "doctorName": "Tzer Bin",
     "nextOfKin" : "Justin Bieber",
+    "nextOfKinRelationship" : "Brother",
     "notes": "Funny guy"
   }, {
     "name" : "Daniel Meier",
@@ -47,6 +50,7 @@
     "nextOfKinPhone": "94567890",
     "doctorName": "Lady Gaga",
     "nextOfKin" : "Hailey Bieber",
+    "nextOfKinRelationship" : "Sibling",
     "notes": "Arrested for harrassment"
   }, {
     "name" : "Elle Meyer",
@@ -59,6 +63,7 @@
     "nextOfKinPhone": "95678901",
     "doctorName": "Spiderman",
     "nextOfKin" : "Kendall Jenner",
+    "nextOfKinRelationship" : "Sister",
     "notes": "Cannot stand up"
   }, {
     "name" : "Fiona Kunz",
@@ -71,6 +76,7 @@
     "nextOfKinPhone": "96789012",
     "doctorName": "Ironman",
     "nextOfKin" : "Kylie Jenner",
+    "nextOfKinRelationship" : "Family member",
     "notes": "Hates walking"
   }, {
     "name" : "George Best",
@@ -83,6 +89,7 @@
     "nextOfKinPhone": "97890123",
     "doctorName": "Choong",
     "nextOfKin" : "Kris Jenner",
+    "nextOfKinRelationship" : "Guardian",
     "notes": "Handsome man"
   } ]
 }

@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_IC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NEXT_OF_KIN;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NEXT_OF_KIN_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NEXT_OF_KIN_RELATIONSHIP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PATIENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PATIENT_PHONE;
@@ -34,6 +35,7 @@ import seedu.address.model.person.Ic;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.NextOfKinPhone;
+import seedu.address.model.person.NextOfKinRelationship;
 import seedu.address.model.person.Notes;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -59,6 +61,7 @@ public class UpdateCommand extends Command {
             + "[" + PREFIX_URGENCY + "LEVEL] "
             + "[" + PREFIX_NEXT_OF_KIN + "NEXT-OF-KIN] "
             + "[" + PREFIX_NEXT_OF_KIN_PHONE + "N-O-K PHONE] "
+            + "[" + PREFIX_NEXT_OF_KIN_RELATIONSHIP + "NEXT-OF-KIN-RELATIONSHIP] "
             + "[" + PREFIX_DOCTOR + "]"
             + "[" + PREFIX_SYMPTOM + "SYMPTOM]"
             + "[" + PREFIX_NOTES + "NOTES]...\n"
@@ -125,6 +128,8 @@ public class UpdateCommand extends Command {
                 .orElse(personToUpdate.getNextOfKinPhone());
         DoctorName updatedDoctorName = updatePersonDescriptor.getDoctorName().orElse(personToUpdate.getDoctorName());
         NextOfKin updatedNextOfKin = updatePersonDescriptor.getNextOfKin().orElse(personToUpdate.getNextOfKin());
+        NextOfKinRelationship updatedNextOfKinRelationship = updatePersonDescriptor.getNextOfKinRelationship()
+                .orElse(personToUpdate.getNextOfKinRelationship());
         Notes updatedNotes = updatePersonDescriptor.getNotes().orElse(personToUpdate.getNotes());
 
         return new Person(updatedName,
@@ -137,6 +142,7 @@ public class UpdateCommand extends Command {
                 updatedNextOfKinPhone,
                 updatedDoctorName,
                 updatedNextOfKin,
+                updatedNextOfKinRelationship,
                 updatedNotes);
     }
 
@@ -178,6 +184,7 @@ public class UpdateCommand extends Command {
         private NextOfKinPhone nextOfKinPhone;
         private DoctorName doctorName;
         private NextOfKin nextOfKin;
+        private NextOfKinRelationship nextOfKinRelationship;
         private Notes notes;
 
         public UpdatePersonDescriptor() {}
@@ -197,6 +204,7 @@ public class UpdateCommand extends Command {
             setNextOfKinPhone(toCopy.nextOfKinPhone);
             setDoctorName(toCopy.doctorName);
             setNextOfKin(toCopy.nextOfKin);
+            setNextOfKinRelationship(toCopy.nextOfKinRelationship);
             setNotes(toCopy.notes);
         }
 
@@ -205,7 +213,7 @@ public class UpdateCommand extends Command {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(name, phone, email, address,
-                    symptoms, urgencyLevel, ic, nextOfKinPhone, doctorName, nextOfKin, notes);
+                    symptoms, urgencyLevel, ic, nextOfKinPhone, doctorName, nextOfKin, nextOfKinRelationship, notes);
         }
 
         public void setName(Name name) {
@@ -263,6 +271,10 @@ public class UpdateCommand extends Command {
             return Optional.ofNullable(nextOfKin);
         }
 
+        public Optional<NextOfKinRelationship> getNextOfKinRelationship() {
+            return Optional.ofNullable(nextOfKinRelationship);
+        }
+
         public void setNotes(Notes notes) {
             this.notes = notes;
         }
@@ -300,6 +312,10 @@ public class UpdateCommand extends Command {
             this.nextOfKinPhone = nextOfKinPhone;
         }
 
+        public void setNextOfKinRelationship(NextOfKinRelationship nextOfKinRelationship) {
+            this.nextOfKinRelationship = nextOfKinRelationship;
+        }
+
         public Optional<NextOfKinPhone> getNextOfKinPhone() {
             return Optional.ofNullable(nextOfKinPhone);
         }
@@ -325,6 +341,7 @@ public class UpdateCommand extends Command {
                     && Objects.equals(nextOfKinPhone, otherUpdatePersonDescriptor.nextOfKinPhone)
                     && Objects.equals(doctorName, otherUpdatePersonDescriptor.doctorName)
                     && Objects.equals(nextOfKin, otherUpdatePersonDescriptor.nextOfKin)
+                    && Objects.equals(nextOfKinRelationship, otherUpdatePersonDescriptor.nextOfKinRelationship)
                     && Objects.equals(notes, otherUpdatePersonDescriptor.notes);
         }
 
@@ -341,6 +358,7 @@ public class UpdateCommand extends Command {
                     .add("nextOfKinPhone", nextOfKinPhone)
                     .add("doctorName", doctorName)
                     .add("nextOfKin", nextOfKin)
+                    .add("nextOfKinRelationship", nextOfKinRelationship)
                     .add("notes", notes)
                     .toString();
         }

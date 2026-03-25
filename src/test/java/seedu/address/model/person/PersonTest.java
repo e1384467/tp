@@ -9,7 +9,9 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_IC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NEXT_OF_KIN_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NEXT_OF_KIN_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NEXT_OF_KIN_RS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NOTES_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_SYMPTOM_HUSBAND;
@@ -89,6 +91,15 @@ public class PersonTest {
         // different nok phone -> returns false
         editedAlice = new PersonBuilder(ALICE).withNextOfKinPhone(VALID_NEXT_OF_KIN_PHONE_BOB).build();
         assertFalse(ALICE.equals(editedAlice));
+
+        // different nok -> returns false
+        editedAlice = new PersonBuilder(ALICE).withNextOfKin(VALID_NEXT_OF_KIN_BOB).build();
+        assertFalse(ALICE.equals(editedAlice));
+
+        // different nok relationship -> returns false
+        editedAlice = new PersonBuilder(ALICE).withNextOfKinRelationship(VALID_NEXT_OF_KIN_RS_BOB).build();
+        assertFalse(ALICE.equals(editedAlice));
+
         // different symptoms -> returns false
         editedAlice = new PersonBuilder(ALICE).withSymptoms(VALID_SYMPTOM_HUSBAND).build();
         assertFalse(ALICE.equals(editedAlice));
@@ -111,6 +122,7 @@ public class PersonTest {
                 + ", nextOfKinPhone=" + ALICE.getNextOfKinPhone()
                 + ", doctorName=" + ALICE.getDoctorName()
                 + ", nextOfKin=" + ALICE.getNextOfKin()
+                + ", nextOfKinRelationship=" + ALICE.getNextOfKinRelationship()
                 + ", notes=" + ALICE.getNotes()
                 + "}";
         assertEquals(expected, ALICE.toString());
@@ -146,6 +158,17 @@ public class PersonTest {
 
         // different NameOfKin -> different hashCode
         Person editedAlice = new PersonBuilder(ALICE).withNextOfKin("John Doe").build();
+        assertNotEquals(ALICE.hashCode(), editedAlice.hashCode());
+    }
+
+    @Test
+    public void hashCode_includingNextOfKinRelationship() {
+        // same values -> equal hashCode
+        Person aliceCopy = new PersonBuilder(ALICE).build();
+        assertEquals(ALICE.hashCode(), aliceCopy.hashCode());
+
+        // different NameOfKin -> different hashCode
+        Person editedAlice = new PersonBuilder(ALICE).withNextOfKinRelationship("Parent").build();
         assertNotEquals(ALICE.hashCode(), editedAlice.hashCode());
     }
 

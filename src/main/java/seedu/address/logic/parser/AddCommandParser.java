@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_IC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NEXT_OF_KIN;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NEXT_OF_KIN_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NEXT_OF_KIN_RELATIONSHIP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PATIENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PATIENT_PHONE;
@@ -25,6 +26,7 @@ import seedu.address.model.person.Ic;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.NextOfKinPhone;
+import seedu.address.model.person.NextOfKinRelationship;
 import seedu.address.model.person.Notes;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -53,6 +55,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                         PREFIX_URGENCY,
                         PREFIX_NEXT_OF_KIN,
                         PREFIX_NEXT_OF_KIN_PHONE,
+                        PREFIX_NEXT_OF_KIN_RELATIONSHIP,
                         PREFIX_DOCTOR,
                         PREFIX_NOTES
                 );
@@ -66,6 +69,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                 PREFIX_URGENCY,
                 PREFIX_NEXT_OF_KIN,
                 PREFIX_NEXT_OF_KIN_PHONE,
+                PREFIX_NEXT_OF_KIN_RELATIONSHIP,
                 PREFIX_DOCTOR)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
@@ -79,6 +83,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                 PREFIX_URGENCY,
                 PREFIX_NEXT_OF_KIN_PHONE,
                 PREFIX_NEXT_OF_KIN,
+                PREFIX_NEXT_OF_KIN_RELATIONSHIP,
                 PREFIX_DOCTOR,
                 PREFIX_NOTES);
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_PATIENT_NAME).get());
@@ -92,6 +97,8 @@ public class AddCommandParser implements Parser<AddCommand> {
                 .get());
         DoctorName doctorName = ParserUtil.parseDoctorName(argMultimap.getValue(PREFIX_DOCTOR).get());
         NextOfKin nextOfKin = ParserUtil.parseNextOfKin(argMultimap.getValue(PREFIX_NEXT_OF_KIN).get());
+        NextOfKinRelationship nextOfKinRelationship = ParserUtil.parseNextOfKinRelationship(argMultimap
+                .getValue(PREFIX_NEXT_OF_KIN_RELATIONSHIP).get());
         Notes notes;
         if (argMultimap.getValue(PREFIX_NOTES).isPresent()) {
             notes = ParserUtil.parseNotes(argMultimap.getValue(PREFIX_NOTES).get());
@@ -101,7 +108,7 @@ public class AddCommandParser implements Parser<AddCommand> {
 
 
         Person person = new Person(name, phone, email, address, symptomList, ic,
-                urgencyLevel, nextOfKinPhone, doctorName, nextOfKin, notes);
+                urgencyLevel, nextOfKinPhone, doctorName, nextOfKin, nextOfKinRelationship, notes);
 
         return new AddCommand(person);
     }
