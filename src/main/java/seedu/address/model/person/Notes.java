@@ -45,14 +45,17 @@ public class Notes {
      * Returns a new Notes object containing the combined text.
      */
     public Notes append(Notes additionalNotes) {
-        String existingText = this.value;
-        String textToAppend = additionalNotes.value;
-
-        if (existingText == null || existingText.trim().isEmpty() || existingText.equals("-")) {
-            return new Notes(textToAppend);
-        } else {
-            return new Notes(existingText + "\n" + textToAppend);
+        if (additionalNotes.value.trim().isEmpty()) {
+            return this;
         }
+
+        String existingText = this.value;
+
+        if (existingText.trim().isEmpty() || existingText.equals("-")) {
+            return additionalNotes;
+        }
+
+        return new Notes(existingText + "\n" + additionalNotes.value);
     }
 
     @Override
