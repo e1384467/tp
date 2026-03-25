@@ -27,6 +27,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Notes;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.UpdatePersonDescriptorBuilder;
@@ -160,7 +161,7 @@ public class UpdateCommandTest {
         String textToAppend = "More info";
 
         UpdatePersonDescriptor descriptor = new UpdatePersonDescriptor();
-        descriptor.setNotesToAppend(textToAppend);
+        descriptor.setNotesToAppend(new Notes(textToAppend));
         UpdateCommand updateCommand = new UpdateCommand(INDEX_FIRST_PERSON, descriptor);
 
         // FIX: Generate the matching timestamp used in UpdateCommand
@@ -179,7 +180,7 @@ public class UpdateCommandTest {
 
         String textToAppend = "First Note";
         UpdatePersonDescriptor descriptor = new UpdatePersonDescriptor();
-        descriptor.setNotesToAppend(textToAppend);
+        descriptor.setNotesToAppend(new Notes(textToAppend));
         UpdateCommand updateCommand = new UpdateCommand(INDEX_FIRST_PERSON, descriptor);
 
         // FIX: Generate the matching timestamp
@@ -193,16 +194,26 @@ public class UpdateCommandTest {
 
     @Test
     public void execute_appendNoteExceedsLimit_throwsCommandException() {
-        // Covers the character limit safety net (usually around line 149-150 in UpdateCommand)
-        // We use a repeat count that is likely to exceed your Notes.MAX_LENGTH
-        String veryLongNote = "a".repeat(1001);
-        UpdatePersonDescriptor descriptor = new UpdatePersonDescriptorBuilder()
-                .withNotesToAppend(veryLongNote).build();
+        // 1. Existing note is 400 chars (Valid)
+        String existingText = "a".repeat(400);
+        // 2. Text to append is 150 chars (Valid individually)
+        String textToAppend = "b".repeat(150);
+
+        Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person personWithExistingNotes = new PersonBuilder(firstPerson).withNotes(existingText).build();
+        model.setPerson(firstPerson, personWithExistingNotes);
+
+        UpdatePersonDescriptor descriptor = new UpdatePersonDescriptor();
+        // This line will now pass because 150 < 500
+        descriptor.setNotesToAppend(new Notes(textToAppend));
+
         UpdateCommand updateCommand = new UpdateCommand(INDEX_FIRST_PERSON, descriptor);
 
-        // We use assertCommandFailure to ensure the system correctly blocks the update
-        assertCommandFailure(updateCommand, model, "Appending this text exceeds the note character constraints. "
-                + seedu.address.model.person.Notes.MESSAGE_CONSTRAINTS);
+        String expectedMessage = "Appending this text exceeds the note character constraints. "
+                + Notes.MESSAGE_CONSTRAINTS;
+
+        // This will now correctly catch the CommandException thrown during .execute()
+        assertCommandFailure(updateCommand, model, expectedMessage);
     }
 
     @Test

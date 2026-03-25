@@ -35,7 +35,7 @@ public class Notes {
     /**
      * Appends additional notes to the existing notes, automatically adding a timestamp.
      * Safely ignores empty strings (No-Op) and overwrites default placeholders.
-     * * @param additionalNotes The new notes to append.
+     * @param additionalNotes The new notes to append.
      * @return A new Notes object containing the combined text.
      */
     public Notes append(Notes additionalNotes) {

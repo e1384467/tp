@@ -145,7 +145,7 @@ public class UpdatePersonDescriptorBuilder {
      * Sets the {@code notesToAppend} of the {@code UpdatePersonDescriptor} that we are building.
      */
     public UpdatePersonDescriptorBuilder withNotesToAppend(String notesToAppend) {
-        descriptor.setNotesToAppend(notesToAppend);
+        descriptor.setNotesToAppend(new Notes(notesToAppend));
         return this;
     }
 
