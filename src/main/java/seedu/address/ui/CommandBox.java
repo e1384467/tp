@@ -20,9 +20,9 @@ public class CommandBox extends UiPart<Region> {
     private static final String FXML = "CommandBox.fxml";
 
     private final CommandExecutor commandExecutor;
-    private final List<String> commandHistory;
-    private int historyIndex;
-    private String currentInput;
+    private final List<String> commandHistory = new ArrayList<>();
+    private int historyIndex = 0;
+    private String currentInput = "";
 
     @FXML
     private TextField commandTextField;
@@ -49,9 +49,6 @@ public class CommandBox extends UiPart<Region> {
                 break;
             }
         });
-        commandHistory = new ArrayList<>();
-        historyIndex = 0;
-        currentInput = "";
     }
 
     private void displayPreviousCommand() {
