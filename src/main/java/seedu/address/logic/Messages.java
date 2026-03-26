@@ -98,6 +98,16 @@ public class Messages {
                 .append(person.getEmail())
                 .append("; Address: ")
                 .append(person.getAddress())
+                .append("; IC: ")
+                .append(person.getIc())
+                .append("; Urgency: ")
+                .append(person.getUrgencyLevel())
+                .append("; Next of Kin: ")
+                .append(person.getNextOfKin())
+                .append("; Next of Kin phone: ")
+                .append(person.getNextOfKinPhone())
+                .append("; Doctor: ")
+                .append(person.getDoctorName())
                 .append("; Symptoms: ");
         person.getSymptoms().forEach(builder::append);
         return builder.toString();
