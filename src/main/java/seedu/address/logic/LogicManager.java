@@ -10,6 +10,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -32,6 +33,7 @@ public class LogicManager implements Logic {
     private final Model model;
     private final Storage storage;
     private final AddressBookParser addressBookParser;
+    private Command lastUndoableCommand;
 
     /**
      * Constructs a {@code LogicManager} with the given {@code Model} and {@code Storage}.
@@ -39,6 +41,7 @@ public class LogicManager implements Logic {
     public LogicManager(Model model, Storage storage) {
         this.model = model;
         this.storage = storage;
+        this.lastUndoableCommand = null;
         addressBookParser = new AddressBookParser();
     }
 
@@ -48,7 +51,28 @@ public class LogicManager implements Logic {
 
         CommandResult commandResult;
         Command command = addressBookParser.parseCommand(commandText);
-        commandResult = command.execute(model);
+
+        // Handle undo command specially
+        if (command instanceof UndoCommand) {
+            UndoCommand undoCommand = (UndoCommand) command;
+            undoCommand.setLastCommand(lastUndoableCommand);
+            commandResult = undoCommand.execute(model);
+
+            // Clear the stored command after successful undo
+            lastUndoableCommand = null;
+        } else {
+            // Execute the command normally
+            commandResult = command.execute(model);
+
+            if (command.isUndoable()) {
+                // Data-modifying commands are stored for potential undo
+                lastUndoableCommand = command;
+            } else {
+                // Non-data-modifying commands clear the undo memory
+                // This ensures consistent behavior: undo only works for consecutive data-modifying commands
+                lastUndoableCommand = null;
+            }
+        }
 
         try {
             storage.saveAddressBook(model.getAddressBook());

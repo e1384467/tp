@@ -73,6 +73,9 @@ public class UpdateCommand extends Command {
 
     private final Index index;
     private final UpdatePersonDescriptor updatePersonDescriptor;
+    private Person originalPerson;
+    private Person updatedPersonForUndo;
+    private boolean wasExecuted = false;
 
     /**
      * @param index of the person in the filtered person list to edit
@@ -87,6 +90,11 @@ public class UpdateCommand extends Command {
     }
 
     @Override
+    public boolean isUndoable() {
+        return true;
+    }
+
+    @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         List<Person> lastShownList = model.getFilteredPersonList();
@@ -96,7 +104,9 @@ public class UpdateCommand extends Command {
         }
 
         Person personToUpdate = lastShownList.get(index.getZeroBased());
+        originalPerson = personToUpdate;
         Person updatedPerson = createUpdatedPerson(personToUpdate, updatePersonDescriptor);
+        updatedPersonForUndo = updatedPerson;
 
         if (!personToUpdate.isSamePerson(updatedPerson) && model.hasPerson(updatedPerson)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
@@ -104,7 +114,17 @@ public class UpdateCommand extends Command {
 
         model.setPerson(personToUpdate, updatedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        wasExecuted = true;
         return new CommandResult(String.format(MESSAGE_UPDATE_PERSON_SUCCESS, Messages.format(updatedPerson)));
+    }
+
+    @Override
+    public void undo(Model model) throws CommandException {
+        requireNonNull(model);
+        if (wasExecuted && updatedPersonForUndo != null && originalPerson != null) {
+            model.setPerson(updatedPersonForUndo, originalPerson);
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        }
     }
 
     /**
@@ -144,17 +164,9 @@ public class UpdateCommand extends Command {
             }
         }
 
-        return new Person(updatedName,
-                updatedPhone,
-                updatedEmail,
-                updatedAddress,
-                updatedSymptoms,
-                updatedIc,
-                updatedUrgencyLevel,
-                updatedNextOfKinPhone,
-                updatedDoctorName,
-                updatedNextOfKin,
-                updatedNotes);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedSymptoms,
+                updatedIc, updatedUrgencyLevel, updatedNextOfKinPhone, updatedDoctorName,
+                updatedNextOfKin, updatedNotes);
     }
 
     @Override
@@ -218,9 +230,6 @@ public class UpdateCommand extends Command {
             setNotesToAppend(toCopy.notesToAppend); // Updated
         }
 
-        /**
-         * Returns true if at least one field is edited.
-         */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(name, phone, email, address,
                     symptoms, urgencyLevel, ic, nextOfKinPhone, doctorName, nextOfKin, notes, notesToAppend);

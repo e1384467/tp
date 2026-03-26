@@ -24,6 +24,8 @@ public class RangeDeleteCommand extends DeleteCommand {
 
     private final Index startIndex;
     private final Index endIndex;
+    private Person[] deletedPersons;
+    private boolean wasExecuted = false;
 
     public RangeDeleteCommand(Index startIndex, Index endIndex) {
         this(startIndex, endIndex, Set.of());
@@ -40,6 +42,11 @@ public class RangeDeleteCommand extends DeleteCommand {
         super(prefixes);
         this.startIndex = startIndex;
         this.endIndex = endIndex;
+    }
+
+    @Override
+    public boolean isUndoable() {
+        return true;
     }
 
     @Override
@@ -64,6 +71,7 @@ public class RangeDeleteCommand extends DeleteCommand {
                 model.setPerson(person, updatedPerson);
                 deletedPersonsString.append("\n" + Messages.format(updatedPerson));
             }
+            wasExecuted = true;
             return new CommandResult(String.format(MESSAGE_DELETE_FIELD_SUCCESS, deletedPersonsString));
         }
 
@@ -71,6 +79,7 @@ public class RangeDeleteCommand extends DeleteCommand {
             model.deletePerson(person);
             deletedPersonsString.append("\n" + Messages.format(person));
         }
+        wasExecuted = true;
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPersonsString));
     }
 
@@ -92,7 +101,19 @@ public class RangeDeleteCommand extends DeleteCommand {
             Person personToDelete = lastShownList.get(startIndex.getZeroBased() + i);
             personsToDelete[i] = personToDelete;
         }
+
+        deletedPersons = personsToDelete;
         return personsToDelete;
+    }
+
+    @Override
+    public void undo(Model model) throws CommandException {
+        requireNonNull(model);
+        if (wasExecuted && deletedPersons != null) {
+            for (Person person : deletedPersons) {
+                model.addPerson(person);
+            }
+        }
     }
 
     @Override

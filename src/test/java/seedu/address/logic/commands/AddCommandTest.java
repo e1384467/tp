@@ -84,6 +84,31 @@ public class AddCommandTest {
         assertEquals(expected, addCommand.toString());
     }
 
+    @Test
+    public void isUndoable_returnsTrue() {
+        AddCommand addCommand = new AddCommand(ALICE);
+        assertTrue(addCommand.isUndoable());
+    }
+
+    @Test
+    public void undo_personWasAdded_successful() throws Exception {
+        Person validPerson = new PersonBuilder().build();
+        AddCommand addCommand = new AddCommand(validPerson);
+
+        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
+
+        // Execute add
+        addCommand.execute(modelStub);
+        assertEquals(1, modelStub.personsAdded.size());
+
+        // Execute undo
+        addCommand.undo(modelStub);
+
+        // Verify the person was removed
+        assertEquals(1, modelStub.personsDeleted.size());
+        assertEquals(0, modelStub.personsAdded.size());
+    }
+
     /**
      * A default model stub that have all of the methods failing.
      */
@@ -182,6 +207,7 @@ public class AddCommandTest {
      */
     private class ModelStubAcceptingPersonAdded extends ModelStub {
         final ArrayList<Person> personsAdded = new ArrayList<>();
+        final ArrayList<Person> personsDeleted = new ArrayList<>();
 
         @Override
         public boolean hasPerson(Person person) {
@@ -193,6 +219,13 @@ public class AddCommandTest {
         public void addPerson(Person person) {
             requireNonNull(person);
             personsAdded.add(person);
+        }
+
+        @Override
+        public void deletePerson(Person person) {
+            requireNonNull(person);
+            personsDeleted.add(person);
+            personsAdded.remove(person);
         }
 
         @Override
