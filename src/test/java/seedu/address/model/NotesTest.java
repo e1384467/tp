@@ -74,9 +74,15 @@ public class NotesTest {
 
     @Test
     public void append_toEmptyNotes_returnsAdditional() {
-        // This turns Line 42 GREEN
+        // This turns Line 42 GREEN, while accounting for timestamps!
         Notes emptyOriginal = new Notes("");
         Notes toAppend = new Notes("New Content");
-        assertEquals(toAppend.toString(), emptyOriginal.append(toAppend).toString());
+
+        // Generate the expected timestamp format
+        String timestamp = java.time.LocalDateTime.now().format(java.time.format
+                        .DateTimeFormatter.ofPattern("dd MMM HH:mm"));
+        String expectedNote = "[" + timestamp + "] New Content";
+
+        assertEquals(expectedNote, emptyOriginal.append(toAppend).toString());
     }
 }

@@ -164,17 +164,9 @@ public class UpdateCommand extends Command {
             }
         }
 
-        return new Person(updatedName,
-                updatedPhone,
-                updatedEmail,
-                updatedAddress,
-                updatedSymptoms,
-                updatedIc,
-                updatedUrgencyLevel,
-                updatedNextOfKinPhone,
-                updatedDoctorName,
-                updatedNextOfKin,
-                updatedNotes);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedSymptoms,
+                updatedIc, updatedUrgencyLevel, updatedNextOfKinPhone, updatedDoctorName,
+                updatedNextOfKin, updatedNotes);
     }
 
     @Override
@@ -238,9 +230,6 @@ public class UpdateCommand extends Command {
             setNotesToAppend(toCopy.notesToAppend); // Updated
         }
 
-        /**
-         * Returns true if at least one field is edited.
-         */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(name, phone, email, address,
                     symptoms, urgencyLevel, ic, nextOfKinPhone, doctorName, nextOfKin, notes, notesToAppend);
