@@ -212,6 +212,31 @@ public class SingleDeleteCommandTest {
         assertEquals(expected, deleteCommand.toString());
     }
 
+    @Test
+    public void isUndoable_returnsTrue() {
+        DeleteCommand deleteCommand = new SingleDeleteCommand(INDEX_FIRST_PERSON);
+        assertTrue(deleteCommand.isUndoable());
+    }
+
+    @Test
+    public void undo_personWasDeleted_successful() throws Exception {
+        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        int initialSize = model.getAddressBook().getPersonList().size();
+
+        // Execute delete
+        DeleteCommand deleteCommand = new SingleDeleteCommand(INDEX_FIRST_PERSON);
+        deleteCommand.execute(model);
+        assertEquals(initialSize - 1, model.getAddressBook().getPersonList().size());
+
+        // Execute undo
+        deleteCommand.undo(model);
+
+        // Verify the person was restored
+        assertEquals(initialSize, model.getAddressBook().getPersonList().size());
+        assertTrue(model.getAddressBook().getPersonList().contains(personToDelete));
+    }
+
     /**
      * Updates {@code model}'s filtered list to show no one.
      */

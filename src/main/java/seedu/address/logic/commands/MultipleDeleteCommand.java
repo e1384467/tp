@@ -25,8 +25,10 @@ public class MultipleDeleteCommand extends DeleteCommand {
             + "Example: " + COMMAND_WORD + " 1,2,4";
 
     private final Index[] targetIndices;
+    private Person[] deletedPersons;
+    private boolean wasExecuted = false;
 
-    public MultipleDeleteCommand(Index[] targetIndices) {
+    public MultipleDeleteCommand(Index... targetIndices) {
         this(targetIndices, Set.of());
     }
 
@@ -39,6 +41,11 @@ public class MultipleDeleteCommand extends DeleteCommand {
     public MultipleDeleteCommand(Index[] targetIndices, Set<Prefix> prefixes) {
         super(prefixes);
         this.targetIndices = targetIndices;
+    }
+
+    @Override
+    public boolean isUndoable() {
+        return true;
     }
 
     @Override
@@ -66,11 +73,24 @@ public class MultipleDeleteCommand extends DeleteCommand {
             return new CommandResult(String.format(MESSAGE_DELETE_FIELD_SUCCESS, deletedPersonsString));
         }
 
+        deletedPersons = personsToDelete;
+
         for (Person person : personsToDelete) {
             model.deletePerson(person);
             deletedPersonsString.append("\n" + Messages.format(person));
         }
+        wasExecuted = true;
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPersonsString));
+    }
+
+    @Override
+    public void undo(Model model) throws CommandException {
+        requireNonNull(model);
+        if (wasExecuted && deletedPersons != null) {
+            for (Person person : deletedPersons) {
+                model.addPerson(person);
+            }
+        }
     }
 
     private void verifyNoDuplicateIndices() throws CommandException {

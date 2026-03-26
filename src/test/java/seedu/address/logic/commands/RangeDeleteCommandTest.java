@@ -282,6 +282,35 @@ public class RangeDeleteCommandTest {
         assertEquals(expected, deleteCommand.toString());
     }
 
+    @Test
+    public void isUndoable_returnsTrue() {
+        DeleteCommand deleteCommand = new RangeDeleteCommand(INDEX_FIRST_PERSON, INDEX_THIRD_PERSON);
+        assertTrue(deleteCommand.isUndoable());
+    }
+
+    @Test
+    public void undo_personsWereDeleted_successful() throws Exception {
+        Model testModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        Person firstPersonToDelete = testModel.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person secondPersonToDelete = testModel.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
+        Person thirdPersonToDelete = testModel.getFilteredPersonList().get(INDEX_THIRD_PERSON.getZeroBased());
+        int initialSize = testModel.getAddressBook().getPersonList().size();
+
+        // Execute delete
+        DeleteCommand deleteCommand = new RangeDeleteCommand(INDEX_FIRST_PERSON, INDEX_THIRD_PERSON);
+        deleteCommand.execute(testModel);
+        assertEquals(initialSize - 3, testModel.getAddressBook().getPersonList().size());
+
+        // Execute undo
+        deleteCommand.undo(testModel);
+
+        // Verify the persons were restored
+        assertEquals(initialSize, testModel.getAddressBook().getPersonList().size());
+        assertTrue(testModel.getAddressBook().getPersonList().contains(firstPersonToDelete));
+        assertTrue(testModel.getAddressBook().getPersonList().contains(secondPersonToDelete));
+        assertTrue(testModel.getAddressBook().getPersonList().contains(thirdPersonToDelete));
+    }
+
     /**
      * Updates {@code model}'s filtered list to show no one.
      */

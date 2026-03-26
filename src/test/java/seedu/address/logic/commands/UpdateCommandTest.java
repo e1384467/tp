@@ -282,6 +282,33 @@ public class UpdateCommandTest {
     }
 
     @Test
+    public void isUndoable_returnsTrue() {
+        UpdateCommand updateCommand = new UpdateCommand(INDEX_FIRST_PERSON, DESC_AMY);
+        assertTrue(updateCommand.isUndoable());
+    }
+
+    @Test
+    public void undo_personWasUpdated_successful() throws Exception {
+        Model testModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        Person originalPerson = testModel.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+
+        UpdatePersonDescriptor descriptor = new UpdatePersonDescriptorBuilder().withName(VALID_NAME_BOB).build();
+        UpdateCommand updateCommand = new UpdateCommand(INDEX_FIRST_PERSON, descriptor);
+
+        // Execute update
+        updateCommand.execute(testModel);
+        Person updatedPerson = testModel.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        assertFalse(updatedPerson.getName().equals(originalPerson.getName()));
+
+        // Execute undo
+        updateCommand.undo(testModel);
+
+        // Verify the person was reverted
+        Person revertedPerson = testModel.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        assertEquals(originalPerson.getName(), revertedPerson.getName());
+    }
+
+    @Test
     public void toStringMethod() {
         Index index = Index.fromOneBased(1);
         UpdatePersonDescriptor editPersonDescriptor = new UpdatePersonDescriptor();
