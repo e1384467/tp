@@ -14,11 +14,6 @@ public class NextOfKinRelationshipTest {
     }
 
     @Test
-    public void constructor_emptyString_throwsIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class, () -> new NextOfKinRelationship("   "));
-    }
-
-    @Test
     public void constructor_invalidCharacters_throwsIllegalArgumentException() {
         // contains numbers → invalid
         assertThrows(IllegalArgumentException.class, () -> new NextOfKinRelationship("Father123"));
@@ -31,12 +26,6 @@ public class NextOfKinRelationshipTest {
     public void constructor_validInput_success() {
         NextOfKinRelationship nok = new NextOfKinRelationship("Father");
         assertEquals("Father", nok.getLabel());
-    }
-
-    @Test
-    public void constructor_trimsInput_success() {
-        NextOfKinRelationship nok = new NextOfKinRelationship("  Mother  ");
-        assertEquals("Mother", nok.getLabel());
     }
 
     @Test

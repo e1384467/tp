@@ -2,6 +2,9 @@ package seedu.address.model.person;
 
 import java.util.Objects;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.AppUtil.checkArgument;
+
 /**
  * Represents a Next-of-kin relationship in the system.
  * Guarantees: immutable; name is validated and non-null.
@@ -17,7 +20,7 @@ public class NextOfKinRelationship {
 
     // Regex: letters + allowed punctuation + spaces
     // ^ start, $ end
-    public static final String VALIDATION_REGEX = "[A-Za-z ,.'-]+";
+    public static final String VALIDATION_REGEX = "[A-Za-z][A-Za-z ,.'-]*";;
 
     private final String label;
 
@@ -27,19 +30,9 @@ public class NextOfKinRelationship {
      * @param label A valid next of kin relationship label.
      */
     public NextOfKinRelationship(String label) {
-        Objects.requireNonNull(label);
-
-        String trimmed = label.trim();
-
-        if (trimmed.isEmpty()) {
-            throw new IllegalArgumentException(MESSAGE_EMPTY);
-        }
-
-        if (!isValidNextOfKinRelationship(trimmed)) {
-            throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
-        }
-
-        this.label = trimmed;
+        requireNonNull(label);
+        checkArgument(isValidNextOfKinRelationship(label), MESSAGE_CONSTRAINTS);
+        this.label = label;
     }
 
     /**

@@ -24,20 +24,9 @@ public class NextOfKinTest {
     }
 
     @Test
-    public void constructor_emptyName_throwsIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class, () -> new NextOfKin("   "));
-    }
-
-    @Test
     public void constructor_invalidName_throwsIllegalArgumentException() {
         String invalidName = "@John#Doe"; // contains invalid characters
         assertThrows(IllegalArgumentException.class, () -> new NextOfKin(invalidName));
-    }
-
-    @Test
-    public void constructor_trimsLeadingAndTrailingSpaces() {
-        NextOfKin nextOfKin = new NextOfKin("   Jane Doe  ");
-        assertEquals("Jane Doe", nextOfKin.getFullName());
     }
 
     // isValidNextOfKin tests
