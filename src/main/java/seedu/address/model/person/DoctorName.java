@@ -1,6 +1,7 @@
 package seedu.address.model.person;
 
-import java.util.Objects;
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
  * Represents a Doctor in the system.
@@ -12,12 +13,10 @@ public class DoctorName {
             "For the names, please use only these characters: (A-Z, a-z), spaces, comma (,), "
                     + "hyphens (-), apostrophe (‘), period (.) for the doctor name.";
 
-    public static final String MESSAGE_EMPTY =
-            "The doctor name field cannot be empty.";
 
     // Regex: letters + allowed punctuation + spaces
     // ^ start, $ end
-    public static final String VALIDATION_REGEX = "[A-Za-z ,.'-]+";
+    public static final String VALIDATION_REGEX = "[A-Za-z][A-Za-z ,.'-]*";
 
     private final String fullName;
 
@@ -27,19 +26,9 @@ public class DoctorName {
      * @param name A valid doctor name.
      */
     public DoctorName(String name) {
-        Objects.requireNonNull(name);
-
-        String trimmed = name.trim();
-
-        if (trimmed.isEmpty()) {
-            throw new IllegalArgumentException(MESSAGE_EMPTY);
-        }
-
-        if (!isValidName(trimmed)) {
-            throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
-        }
-
-        this.fullName = trimmed;
+        requireNonNull(name);
+        checkArgument(isValidName(name), MESSAGE_CONSTRAINTS);
+        this.fullName = name;
     }
 
     /**
