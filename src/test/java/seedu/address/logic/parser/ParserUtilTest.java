@@ -301,5 +301,11 @@ public class ParserUtilTest {
 
         // One of the indices is zero (caught by parseIndex)
         assertThrows(ParseException.class, () -> ParserUtil.parseIndices("1,0,3"));
+
+        // FIX FOR COVERAGE: Consecutive commas causing an empty string during split
+        assertThrows(ParseException.class, () -> ParserUtil.parseIndices("1,,3"));
+
+        // FIX FOR COVERAGE: Leading comma causing an empty string at the start
+        assertThrows(ParseException.class, () -> ParserUtil.parseIndices(",2"));
     }
 }
