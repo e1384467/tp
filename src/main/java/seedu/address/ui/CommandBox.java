@@ -1,8 +1,5 @@
 package seedu.address.ui;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -20,9 +17,7 @@ public class CommandBox extends UiPart<Region> {
     private static final String FXML = "CommandBox.fxml";
 
     private final CommandExecutor commandExecutor;
-    private final List<String> commandHistory = new ArrayList<>();
-    private int historyIndex = 0;
-    private String currentInput = "";
+    private final CommandHistory commandHistory = new CommandHistory();
 
     @FXML
     private TextField commandTextField;
@@ -52,35 +47,13 @@ public class CommandBox extends UiPart<Region> {
     }
 
     private void displayPreviousCommand() {
-        if (commandHistory.isEmpty()) {
-            return;
-        }
-
-        if (historyIndex == commandHistory.size()) {
-            currentInput = commandTextField.getText();
-        }
-
-        if (historyIndex > 0) {
-            historyIndex -= 1;
-        }
-
-        commandTextField.setText(commandHistory.get(historyIndex));
+        String toSet = commandHistory.getPreviousCommand(commandTextField.getText());
+        commandTextField.setText(toSet);
     }
 
     private void displayNextCommand() {
-        if (commandHistory.isEmpty()) {
-            return;
-        }
-
-        if (historyIndex < commandHistory.size()) {
-            historyIndex += 1;
-        }
-
-        if (historyIndex == commandHistory.size()) {
-            commandTextField.setText(currentInput);
-        } else {
-            commandTextField.setText(commandHistory.get(historyIndex));
-        }
+        String toSet = commandHistory.getNextCommand();
+        commandTextField.setText(toSet);
     }
 
     /**
@@ -96,9 +69,7 @@ public class CommandBox extends UiPart<Region> {
         try {
             commandExecutor.execute(commandText);
             commandTextField.setText("");
-            commandHistory.add(commandText);
-            historyIndex = commandHistory.size();
-            currentInput = "";
+            commandHistory.addCommand(commandText);
         } catch (CommandException | ParseException e) {
             setStyleToIndicateCommandFailure();
         }
