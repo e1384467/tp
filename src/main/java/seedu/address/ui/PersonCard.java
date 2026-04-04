@@ -65,8 +65,8 @@ public class PersonCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
         phone.setText("Hp: " + person.getPhone().value);
-        address.setText(person.getAddress().value);
-        email.setText(person.getEmail().value);
+        address.setText("Address: " + person.getAddress().value);
+        email.setText("Email: " + person.getEmail().value);
         nextOfKinPhone.setText("NOK phone: " + person.getNextOfKinPhone().toString());
         doctorName.setText("Doctor: " + person.getDoctorName().toString());
         nextOfKin.setText("NOK: " + person.getNextOfKin().toString());
