@@ -22,7 +22,7 @@ public class Symptom {
     public Symptom(String symptomName) {
         requireNonNull(symptomName);
         checkArgument(isValidSymptomName(symptomName), MESSAGE_CONSTRAINTS);
-        this.symptomName = symptomName.toLowerCase();
+        this.symptomName = symptomName;
     }
 
     /**
@@ -44,12 +44,12 @@ public class Symptom {
         }
 
         Symptom otherSymptom = (Symptom) other;
-        return symptomName.equals(otherSymptom.symptomName);
+        return symptomName.equalsIgnoreCase(otherSymptom.symptomName);
     }
 
     @Override
     public int hashCode() {
-        return symptomName.hashCode();
+        return symptomName.toLowerCase().hashCode();
     }
 
     /**
